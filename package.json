@@ -1,0 +1,19 @@
+{
+  "name": "rumpus-ce",
+  "version": "0.1.0",
+  "description": "Rumpus CE (Community Edition) client for browsers and node, for writing applications that talk to Butterscotch Shenanigans games (like Levelhead).",
+  "main": "index.js",
+  "scripts": {
+    "test": "npx mocha build/test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bscotch/rumpus-ce.git"
+  },
+  "author": "Adam Coster",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/bscotch/rumpus-ce/issues"
+  },
+  "homepage": "https://github.com/bscotch/rumpus-ce#readme"
+}
