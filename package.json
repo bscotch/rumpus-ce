@@ -1,11 +1,22 @@
 {
-  "name": "rumpus-ce",
+  "name": "@bscotch/rumpus-ce",
   "version": "0.1.0",
-  "description": "Rumpus CE (Community Edition) client for browsers and node, for writing applications that talk to Butterscotch Shenanigans games (like Levelhead).",
+  "description": "Rumpus CE (Community Edition) node client, for writing applications that talk to Levelhead and other Butterscotch Shenanigans resources.",
   "main": "index.js",
   "scripts": {
-    "test": "npx mocha build/test"
+    "test": "npx mocha ./build/test/index.js",
+    "build": "rm -rf build && npx tsc",
+    "prepare": "npm run build",
+    "preversion": "git checkout develop && git fetch origin --prune && npm run prepare && npm test",
+    "postversion": "git push origin develop && git checkout master && git merge develop && npm publish && git push origin master && git checkout develop"
   },
+  "keywords": [
+    "rumpus",
+    "api",
+    "bscotch",
+    "butterscotch shenanigans",
+    "levelhead"
+  ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/bscotch/rumpus-ce.git"
@@ -15,5 +26,20 @@
   "bugs": {
     "url": "https://github.com/bscotch/rumpus-ce/issues"
   },
-  "homepage": "https://github.com/bscotch/rumpus-ce#readme"
+  "homepage": "https://github.com/bscotch/rumpus-ce#readme",
+  "dependencies": {
+    "axios": "^0.19.0"
+  },
+  "devDependencies": {
+    "@types/axios": "^0.14.0",
+    "@types/chai": "^4.2.7",
+    "@types/mocha": "^5.2.7",
+    "@types/node": "^12.12.21",
+    "@typescript-eslint/eslint-plugin": "^2.12.0",
+    "@typescript-eslint/parser": "^2.12.0",
+    "chai": "^4.2.0",
+    "eslint": "^6.8.0",
+    "mocha": "^6.2.2",
+    "typescript": "^3.7.4"
+  }
 }
