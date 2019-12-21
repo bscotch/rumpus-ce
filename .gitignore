@@ -1,6 +1,5 @@
 # Builds
-browser/
-node/
+build/
 
 # Logs
 logs

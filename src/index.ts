@@ -1,2 +1,1 @@
-const RumpusClient = "Hello World";
-console.log(RumpusClient);
+export {default as RumpusCE} from "./lib/RumpusCE";

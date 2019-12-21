@@ -2,15 +2,15 @@
   "name": "@bscotch/rumpus-ce",
   "version": "0.1.0",
   "description": "Rumpus CE (Community Edition) node client, for writing applications that talk to Levelhead and other Butterscotch Shenanigans resources.",
-  "main": "node/index.js",
-  "browser": "browser.js",
+  "main": "build/index.js",
+  "browser": "browser/index.js",
   "files": [
-    "node/lib/**/*",
-    "node/index.js"
+    "build/lib/**/*",
+    "build/index.js"
   ],
   "scripts": {
-    "test": "npx mocha ./node/test/index.js",
-    "build": "rm -rf node && rm -rf browser && npx tsc && npx webpack",
+    "test": "npx mocha ./build/test/index.js",
+    "build": "rm -rf build && npx tsc && npx webpack",
     "prepare": "npm run build",
     "preversion": "git checkout develop && git fetch origin --prune && npm run prepare && npm test",
     "postversion": "git push origin develop && git checkout master && git merge develop && npm publish && git push origin master && git checkout develop"
@@ -47,6 +47,7 @@
     "mocha": "^6.2.2",
     "ts-loader": "^6.2.1",
     "typescript": "^3.7.4",
-    "webpack": "^4.41.4"
+    "webpack": "^4.41.4",
+    "webpack-cli": "^3.3.10"
   }
 }

@@ -1,16 +1,19 @@
 const path = require('path');
 
 module.exports = {
-  entry: './src/index.ts',
+  entry: './browser/index.ts',
   devtool: 'inline-source-map',
+  mode: 'production',
   module: {
     rules: [
       {
         test: /\.tsx?$/,
-        use: 'ts-loader',
         exclude: /node_modules/,
-        options:{
-          configFile: "tsconfig.browser.json"
+        use:{
+          loader: 'ts-loader',
+          options:{
+            configFile: "browser/tsconfig.json"
+          }
         }
       },
     ],
@@ -19,7 +22,7 @@ module.exports = {
     extensions: [ '.tsx', '.ts', '.js' ],
   },
   output: {
-    filename: 'browser.js',
-    path: __dirname,
+    filename: 'index.js',
+    path: path.join(__dirname,'browser'),
   },
 };
