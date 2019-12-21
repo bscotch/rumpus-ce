@@ -11,9 +11,9 @@
   "scripts": {
     "test": "npx mocha ./build/test/index.js",
     "build": "rm -rf build && npx tsc && npx webpack",
-    "prepare": "npm run build",
-    "preversion": "git checkout develop && git fetch origin --prune && npm run prepare && npm test",
-    "postversion": "git push origin develop && git checkout master && git merge develop && npm publish && git push origin master && git checkout develop"
+    "preversion": "git checkout develop && git fetch origin --prune && npm run build && npm test",
+    "version": "git add -A",
+    "postversion": "git push origin develop && git checkout master && git merge develop && git push origin master && npm publish && git checkout develop"
   },
   "keywords": [
     "rumpus",
