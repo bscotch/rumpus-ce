@@ -1,5 +1,5 @@
 {
-  "include": ["./src", "browser/index.ts"],
+  "include": ["./src"],
   "compilerOptions": {
     "lib":[],
     /* Basic Options */
