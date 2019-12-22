@@ -6,6 +6,13 @@
 
 This project is designed to help jump-start community-created projects by providing easy access to Rumpus CE data -- learn more about Rumpus CE on the [Bscotch website](https://beta.bscotch.net/rumpus-ce) and check out the [Rumpus CE documentation](https://beta.bscotch.net/api/docs/community-edition/) for all the technical details.
 
+## Browser vs. Server
+
+This project is meant to be used in either a browser or non-browser (server/Node) context. However, differences between those two contexts, in particular with CORS in browsers and javascript feature variation across browsers, means that not everything will work in all contexts.
+
+## Authentication
+
+This project supports unauthenticated requests (for those Rumpus CE endpoints that allow for that) and Delegation Key-authenticated requests. Delegation Keys provide well-defined and extremely limited access to Rumpus accounts, so that players can hand keys over to unofficial 3rd parties without having to worry *too* much about privacy and security issues. Delegation Keys are created via Rumpus [account settings](https://beta.bscotch.net/account).
 
 ## Installation
 
@@ -64,7 +71,7 @@ rce.defaultDelegationKey = 'SomeNewNonsense';
 
 Full documentation is provided via typings and JSDocs. Below is a quick, non-comprehensive list of functionality for convenience.
 
-+ `rce.version()`: Get the current Rumpus, Terms, and Privacy Policy versions.
++ `rce.version()`: [node only] Get the current Rumpus, Terms, and Privacy Policy versions.
 + `rce.levelhead.aliases.search(['bscotch404'])`: Get the Levelhead aliases (usernames) for a list of lookup codes.
 + `rce.delegationKeyPermissions()`: Get permissions information for a given delegation key.
 + `rce.request()`: Generic method for sending requests to Rumpus.
