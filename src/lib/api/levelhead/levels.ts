@@ -1,12 +1,12 @@
 import {default as RumpusCE, DelegationOptions} from "../../RumpusCE";
 import {cleanQuery} from "../../utility";
 import {
-  LevelSearchQueryParams,
+  LevelheadLevelSearch,
   LevelheadLevel
 } from "./levels.d";
 
 export async function getLevelheadLevels(this:RumpusCE
-  , query?: LevelSearchQueryParams
+  , query?: LevelheadLevelSearch
   , options?: DelegationOptions
 ){
   const res = await this.get(`/api/levelhead/levels`,{

@@ -14,7 +14,7 @@ interface CrateItemRecord {
   createdAt: string
 }
 
-export type LevelSearchQueryParams = {
+export type LevelheadLevelSearch = {
   sort?: LevelSearchSortOption,
   limit?: number,
   userIds?: string|string[],

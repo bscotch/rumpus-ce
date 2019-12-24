@@ -3,12 +3,7 @@ import axios, {
   AxiosRequestConfig,
   AxiosResponse
 } from "axios";
-import {
-  getLevelheadAliases
-} from "./api/levelhead/aliases";
-import {
-  getLevelheadLevels
-} from "./api/levelhead/levels";
+import {createLevelheadAPI,LevelheadAPI} from "./api";
 
 type Method = "get"|"post"|"patch"|"put"|"delete";
 type Server = "dev"|"beta";
@@ -36,18 +31,6 @@ interface RumpusResponse {
   requestId: string,
   remainingRequests: number,
 }
-
-function createLevelheadAPI(client:RumpusCE){
-  return Object.freeze({
-    aliases:Object.freeze({
-      search: getLevelheadAliases.bind(client)
-    }),
-    levels:Object.freeze({
-      search: getLevelheadLevels.bind(client)
-    })
-  });
-}
-
 
 export default class RumpusCE {
 
@@ -155,6 +138,3 @@ export default class RumpusCE {
     };
   }
 }
-
-const lhAPIDummy = (false as true) && createLevelheadAPI(new RumpusCE());
-type LevelheadAPI = typeof lhAPIDummy;

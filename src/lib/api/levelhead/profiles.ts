@@ -1,13 +1,22 @@
-type ProfileSearchSortOption = 'createdAt'|'updatedAt'|'Subscribers'|'PlayTime'|'Trophies';
+import {default as RumpusCE, DelegationOptions} from "../../RumpusCE";
+import {cleanQuery} from "../../utility";
+import {
+  LevelheadProfile,
+  LevelheadProfileSearch
+} from "./profiles.d";
 
-export interface ProfileSearchQueryParams {
-  userIds?:string,
-  sort?:ProfileSearchSortOption,
-  limit?:number,
-  minSubscribers?:number,
-  maxSubscribers?:number,
-  minPlayTime?:number,
-  maxPlayTime?:number,
-  includeAliases?:boolean,
-  tiebreakerItemId?:string
+export async function getLevelheadProfiles(this:RumpusCE
+  , query?: LevelheadProfileSearch
+  , options?: DelegationOptions
+){
+  const res = await this.get(`/api/levelhead/players`,{
+    ...options,
+    query:cleanQuery(query)
+  });
+  if(res.status==200){
+    return res.data as LevelheadProfile[];
+  }
+  else{
+    throw new Error(`Profile search failed with status ${res.status}`);
+  }
 }

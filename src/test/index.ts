@@ -20,20 +20,30 @@ describe("Rumpus CE Client", async function(){
       expect(keyInfo.permissions).to.be.an('array');
     });
   });
-  describe("Levelhead Aliases", async function(){
-    it("can search aliases", async function(){
-      const rce = new RumpusCE();
-      const aliases = await rce.levelhead.aliases.search('bscotch404');
-      expect(aliases.length).to.equal(1);
-      const [alias] = aliases;
-      expect(alias.userId).to.equal('bscotch404');
+  describe("Levelhead",async function(){
+    describe("Aliases", async function(){
+      it("can search aliases", async function(){
+        const rce = new RumpusCE();
+        const aliases = await rce.levelhead.aliases.search('bscotch404');
+        expect(aliases.length).to.equal(1);
+        const [alias] = aliases;
+        expect(alias.userId).to.equal('bscotch404');
+      });
     });
-  });
-  describe("Levelhead Levels", async function(){
-    it("can search levels", async function(){
-      const rce = new RumpusCE();
-      const levels = await rce.levelhead.levels.search({limit:5});
-      expect(levels.length).to.equal(5);
+    describe("Levels", async function(){
+      it("can search levels", async function(){
+        const rce = new RumpusCE();
+        const levels = await rce.levelhead.levels.search({limit:5});
+        expect(levels.length).to.equal(5);
+      });
+    });
+    describe("Profiles", async function(){
+      it("can search profiles", async function(){
+        const rce = new RumpusCE();
+        const profiles = await rce.levelhead.profiles.search({userIds:'bscotch404'});
+        expect(profiles.length).to.equal(1);
+        expect(profiles[0].userId).to.equal('bscotch404');
+      });
     });
   });
 

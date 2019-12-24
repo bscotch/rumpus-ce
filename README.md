@@ -73,6 +73,8 @@ Full documentation is provided via typings and JSDocs. Below is a quick, non-com
 
 + `rce.version()`: [node only] Get the current Rumpus, Terms, and Privacy Policy versions.
 + `rce.levelhead.aliases.search('bscotch404')`: Get the Levelhead aliases (usernames) for a list of lookup codes.
++ `rce.levelhead.levels.search()`: Search for Levelhead levels.
++ `rce.levelhead.profiles.search()`: Search for Levelhead player profiles.
 + `rce.delegationKeyPermissions()`: Get permissions information for a given delegation key.
 + `rce.request()`: Generic method for sending requests to Rumpus.
 + `rce.get()`: Shortcut method for sending GET requests to Rumpus.
