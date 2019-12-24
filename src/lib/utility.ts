@@ -1,5 +1,8 @@
 
-export function csv (items:Array<any>){
+export function csv (items:Array<any>|string){
+  if(typeof items == 'string'){
+    return items;
+  }
   return items.join(',');
 }
 

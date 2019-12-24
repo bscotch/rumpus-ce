@@ -23,7 +23,7 @@ describe("Rumpus CE Client", async function(){
   describe("Levelhead Aliases", async function(){
     it("can search aliases", async function(){
       const rce = new RumpusCE();
-      const aliases = await rce.levelhead.aliases.search(['bscotch404']);
+      const aliases = await rce.levelhead.aliases.search('bscotch404');
       expect(aliases.length).to.equal(1);
       const [alias] = aliases;
       expect(alias.userId).to.equal('bscotch404');
