@@ -1,7 +1,14 @@
-import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse } from "axios";
+import axios, {
+  AxiosInstance,
+  AxiosRequestConfig,
+  AxiosResponse
+} from "axios";
 import {
   getLevelheadAliases
 } from "./api/levelhead/aliases";
+import {
+  getLevelheadLevels
+} from "./api/levelhead/levels";
 
 type Method = "get"|"post"|"patch"|"put"|"delete";
 type Server = "dev"|"beta";
@@ -30,10 +37,23 @@ interface RumpusResponse {
   remainingRequests: number,
 }
 
+function createLevelheadAPI(client:RumpusCE){
+  return Object.freeze({
+    aliases:Object.freeze({
+      search: getLevelheadAliases.bind(client)
+    }),
+    levels:Object.freeze({
+      search: getLevelheadLevels.bind(client)
+    })
+  });
+}
+
+
 export default class RumpusCE {
 
   private _server: Server;
   private _request: AxiosInstance;
+  private _levelheadAPI: LevelheadAPI;
 
   constructor(
     public defaultDelegationKey:string|undefined = process.env.RUMPUS_DELEGATION_KEY,
@@ -41,14 +61,11 @@ export default class RumpusCE {
   ){
     this._server = server;
     this._request = axios.create({baseURL:`https://${this._server}.bscotch.net`});
+    this._levelheadAPI = createLevelheadAPI(this);
   }
 
   get levelhead(){
-    return {
-      aliases:{
-        search: getLevelheadAliases.bind(this)
-      }
-    };
+    return this._levelheadAPI;
   }
 
   async version(){
@@ -138,3 +155,6 @@ export default class RumpusCE {
     };
   }
 }
+
+const lhAPIDummy = (false as true) && createLevelheadAPI(new RumpusCE());
+type LevelheadAPI = typeof lhAPIDummy;
