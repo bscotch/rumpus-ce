@@ -1,6 +1,6 @@
 {
   "name": "@bscotch/rumpus-ce",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "Rumpus CE (Community Edition) node client, for writing applications that talk to Levelhead and other Butterscotch Shenanigans resources.",
   "main": "build/index.js",
   "browser": "browser/index.js",
