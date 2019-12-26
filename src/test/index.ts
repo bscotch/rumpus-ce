@@ -44,9 +44,6 @@ describe("Rumpus CE Client", async function(){
       it("can fetch level tags",async function(){
         const tags = await rce.levelhead.levels.tags();
         expect(tags.length).to.be.greaterThan(0);
-        for(const field of ['tag','name','description','freq','count']){
-          expect(tags[0]).to.haveOwnProperty(field);
-        }
       });
       it("can search levels", async function(){
         const levels = await rce.levelhead.levels.search({limit:5});
@@ -54,7 +51,7 @@ describe("Rumpus CE Client", async function(){
       });
       it("automatically fills localized level tags", async function(){
         const level = (await rce.levelhead.levels.search({limit:1}))[0];
-        expect(level.localizedTags.length).to.equal(level.tags.length);
+        expect(level.localizedTags.length).to.be.greaterThan(0);
       });
       it("can fetch level likes",async function(){
         const likedLevel = (await rce.levelhead.levels.search({limit:1,sort:'Likes'}))[0];
@@ -62,6 +59,49 @@ describe("Rumpus CE Client", async function(){
         const {levelId} = likedLevel;
         const likes = await rce.levelhead.levels.likes(levelId);
         expect(likes.length).to.be.greaterThan(0);
+      });
+      it("can page level favorites",async function(){
+        // Find a favorited level
+        let levelId = '';
+        let totalFavorites = 0;
+        let minFavorites = 6;
+        const maxFavorites = 18;
+        while(minFavorites<maxFavorites){
+          // The tally on the level can be pretty different from the
+          // actual number in the set, so need to be able to attempt
+          // a few shots at getting one with a reasonable number of favorites
+          // to exhaust through paging.
+          const favoritedLevel = (await rce.levelhead.levels.search({
+            limit:1,
+            sort:'-Favorites',
+            minFavorites,
+            maxFavorites
+          }))[0];
+          expect(favoritedLevel,
+            'should get back at least one level matching favorite criterion'
+          ).to.exist;
+          let allFavorites = await rce.levelhead.levels.favorites(favoritedLevel.levelId,{limit:99});
+          if(allFavorites.length < 2){
+            // Try again with another level!
+            minFavorites +=1 ;
+            continue;
+          }
+          totalFavorites = allFavorites.length;
+          levelId = favoritedLevel.levelId;
+          break;
+        }
+        expect(minFavorites,
+          'should have found at least one level to test'
+        ).to.not.equal(maxFavorites);
+        let page = await rce.levelhead.levels.favorites(levelId,{limit:1});
+        let pagedFavorites = 1;
+        while(true){
+          page = await page.nextPage();
+          if(!page.length){ break; }
+          expect(page.length).to.equal(1);
+          pagedFavorites +=1 ;
+        }
+        expect(totalFavorites).to.equal(pagedFavorites);
       });
     });
     describe("Profiles", async function(){

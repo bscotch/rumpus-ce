@@ -12,6 +12,16 @@ import {
   getLevelheadProfiles
 } from "./levelhead/profiles";
 
+export interface ResultsPage<t> extends Array<t> {
+  nextPage():Promise<ResultsPage<t>>
+}
+
+export async function blankResultsPage(){
+  const results = [] as ResultsPage<never>;
+  results.nextPage = blankResultsPage;
+  return results;
+}
+
 export function createLevelheadAPI(client:RumpusCE){
   return {
     aliases:{

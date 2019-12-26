@@ -1,13 +1,13 @@
 import {default as RumpusCE, DelegationOptions} from "../../RumpusCE";
 import {cleanQuery} from "../../utility";
 import {
-  LevelheadLevel,
   LevelheadLevelTag,
   LevelheadLevelSearch,
   LevelheadLevelDownload
 } from "./levels.d";
+import {ResultsPage, blankResultsPage} from "..";
 
-let _cachedlocalizedTags: {[tag:string]:string};
+let _cachedlocalizedTags: {[tag:string]:string} = {};
 
 // export function addLevelFunctionality(level:LevelheadLevelDownload){
 //   const fancyLevel = level as LevelheadLevel;
@@ -66,12 +66,22 @@ async function getLevelheadLevelList(this:RumpusCE
     query:cleanQuery(query)
   });
   if(res.status==200){
-    // TODO: Add .nextPage() function
-    // TODO: Add .aliases() function that returns a list of alias objects per entry
-    return res.data as string[];
+    const users = res.data as ResultsPage<{_id:string,userId:string,alias?:string}>;
+    const lastId = users.length && (!query?.limit || query.limit == users.length)
+     ? users[users.length-1]._id
+     : false ;
+    if(lastId){
+      const newQuery = {...query,beforeId:lastId};
+      users.nextPage = ()=>{
+        return getLevelheadLevelList.bind(this)(listType,levelId,newQuery,options);
+      }
+    }
+    else{
+      users.nextPage = blankResultsPage;
+    }
+    return users;
   }
   else{
-    console.log(res);
     throw new Error(`Level ${listType} failed with status ${res.status}`);
   }
 }

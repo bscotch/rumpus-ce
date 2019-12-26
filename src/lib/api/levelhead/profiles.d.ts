@@ -1,7 +1,6 @@
 import {Alias} from "./aliases";
 
-type ProfileSearchSortOption = 'createdAt'|'updatedAt'|'Subscribers'|'PlayTime'|'Trophies';
-
+type ProfileSearchSortOption = 'createdAt'|'updatedAt'|'Subscribers'|'PlayTime'|'Trophies'|'-createdAt'|'-updatedAt'|'-Subscribers'|'-PlayTime'|'-Trophies';
 export type LevelheadProfileSearch = {
   userIds?:string,
   sort?:ProfileSearchSortOption,
