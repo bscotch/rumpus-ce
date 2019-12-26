@@ -3,7 +3,10 @@ import axios, {
   AxiosRequestConfig,
   AxiosResponse
 } from "axios";
-import {createLevelheadAPI,LevelheadAPI} from "./api";
+import {
+  createLevelheadAPI,
+  LevelheadAPI
+} from "./api";
 
 type Method = "get"|"post"|"patch"|"put"|"delete";
 type Server = "dev"|"beta";

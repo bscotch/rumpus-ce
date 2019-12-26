@@ -2,6 +2,14 @@ import {Alias} from "./aliases";
 
 type LevelSearchSortOption = 'createdAt'|'updatedAt'|'gameVersion'|'Attempts'|'Players'|'Playtime'|'TimePerWin'|'Difficulty'|'ReplayValue'|'ExposureBucks'|'QAScore'|'HiddenGem'|'Likes'|'Favorites'|'FailureRate';
 
+export interface LevelheadLevelTag {
+  tag:string,
+  name:string,
+  description:string,
+  count:number,
+  freq:number
+}
+
 interface CrateItemRecord {
   userId: string,
   alias: {
@@ -75,6 +83,7 @@ export interface LevelheadLevel {
   creatorTime: number,
   gameVersion: number,
   tags: string[],
+  localizedTags: string[],
   content: {
     World: number,
     Movement: number,
