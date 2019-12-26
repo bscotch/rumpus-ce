@@ -44,6 +44,13 @@ describe("Rumpus CE Client", async function(){
         const level = (await rce.levelhead.levels.search({limit:1}))[0];
         expect(level.localizedTags.length).to.equal(level.tags.length);
       });
+      it("can fetch level likes",async function(){
+        const likedLevel = (await rce.levelhead.levels.search({limit:1,sort:'Likes'}))[0];
+        expect(likedLevel).to.exist;
+        const {levelId} = likedLevel;
+        const likes = await rce.levelhead.levels.likes(levelId);
+        expect(likes.length).to.be.greaterThan(0);
+      });
     });
     describe("Profiles", async function(){
       it("can search profiles", async function(){

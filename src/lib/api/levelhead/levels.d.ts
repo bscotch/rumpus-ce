@@ -68,7 +68,7 @@ export type LevelheadLevelSearch = {
   maxFailureRate?: number
 };
 
-export interface LevelheadLevel {
+export interface LevelheadLevelDownload {
   _id: string,
   levelId: string,
   userId: string,
@@ -109,4 +109,12 @@ export interface LevelheadLevel {
     HighScore: Array<CrateItemRecord>,
     FastestTime: Array<CrateItemRecord>
   }
+}
+
+export interface LevelheadLevel extends LevelheadLevelDownload {
+  likes(): Promise<string[]>, // TODO: Implement
+  favorites(): Promise<string[]>, // TODO: Implement
+  toggleLike(): Promise<boolean>, // TODO: Implement
+  toggleFavorite(): Promise<boolean>, // TODO: Implement
+  toggleBookmark(): Promise<boolean> // TODO: Implement
 }
