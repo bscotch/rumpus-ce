@@ -63,19 +63,31 @@ const rce = new RumpusCE();
 const myDelegationToken = 'AWholeBunchOfNonsense';
 const rce = new RumpusCE(myDelegationToken);
 
-// Finally, you can change the default key at any time.
+// You can change the default key at any time.
 rce.defaultDelegationKey = 'SomeNewNonsense';
+
+// You can override the default key on a per-request basis.
+rce.levelhead.aliases.search("bscotch404",{},{delegationKey:'AnOverrideKey'});
+
+// Finally, you can prevent use of a key completely, for example for endpoints
+// that are publicly accessible but to which a given Delegatin Key does not have
+// explicit permissions.
+rce.get('/api/some/endpoint',{doNotUseKey:true});
 ```
+
+### Data Structures
+
+Some of the arrays and objects returned by Rumpus CE methods have methods attached to them to simplify subsequent API interaction. If you use an IDE that reveals type information you'll be able to infer this on a method-specific basis. Example extended objects:
+
++ `ResultsPage`: An array with the addition of an async `.nextPage()` method.
 
 ### Methods
 
 Full documentation is provided via typings and JSDocs. Below is a quick, non-comprehensive list of functionality for convenience.
 
+#### General
+
 + `rce.version()`: [node only] Get the current Rumpus, Terms, and Privacy Policy versions.
-+ `rce.levelhead.aliases.search('bscotch404')`: Get the Levelhead aliases (usernames) for a list of lookup codes.
-+ `rce.levelhead.levels.tags()`: Level tags are machine-friendly tokens -- this returns the current set of level tags along with their statistical frequencies across all levels, and their name and description in the requester's language.
-+ `rce.levelhead.levels.search()`: Search for Levelhead levels. Level tags are automatically translated into the requester's preferred language (English fallback).
-+ `rce.levelhead.profiles.search()`: Search for Levelhead player profiles.
 + `rce.delegationKeyPermissions()`: Get permissions information for a given delegation key.
 + `rce.request()`: Generic method for sending requests to Rumpus.
 + `rce.get()`: Shortcut method for sending GET requests to Rumpus.
@@ -83,3 +95,12 @@ Full documentation is provided via typings and JSDocs. Below is a quick, non-com
 + `rce.patch()`: Shortcut method for sending PATCH requests to Rumpus.
 + `rce.put()`: Shortcut method for sending PUT requests to Rumpus.
 + `rce.delete()`: Shortcut method for sending DELETE requests to Rumpus.
+
+#### Levelhead
+
++ `rce.levelhead.aliases.search('bscotch404')`: Get the Levelhead aliases (usernames) for a list of lookup codes.
++ `rce.levelhead.levels.tags()`: Level tags are machine-friendly tokens -- this returns the current set of level tags along with their statistical frequencies across all levels, and their name and description in the requester's language.
++ `rce.levelhead.levels.likes()`: List the users who like a given Levelhead level. Resulting array has a `nextPage()` function to simplify paging.
++ `rce.levelhead.levels.favorites()`: List the users who favorited a given Levelhead level.
++ `rce.levelhead.levels.search()`: Search for Levelhead levels. Level tags are automatically translated into the requester's preferred language (English fallback).
++ `rce.levelhead.profiles.search()`: Search for Levelhead player profiles.

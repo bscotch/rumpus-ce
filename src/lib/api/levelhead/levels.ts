@@ -68,17 +68,15 @@ async function getLevelheadLevelList(this:RumpusCE
   if(res.status==200){
     const users = res.data as ResultsPage<{_id:string,userId:string,alias?:string}>;
     const lastId = users.length && (!query?.limit || query.limit == users.length)
-     ? users[users.length-1]._id
-     : false ;
-    if(lastId){
-      const newQuery = {...query,beforeId:lastId};
-      users.nextPage = ()=>{
+      ? users[users.length-1]._id
+      : false ;
+    users.nextPage = ()=>{
+      if(lastId){
+        const newQuery = {...query,beforeId:lastId};
         return getLevelheadLevelList.bind(this)(listType,levelId,newQuery,options);
       }
-    }
-    else{
-      users.nextPage = blankResultsPage;
-    }
+      return blankResultsPage();
+    };
     return users;
   }
   else{

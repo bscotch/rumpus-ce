@@ -86,7 +86,7 @@ export default class RumpusCE {
       throw new Error("Expired delegation key.");
     }
     else{
-      throw new Error("Unexpected server responsel.");
+      throw new Error("Unexpected server response.");
     }
   }
 

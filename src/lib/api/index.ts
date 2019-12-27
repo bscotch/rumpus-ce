@@ -13,6 +13,7 @@ import {
 } from "./levelhead/profiles";
 
 export interface ResultsPage<t> extends Array<t> {
+  /** Fetch the next page of results from the API. */
   nextPage():Promise<ResultsPage<t>>
 }
 
