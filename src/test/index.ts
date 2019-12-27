@@ -3,8 +3,20 @@ import {default as RumpusCE,VersionedItem} from "../lib/RumpusCE";
 import dotenv from 'dotenv';
 dotenv.config();
 
+const localClient = new RumpusCE(
+  process.env.RUMPUS_DELEGATION_KEY,
+  'local',
+  {
+    username: process.env.DEV_SERVER_USERNAME as string,
+    password: process.env.DEV_SERVER_PASSWORD as string
+  });
+
+const betaClient = new RumpusCE();
+
 describe("Rumpus CE Client", async function(){
-  const rce = new RumpusCE();
+
+  const rce = localClient;
+  
   describe("General", async function(){
     it("can fetch the server version", async function(){
       const version = await rce.version();

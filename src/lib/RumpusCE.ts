@@ -9,7 +9,7 @@ import {
 } from "./api";
 
 type Method = "get"|"post"|"patch"|"put"|"delete";
-type Server = "dev"|"beta";
+type Server = "local"|"dev"|"beta";
 export type VersionedItem = 'privacy'|'terms'|'terms-rce'|'rumpus';
 
 export interface DelegationOptions {
@@ -40,19 +40,24 @@ export default class RumpusCE {
   private _server: Server;
   private _request: AxiosInstance;
   private _levelheadAPI: LevelheadAPI;
+  private _baseUrl: string;
 
   constructor(
     public defaultDelegationKey:string|undefined = process.env.RUMPUS_DELEGATION_KEY,
-    server:Server = 'beta'
+    server:Server = 'beta',
+    auth?:{username:string,password:string}
   ){
     this._server = server;
-    this._request = axios.create({baseURL:`https://${this._server}.bscotch.net`});
+    this._baseUrl = server == 'local'
+      ? 'http://localhost:8080'
+      : `https://${this._server}.bscotch.net`;
+    this._request = axios.create({baseURL:this._baseUrl,auth});
     this._levelheadAPI = createLevelheadAPI(this);
   }
 
-  get levelhead(){
-    return this._levelheadAPI;
-  }
+  get baseUrl(){ return this._baseUrl; }
+
+  get levelhead(){ return this._levelheadAPI; }
 
   async version(){
     const res = await this.get('/api/version',{doNotUseKey:true});
