@@ -1,4 +1,4 @@
-# IN ACTIVE DEVELOPMENT -- NOT FUNCTIONAL
+# UNDER ACTIVE DEVELOPMENT -- HIGHLY UNSTABLE
 
 # Rumpus Community Edition API Client
 
@@ -77,7 +77,7 @@ rce.get('/api/some/endpoint',{doNotUseKey:true});
 
 ### Data Structures
 
-Some of the arrays and objects returned by Rumpus CE methods have methods attached to them to simplify subsequent API interaction. If you use an IDE that reveals type information you'll be able to infer this on a method-specific basis. Example extended objects:
+Some of the arrays and objects returned by Rumpus CE methods have methods attached to them to simplify subsequent API interaction. If you use an IDE that reveals type information you'll be able to infer this on a method/object-specific basis. Example extended objects:
 
 + `ResultsPage`: An array with the addition of an async `.nextPage()` method.
 
@@ -99,8 +99,8 @@ Full documentation is provided via typings and JSDocs. Below is a quick, non-com
 #### Levelhead
 
 + `rce.levelhead.aliases.search('bscotch404')`: Get the Levelhead aliases (usernames) for a list of lookup codes.
-+ `rce.levelhead.levels.tags()`: Level tags are machine-friendly tokens -- this returns the current set of level tags along with their statistical frequencies across all levels, and their name and description in the requester's language.
-+ `rce.levelhead.levels.likes()`: List the users who like a given Levelhead level. Resulting array has a `nextPage()` function to simplify paging.
-+ `rce.levelhead.levels.favorites()`: List the users who favorited a given Levelhead level.
++ `rce.levelhead.levels.getTags()`: Level tags are machine-friendly tokens -- this returns the current set of level tags along with their statistical frequencies across all levels, and their name and description in the requester's language.
++ `rce.levelhead.levels.getLikes()`: List the users who like a given Levelhead level. Resulting array has a `nextPage()` function to simplify paging.
++ `rce.levelhead.levels.getFavorites()`: List the users who favorited a given Levelhead level.
 + `rce.levelhead.levels.search()`: Search for Levelhead levels. Level tags are automatically translated into the requester's preferred language (English fallback).
 + `rce.levelhead.profiles.search()`: Search for Levelhead player profiles.

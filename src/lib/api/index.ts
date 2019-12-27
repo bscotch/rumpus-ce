@@ -30,9 +30,9 @@ export function createLevelheadAPI(client:RumpusCE){
     },
     levels:{
       search: getLevelheadLevels.bind(client),
-      tags: getLevelheadLevelTags.bind(client),
-      likes: getLevelheadLevelLikes.bind(client),
-      favorites: getLevelheadLevelFavorites.bind(client),
+      getTags: getLevelheadLevelTags.bind(client),
+      getLikes: getLevelheadLevelLikes.bind(client),
+      getFavorites: getLevelheadLevelFavorites.bind(client),
     },
     profiles:{
       search: getLevelheadProfiles.bind(client)

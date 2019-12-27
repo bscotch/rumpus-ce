@@ -42,7 +42,7 @@ describe("Rumpus CE Client", async function(){
     });
     describe("Levels", async function(){
       it("can fetch level tags",async function(){
-        const tags = await rce.levelhead.levels.tags();
+        const tags = await rce.levelhead.levels.getTags();
         expect(tags.length).to.be.greaterThan(0);
       });
       it("can search levels", async function(){
@@ -57,7 +57,7 @@ describe("Rumpus CE Client", async function(){
         const likedLevel = (await rce.levelhead.levels.search({limit:1,sort:'Likes'}))[0];
         expect(likedLevel).to.exist;
         const {levelId} = likedLevel;
-        const likes = await rce.levelhead.levels.likes(levelId);
+        const likes = await rce.levelhead.levels.getLikes(levelId);
         expect(likes.length).to.be.greaterThan(0);
       });
       it("can page level favorites",async function(){
@@ -80,7 +80,7 @@ describe("Rumpus CE Client", async function(){
           expect(favoritedLevel,
             'should get back at least one level matching favorite criterion'
           ).to.exist;
-          let allFavorites = await rce.levelhead.levels.favorites(favoritedLevel.levelId,{limit:99});
+          let allFavorites = await rce.levelhead.levels.getFavorites(favoritedLevel.levelId,{limit:99});
           if(allFavorites.length < 2){
             // Try again with another level!
             minFavorites +=1 ;
@@ -93,7 +93,7 @@ describe("Rumpus CE Client", async function(){
         expect(minFavorites,
           'should have found at least one level to test'
         ).to.not.equal(maxFavorites);
-        let page = await rce.levelhead.levels.favorites(levelId,{limit:1});
+        let page = await rce.levelhead.levels.getFavorites(levelId,{limit:1});
         let pagedFavorites = 1;
         while(true){
           page = await page.nextPage();

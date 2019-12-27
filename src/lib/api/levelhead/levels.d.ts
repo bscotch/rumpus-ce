@@ -113,9 +113,11 @@ export interface LevelheadLevelDownload {
 }
 
 export interface LevelheadLevel extends LevelheadLevelDownload {
-  likes(): Promise<string[]>, // TODO: Implement
-  favorites(): Promise<string[]>, // TODO: Implement
-  toggleLike(): Promise<boolean>, // TODO: Implement
-  toggleFavorite(): Promise<boolean>, // TODO: Implement
-  toggleBookmark(): Promise<boolean> // TODO: Implement
+  /** Fetch the list of users who like this Level. Includes paging. */
+  getLikes(): Promise<string[]>, // TODO: Implement
+  /** Fetch the list of users who favorited this level. Includes paging. */
+  getFavorites(): Promise<string[]>, // TODO: Implement
+  // toggleLike(): Promise<boolean>, // TODO: Implement
+  // toggleFavorite(): Promise<boolean>, // TODO: Implement
+  // toggleBookmark(): Promise<boolean> // TODO: Implement
 }

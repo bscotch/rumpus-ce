@@ -1,6 +1,7 @@
 import {default as RumpusCE, DelegationOptions} from "../../RumpusCE";
 import {cleanQuery} from "../../utility";
 import {
+  LevelheadLevel,
   LevelheadLevelTag,
   LevelheadLevelSearch,
   LevelheadLevelDownload
@@ -10,8 +11,8 @@ import {ResultsPage, blankResultsPage} from "..";
 let _cachedlocalizedTags: {[tag:string]:string} = {};
 
 // export function addLevelFunctionality(level:LevelheadLevelDownload){
-//   const fancyLevel = level as LevelheadLevel;
-//   // fancyLevel.toggleLike()=>{};
+//   const fancyLevel = level as LevelheadLevel ;
+//   fancyLevel.getLikes
 // }
 
 export async function getLevelheadLevelTags(this:RumpusCE
@@ -55,7 +56,7 @@ export async function getLevelheadLevels(this:RumpusCE
   }
 }
 
-async function getLevelheadLevelList(this:RumpusCE
+async function getLevelheadLevelUserList(this:RumpusCE
   , listType: 'likes'|'favorites'
   , levelId: string
   , query?: {limit?:number,userIds?:string|string[],beforeId?:string,includeAliases?:boolean}
@@ -73,7 +74,7 @@ async function getLevelheadLevelList(this:RumpusCE
     users.nextPage = ()=>{
       if(lastId){
         const newQuery = {...query,beforeId:lastId};
-        return getLevelheadLevelList.bind(this)(listType,levelId,newQuery,options);
+        return getLevelheadLevelUserList.bind(this)(listType,levelId,newQuery,options);
       }
       return blankResultsPage();
     };
@@ -90,7 +91,7 @@ export async function getLevelheadLevelLikes(this:RumpusCE
   , query?: {limit?:number,userIds?:string|string[],beforeId?:string,includeAliases?:boolean}
   , options?: DelegationOptions
 ){
-  return getLevelheadLevelList.call(this,'likes',levelId,query,options);
+  return getLevelheadLevelUserList.call(this,'likes',levelId,query,options);
 }
 
 /** Get the list of userIds for users who favorited this level. */
@@ -99,6 +100,6 @@ export async function getLevelheadLevelFavorites(this:RumpusCE
   , query?: {limit?:number,userIds?:string|string[],beforeId?:string,includeAliases?:boolean}
   , options?: DelegationOptions
 ){
-  return getLevelheadLevelList.call(this,'favorites',levelId,query,options);
+  return getLevelheadLevelUserList.call(this,'favorites',levelId,query,options);
 }
 
