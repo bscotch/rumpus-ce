@@ -1,6 +1,7 @@
 import {default as RumpusCE, DelegationOptions} from "../../RumpusCE";
 import {cleanQuery} from "../../utility";
 import {
+  ListedUserId,
   LevelheadLevel,
   LevelheadLevelTag,
   LevelheadLevelSearch,
@@ -10,10 +11,18 @@ import {ResultsPage, blankResultsPage} from "..";
 
 let _cachedlocalizedTags: {[tag:string]:string} = {};
 
-// export function addLevelFunctionality(level:LevelheadLevelDownload){
-//   const fancyLevel = level as LevelheadLevel ;
-//   fancyLevel.getLikes
-// }
+export function addLevelFunctionality(client:RumpusCE,level:LevelheadLevelDownload){
+  const fancyLevel = level as LevelheadLevel ;
+  fancyLevel.getLikes = (
+    query?: LevelheadLevelLikesSearch,
+    options?: DelegationOptions
+  )=>getLevelheadLevelLikes.call(client,level.levelId,query,options);
+  fancyLevel.getFavorites = (
+    query?: LevelheadLevelLikesSearch,
+    options?: DelegationOptions
+  )=>getLevelheadLevelFavorites.call(client,level.levelId,query,options);
+  return fancyLevel;
+}
 
 export async function getLevelheadLevelTags(this:RumpusCE
   , options?: DelegationOptions
@@ -41,13 +50,14 @@ export async function getLevelheadLevels(this:RumpusCE
     query:cleanQuery(query)
   });
   if(res.status==200){
-    const levels = res.data as LevelheadLevelDownload[];
+    const levels = res.data as LevelheadLevel[];
     for(const level of levels){
       const localizedTags = [];
       for(const tag of level.tags){
         localizedTags.push(_cachedlocalizedTags[tag]);
       }
       level.localizedTags = localizedTags.filter(x=>x);
+      addLevelFunctionality(this,level);
     }
     return levels;
   }
@@ -67,7 +77,7 @@ async function getLevelheadLevelUserList(this:RumpusCE
     query:cleanQuery(query)
   });
   if(res.status==200){
-    const users = res.data as ResultsPage<{_id:string,userId:string,alias?:string}>;
+    const users = res.data as ResultsPage<ListedUserId>;
     const lastId = users.length && (!query?.limit || query.limit == users.length)
       ? users[users.length-1]._id
       : false ;
@@ -85,10 +95,17 @@ async function getLevelheadLevelUserList(this:RumpusCE
   }
 }
 
+export interface LevelheadLevelLikesSearch{
+  limit?:number,
+  userIds?:string|string[],
+  beforeId?:string,
+  includeAliases?:boolean
+}
+
 /** Get the list of userIds for users who liked this level. */
 export async function getLevelheadLevelLikes(this:RumpusCE
   , levelId: string
-  , query?: {limit?:number,userIds?:string|string[],beforeId?:string,includeAliases?:boolean}
+  , query?: LevelheadLevelLikesSearch
   , options?: DelegationOptions
 ){
   return getLevelheadLevelUserList.call(this,'likes',levelId,query,options);

@@ -58,7 +58,13 @@ describe("Rumpus CE Client", async function(){
         expect(likedLevel).to.exist;
         const {levelId} = likedLevel;
         const likes = await rce.levelhead.levels.getLikes(levelId);
-        expect(likes.length).to.be.greaterThan(0);
+        expect(likes.length,'level should have at least one Like').to.be.greaterThan(0);
+        // Also fetch via the object
+        const likesFromLevel = await likedLevel.getLikes();
+        expect(likesFromLevel.length).to.equal(likes.length);
+        for(let i=0; i<likesFromLevel.length; i++){
+          expect(likesFromLevel[i]._id).to.equal(likes[i]._id);
+        }
       });
       it("can page level favorites",async function(){
         // Find a favorited level
