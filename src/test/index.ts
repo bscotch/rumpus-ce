@@ -15,7 +15,7 @@ const betaClient = new RumpusCE();
 
 describe("Rumpus CE Client", async function(){
 
-  const rce = localClient;
+  const rce = betaClient;
   
   describe("General", async function(){
     it("can fetch the server version", async function(){
