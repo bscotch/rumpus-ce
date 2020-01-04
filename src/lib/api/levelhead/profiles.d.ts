@@ -1,6 +1,8 @@
 import {Alias} from "./aliases";
+import { ResultsPage } from "..";
 
 type ProfileSearchSortOption = 'createdAt'|'updatedAt'|'Subscribers'|'PlayTime'|'Trophies'|'-createdAt'|'-updatedAt'|'-Subscribers'|'-PlayTime'|'-Trophies';
+
 export type LevelheadProfileSearch = {
   userIds?:string,
   sort?:ProfileSearchSortOption,
@@ -13,13 +15,13 @@ export type LevelheadProfileSearch = {
   maxSubscribers?:number,
   minPlayTime?:number,
   maxPlayTime?:number,
-  minUpdatedAt?: Date|string,
-  maxUpdatedAt?: Date|string,
-  minCreatedAt?: Date|string,
-  maxCreatedAt?: Date|string,
+  minUpdatedAt?: string,
+  maxUpdatedAt?: string,
+  minCreatedAt?: string,
+  maxCreatedAt?: string,
 }
 
-export interface LevelheadProfile {
+export interface LevelheadProfileDownload {
   _id: string,
   userId: string,
   alias: Alias,
@@ -46,4 +48,15 @@ export interface LevelheadProfile {
     AchPoints: number,
     CampaignProg: number
   }
+}
+
+
+export interface ListedLevelId {
+  _id:string,
+  levelId:string
+}
+
+export interface LevelheadProfile extends LevelheadProfileDownload{
+  getLikedLevels(): Promise<ResultsPage<ListedLevelId>>,
+  getFavoritedLevels(): Promise<ResultsPage<ListedLevelId>>,
 }

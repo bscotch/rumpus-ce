@@ -70,10 +70,10 @@ export type LevelheadLevelSearch = {
   maxFavorites?: number,
   minFailureRate?: number,
   maxFailureRate?: number,
-  minUpdatedAt?: Date|string,
-  maxUpdatedAt?: Date|string,
-  minCreatedAt?: Date|string,
-  maxCreatedAt?: Date|string,
+  minUpdatedAt?: string,
+  maxUpdatedAt?: string,
+  minCreatedAt?: string,
+  maxCreatedAt?: string,
 };
 
 export interface LevelheadLevelDownload {
@@ -128,9 +128,9 @@ export interface ListedUserId {
 
 export interface LevelheadLevel extends LevelheadLevelDownload {
   /** Fetch the list of users who like this Level. Includes paging. */
-  getLikes(): Promise<ResultsPage<ListedUserId>>, // TODO: Implement
+  getLikes(): Promise<ResultsPage<ListedUserId>>,
   /** Fetch the list of users who favorited this level. Includes paging. */
-  getFavorites(): Promise<ResultsPage<ListedUserId>>, // TODO: Implement
+  getFavorites(): Promise<ResultsPage<ListedUserId>>,
   // toggleLike(): Promise<boolean>, // TODO: Implement
   // toggleFavorite(): Promise<boolean>, // TODO: Implement
   // toggleBookmark(): Promise<boolean> // TODO: Implement

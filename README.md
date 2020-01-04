@@ -98,9 +98,19 @@ Full documentation is provided via typings and JSDocs. Below is a quick, non-com
 
 #### Levelhead
 
+##### Misc.
+
 + `rce.levelhead.aliases.search('bscotch404')`: Get the Levelhead aliases (usernames) for a list of lookup codes.
+
+##### Levels
+
 + `rce.levelhead.levels.getTags()`: Level tags are machine-friendly tokens -- this returns the current set of level tags along with their statistical frequencies across all levels, and their name and description in the requester's language.
-+ `rce.levelhead.levels.getLikes()`: List the users who like a given Levelhead level. Resulting array has a `nextPage()` function to simplify paging.
-+ `rce.levelhead.levels.getFavorites()`: List the users who favorited a given Levelhead level.
 + `rce.levelhead.levels.search()`: Search for Levelhead levels. Level tags are automatically translated into the requester's preferred language (English fallback).
++ `rce.levelhead.levels.getLikes(levelId)`: List the users who like a given Levelhead level. Resulting array has a `nextPage()` function to simplify paging.
++ `rce.levelhead.levels.getFavorites(levelId)`: List the users who favorited a given Levelhead level.
+
+##### Profiles
+
 + `rce.levelhead.profiles.search()`: Search for Levelhead player profiles.
++ `rce.levelhead.profiles.getLikedLevels(userId)`: Page through the levels "liked" by a given user.
++ `rce.levelhead.profiles.getFavoritedLevels(userId)`: Page through the levels "favorited" by a given user.

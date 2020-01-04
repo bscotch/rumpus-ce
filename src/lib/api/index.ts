@@ -9,7 +9,9 @@ import {
   getLevelheadLevelFavorites
 } from "./levelhead/levels";
 import {
-  getLevelheadProfiles
+  getLevelheadProfiles,
+  getLevelheadLikedLevels,
+  getLevelheadFavoritedLevels
 } from "./levelhead/profiles";
 
 export interface ResultsPage<t> extends Array<t> {
@@ -35,7 +37,9 @@ export function createLevelheadAPI(client:RumpusCE){
       getFavorites: getLevelheadLevelFavorites.bind(client),
     },
     profiles:{
-      search: getLevelheadProfiles.bind(client)
+      search: getLevelheadProfiles.bind(client),
+      getLikedLevels: getLevelheadLikedLevels.bind(client),
+      getFavoritedLevels: getLevelheadFavoritedLevels.bind(client)
     }
   };
 }

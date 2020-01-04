@@ -98,8 +98,8 @@ export async function getLevelheadLevels(this:RumpusCE
     query:cleanQuery(query)
   });
   if(res.status==200){
-    const levels = res.data as LevelheadLevel[];
-    return levels;
+    const levels = res.data as LevelheadLevelDownload[];
+    return levels.map(level=>addLevelFunctionality(this,level));
   }
   else{
     throw new Error(`Level search failed with status ${res.status}`);
