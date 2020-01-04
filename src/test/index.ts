@@ -16,16 +16,21 @@ const betaClient = new RumpusCE();
 describe("Rumpus CE Client", async function(){
 
   const rce = betaClient;
-  
+
   describe("General", async function(){
     it("can fetch the server version", async function(){
+      const versionFields = ['privacy','terms','terms-rce','rumpus'];
       const version = await rce.version();
-      for(const field of ['privacy','terms','terms-rce','rumpus']){
-        expect(version[field as VersionedItem],`version object must include '${field}'`).to.be.a('string');
+      for(const field of versionFields){
+        expect(version[field as VersionedItem],
+          `version object must include '${field}'`
+        ).to.be.a('string');
       }
     });
     it("can fetch info about the current delegation key", async function(){
-      expect(rce.defaultDelegationKey,'missing delegation key in root .env file: add one!').to.be.a('string');
+      expect(rce.defaultDelegationKey,
+        'missing delegation key in root .env file: add one!'
+      ).to.be.a('string');
       const keyInfo = await rce.delegationKeyPermissions();
       expect(keyInfo.passId).to.be.a('string');
       expect(keyInfo.permissions).to.be.an('array');
@@ -58,15 +63,20 @@ describe("Rumpus CE Client", async function(){
         expect(likedLevel).to.exist;
         const {levelId} = likedLevel;
         const likes = await rce.levelhead.levels.getLikes(levelId);
-        expect(likes.length,'level should have at least one Like').to.be.greaterThan(0);
+        expect(likes.length,
+          'level should have at least one Like'
+        ).to.be.greaterThan(0);
         // Also fetch via the object
         const likesFromLevel = await likedLevel.getLikes();
         expect(likesFromLevel.length).to.equal(likes.length);
-        for(let i=0; i<likesFromLevel.length; i++){
-          expect(likesFromLevel[i]._id).to.equal(likes[i]._id);
+        for(let i=0; i<likesFromLevel.length; i++)
+        {
+          expect(likesFromLevel[i]._id,
+            'can fetch likes via a level object'
+          ).to.equal(likes[i]._id);
         }
       });
-      it("can page level favorites",async function(){
+      it("can page level favorites", async function(){
         // Find a favorited level
         let levelId = '';
         let totalFavorites = 0;
@@ -86,7 +96,7 @@ describe("Rumpus CE Client", async function(){
           expect(favoritedLevel,
             'should get back at least one level matching favorite criterion'
           ).to.exist;
-          let allFavorites = await rce.levelhead.levels.getFavorites(favoritedLevel.levelId,{limit:99});
+          const allFavorites = await rce.levelhead.levels.getFavorites(favoritedLevel.levelId,{limit:99});
           if(allFavorites.length < 2){
             // Try again with another level!
             minFavorites +=1 ;
@@ -101,9 +111,12 @@ describe("Rumpus CE Client", async function(){
         ).to.not.equal(maxFavorites);
         let page = await rce.levelhead.levels.getFavorites(levelId,{limit:1});
         let pagedFavorites = 1;
+        // eslint-disable-next-line no-constant-condition
         while(true){
           page = await page.nextPage();
-          if(!page.length){ break; }
+          if(!page.length){
+            break;
+          }
           expect(page.length).to.equal(1);
           pagedFavorites +=1 ;
         }

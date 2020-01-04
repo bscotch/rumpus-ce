@@ -31,6 +31,7 @@ module.exports = {
       "@typescript-eslint/no-empty-function":"off",
       "no-empty":"off",
       'semi':'error',
+      'no-constant-condition': 'warn',
       "no-trailing-spaces": "error",
       "getter-return":"off"
   },
