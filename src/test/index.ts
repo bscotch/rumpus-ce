@@ -125,6 +125,24 @@ describe("Rumpus CE Client", async function(){
         expect(players.length).to.equal(1);
         expect(players[0].userId).to.equal('bscotch404');
       });
+      it("can fetch player's follower list",async function(){
+        const player = (await rce.levelhead.players.search({limit:1,sort:'Subscribers'}))[0];
+        expect(player).to.exist;
+        const {userId} = player;
+        const followers = await rce.levelhead.players.getFollowers(userId);
+        expect(followers.length,
+          'should have at least one follower'
+        ).to.be.at.least(1);
+        // Also fetch via the object
+        const followersFromPlayer = await player.getFollowers();
+        expect(followersFromPlayer.length).to.equal(followers.length);
+        for(let i=0; i<followersFromPlayer.length; i++)
+        {
+          expect(followersFromPlayer[i]._id,
+            'can fetch followers via a player object'
+          ).to.equal(followers[i]._id);
+        }
+      });
       it("can fetch player's liked levels ",async function(){
         const player = (await rce.levelhead.players.search({limit:1,sort:'Subscribers'}))[0];
         expect(player).to.exist;

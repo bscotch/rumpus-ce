@@ -1,5 +1,6 @@
 import {Alias} from "./aliases";
 import { ResultsPage } from "..";
+import {ListedLevelId} from "./levels.d";
 
 type PlayerSearchSortOption = 'createdAt'|'updatedAt'|'Subscribers'|'PlayTime'|'Trophies'|'-createdAt'|'-updatedAt'|'-Subscribers'|'-PlayTime'|'-Trophies';
 
@@ -50,13 +51,15 @@ export interface LevelheadPlayerDownload {
   }
 }
 
-
-export interface ListedLevelId {
+export interface ListedUserId {
   _id:string,
-  levelId:string
+  userId:string,
+  alias?:string
 }
 
 export interface LevelheadPlayer extends LevelheadPlayerDownload{
   getLikedLevels(): Promise<ResultsPage<ListedLevelId>>,
   getFavoritedLevels(): Promise<ResultsPage<ListedLevelId>>,
+  getFollowers(): Promise<ResultsPage<ListedUserId>>,
+  getFollowing(): Promise<ResultsPage<ListedUserId>>,
 }

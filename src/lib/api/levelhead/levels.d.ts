@@ -1,5 +1,6 @@
 import {Alias} from "./aliases";
 import { ResultsPage } from "..";
+import {ListedUserId} from "./players.d";
 
 type LevelSearchSortOption = 'createdAt'|'updatedAt'|'gameVersion'|'Attempts'|'Players'|'Playtime'|'TimePerWin'|'Difficulty'|'ReplayValue'|'ExposureBucks'|'QAScore'|'HiddenGem'|'Likes'|'Favorites'|'FailureRate'|'-createdAt'|'-updatedAt'|'-gameVersion'|'-Attempts'|'-Players'|'-Playtime'|'-TimePerWin'|'-Difficulty'|'-ReplayValue'|'-ExposureBucks'|'-QAScore'|'-HiddenGem'|'-Likes'|'-Favorites'|'-FailureRate';
 
@@ -120,10 +121,9 @@ export interface LevelheadLevelDownload {
   }
 }
 
-export interface ListedUserId {
+export interface ListedLevelId {
   _id:string,
-  userId:string,
-  alias?:string
+  levelId:string
 }
 
 export interface LevelheadLevel extends LevelheadLevelDownload {

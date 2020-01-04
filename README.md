@@ -8,7 +8,7 @@ This project is designed to help jump-start community-created projects by provid
 
 ## Browser vs. Server
 
-This project is meant to be used in either a browser or non-browser (server/Node) context. However, differences between those two contexts, in particular with CORS in browsers and javascript feature variation across browsers, means that not everything will work in all contexts.
+This project is meant to be used in either a browser or non-browser (server/Node) context. However, differences between those two contexts, in particular with CORS in browsers and JavaScript feature variation across browsers, means that not everything will work in all contexts.
 
 ## Authentication
 
@@ -83,7 +83,7 @@ Some of the arrays and objects returned by Rumpus CE methods have methods attach
 
 ### Methods
 
-Full documentation is provided via typings and JSDocs. Below is a quick, non-comprehensive list of functionality for convenience.
+Full documentation is provided via types and JSDocs. Below is a quick, non-comprehensive list of functionality for convenience.
 
 #### General
 
@@ -114,3 +114,5 @@ Full documentation is provided via typings and JSDocs. Below is a quick, non-com
 + `rce.levelhead.profiles.search()`: Search for Levelhead player profiles.
 + `rce.levelhead.profiles.getLikedLevels(userId)`: Page through the levels "liked" by a given user.
 + `rce.levelhead.profiles.getFavoritedLevels(userId)`: Page through the levels "favorited" by a given user.
++ `rce.levelhead.profiles.getFollowers(userId)`: Page through the users who follow a given user.
++ `rce.levelhead.profiles.getFollowing(userId)`: Page through the users a given user follows.

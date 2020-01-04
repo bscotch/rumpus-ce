@@ -1,12 +1,14 @@
 import {default as RumpusCE, DelegationOptions} from "../../RumpusCE";
 import {cleanQuery} from "../../utility";
 import {
-  ListedUserId,
   LevelheadLevel,
   LevelheadLevelTag,
   LevelheadLevelSearch,
   LevelheadLevelDownload
 } from "./levels.d";
+import {
+  ListedUserId
+} from "./players.d";
 import {ResultsPage, blankResultsPage} from "..";
 
 export async function getLevelheadLevelTags(this:RumpusCE
@@ -76,7 +78,7 @@ export async function getLevelheadLevelFavorites(this:RumpusCE
   return getLevelheadLevelUserList.call(this,'favorites',levelId,query,options);
 }
 
-export function addLevelFunctionality(client:RumpusCE,level:LevelheadLevelDownload){
+function addLevelFunctionality(client:RumpusCE,level:LevelheadLevelDownload){
   const fancyLevel = level as LevelheadLevel ;
   fancyLevel.getLikes = (
     query?: LevelheadLevelLikesSearch,
