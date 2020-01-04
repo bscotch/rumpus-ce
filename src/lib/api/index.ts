@@ -9,11 +9,14 @@ import {
   getLevelheadLevelFavorites
 } from "./levelhead/levels";
 import {
+  getLevelheadPlayer,
   getLevelheadPlayers,
   getLevelheadLikedLevels,
   getLevelheadFavoritedLevels,
   getLevelheadPlayerFollowers,
-  getLevelheadPlayerFollowing
+  getLevelheadPlayerFollowing,
+  followLevelheadPlayer,
+  unfollowLevelheadPlayer
 } from "./levelhead/players";
 
 export interface ResultsPage<t> extends Array<t> {
@@ -40,10 +43,13 @@ export function createLevelheadAPI(client:RumpusCE){
     },
     players:{
       search: getLevelheadPlayers.bind(client),
+      getPlayer: getLevelheadPlayer.bind(client),
       getLikedLevels: getLevelheadLikedLevels.bind(client),
       getFavoritedLevels: getLevelheadFavoritedLevels.bind(client),
       getFollowers: getLevelheadPlayerFollowers.bind(client),
-      getFollowing: getLevelheadPlayerFollowing.bind(client)
+      getFollowing: getLevelheadPlayerFollowing.bind(client),
+      follow: followLevelheadPlayer.bind(client),
+      unfollow: unfollowLevelheadPlayer.bind(client)
     }
   };
 }

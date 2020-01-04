@@ -14,6 +14,8 @@ This project is meant to be used in either a browser or non-browser (server/Node
 
 This project supports unauthenticated requests (for those Rumpus CE endpoints that allow for that) and Delegation Key-authenticated requests. Delegation Keys provide well-defined and extremely limited access to Rumpus accounts, so that players can hand keys over to unofficial 3rd parties without having to worry *too* much about privacy and security issues. Delegation Keys are created via Rumpus [account settings](https://beta.bscotch.net/account).
 
+Users opt into different sets of permissions when they create delegation keys -- if there is a mismatch between what is allowed by a delegation key and what you're trying to do, you'll get back `403` statuses from your request.
+
 ## Installation
 
 To use directly in the browser via CDN:
@@ -111,8 +113,11 @@ Full documentation is provided via types and JSDocs. Below is a quick, non-compr
 
 ##### Players
 
-+ `rce.levelhead.profiles.search()`: Search for Levelhead player profiles.
-+ `rce.levelhead.profiles.getLikedLevels(userId)`: Page through the levels "liked" by a given user.
-+ `rce.levelhead.profiles.getFavoritedLevels(userId)`: Page through the levels "favorited" by a given user.
-+ `rce.levelhead.profiles.getFollowers(userId)`: Page through the users who follow a given user.
-+ `rce.levelhead.profiles.getFollowing(userId)`: Page through the users a given user follows.
++ `rce.levelhead.players.search()`: Search for Levelhead players.
++ `rce.levelhead.players.getLikedLevels(userId)`: Page through the levels "liked" by a given player.
++ `rce.levelhead.players.getFavoritedLevels(userId)`: Page through the levels "favorited" by a given player.
++ `rce.levelhead.players.getFollowers(userId)`: Page through the users who follow a given player.
++ `rce.levelhead.players.getFollowing(userId)`: Page through the users a given user follows.
++ `rce.levelhead.players.follow(userId)`: Follow a player.
++ `rce.levelhead.players.unfollow(userId)`: Unfollow a player.
+

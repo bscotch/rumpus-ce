@@ -5,7 +5,11 @@ dotenv.config();
 
 const localClient = new RumpusCE(
   process.env.RUMPUS_DELEGATION_KEY,
-  'local',
+  'local');
+
+const devClient = new RumpusCE(
+  process.env.RUMPUS_DELEGATION_KEY,
+  'dev',
   {
     username: process.env.DEV_SERVER_USERNAME as string,
     password: process.env.DEV_SERVER_PASSWORD as string
@@ -15,7 +19,7 @@ const betaClient = new RumpusCE();
 
 describe("Rumpus CE Client", async function(){
 
-  const rce = betaClient;
+  const rce = devClient;
 
   describe("General", async function(){
     it("can fetch the server version", async function(){
@@ -52,7 +56,8 @@ describe("Rumpus CE Client", async function(){
       });
       it("can search levels", async function(){
         const levels = await rce.levelhead.levels.search({limit:5});
-        expect(levels.length).to.equal(5);
+        expect(levels.length).to.be.at.least(1);
+        expect(levels.length).to.be.lessThan(6);
       });
       it("can fetch level likes",async function(){
         const likedLevel = (await rce.levelhead.levels.search({limit:1,sort:'Likes'}))[0];
@@ -124,6 +129,29 @@ describe("Rumpus CE Client", async function(){
         const players = await rce.levelhead.players.search({userIds:'bscotch404'});
         expect(players.length).to.equal(1);
         expect(players[0].userId).to.equal('bscotch404');
+      });
+      it("can (un)follow a player",async function(){
+        // Use Seth as the test case. Have the test end up
+        // back where it started so that anyone running the
+        // test doesn't have a permanent side effect.
+        const dev = 'bscotch007';
+        const {userId} = await rce.delegationKeyPermissions();
+        const isFollowingDev = async ()=>{
+          const follows = await rce.levelhead.players.getFollowing(userId,{userIds:dev});
+          return Boolean(follows.length);
+        };
+        if(await isFollowingDev()){
+          await rce.levelhead.players.unfollow(dev);
+          expect(await isFollowingDev(),'should no longer be following').to.be.false;
+          await rce.levelhead.players.follow(dev);
+          expect(await isFollowingDev(),'should be following again').to.be.true;
+        }
+        else{
+          await rce.levelhead.players.follow(dev);
+          expect(await isFollowingDev(),'should now be following').to.be.true;
+          await rce.levelhead.players.unfollow(dev);
+          expect(await isFollowingDev(),'should not be following again').to.be.false;
+        }
       });
       it("can fetch player's follower list",async function(){
         const player = (await rce.levelhead.players.search({limit:1,sort:'Subscribers'}))[0];
