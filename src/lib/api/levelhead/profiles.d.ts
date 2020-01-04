@@ -5,12 +5,18 @@ export type LevelheadProfileSearch = {
   userIds?:string,
   sort?:ProfileSearchSortOption,
   limit?:number,
+  paging?: boolean,
+  nextPageToken?: string,
+  includeAliases?:boolean,
+  tiebreakerItemId?:string,
   minSubscribers?:number,
   maxSubscribers?:number,
   minPlayTime?:number,
   maxPlayTime?:number,
-  includeAliases?:boolean,
-  tiebreakerItemId?:string
+  minUpdatedAt?: Date|string,
+  maxUpdatedAt?: Date|string,
+  minCreatedAt?: Date|string,
+  maxCreatedAt?: Date|string,
 }
 
 export interface LevelheadProfile {

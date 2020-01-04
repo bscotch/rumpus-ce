@@ -32,6 +32,8 @@ export type LevelheadLevelSearch = {
   tags?: string|string[],
   excludeTags?: string|string[],
   tiebreakerItemId?: string,
+  nextPageToken?: string,
+  paging?: boolean,
   tower?: boolean,
   marketing?: boolean,
   dailyBuild?: boolean,
@@ -67,12 +69,17 @@ export type LevelheadLevelSearch = {
   minFavorites?: number,
   maxFavorites?: number,
   minFailureRate?: number,
-  maxFailureRate?: number
+  maxFailureRate?: number,
+  minUpdatedAt?: Date|string,
+  maxUpdatedAt?: Date|string,
+  minCreatedAt?: Date|string,
+  maxCreatedAt?: Date|string,
 };
 
 export interface LevelheadLevelDownload {
   _id: string,
   levelId: string,
+  avatarId: string,
   userId: string,
   alias: Alias,
   title: string,
