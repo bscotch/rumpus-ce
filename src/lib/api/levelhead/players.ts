@@ -1,11 +1,11 @@
 import {default as RumpusCE, DelegationOptions} from "../../RumpusCE";
 import {cleanQuery} from "../../utility";
 import {
-  LevelheadProfileDownload,
-  LevelheadProfile,
-  LevelheadProfileSearch,
+  LevelheadPlayerDownload,
+  LevelheadPlayer,
+  LevelheadPlayerSearch,
   ListedLevelId
-} from "./profiles.d";
+} from "./players.d";
 import {ResultsPage, blankResultsPage} from "..";
 
 async function getLevelheadPlayerLevelList(this:RumpusCE
@@ -62,9 +62,9 @@ export async function getLevelheadFavoritedLevels(this:RumpusCE
 }
 
 export function addPlayerFunctionality(client:RumpusCE
-  , player: LevelheadProfileDownload
+  , player: LevelheadPlayerDownload
 ){
-  const fancyPlayer = player as LevelheadProfile ;
+  const fancyPlayer = player as LevelheadPlayer ;
   fancyPlayer.getLikedLevels = (
     query?: LevelheadPlayerLikesSearch,
     options?: DelegationOptions
@@ -76,8 +76,8 @@ export function addPlayerFunctionality(client:RumpusCE
   return fancyPlayer;
 }
 
-export async function getLevelheadProfiles(this:RumpusCE
-  , query?: LevelheadProfileSearch
+export async function getLevelheadPlayers(this:RumpusCE
+  , query?: LevelheadPlayerSearch
   , options?: DelegationOptions
 ){
   const res = await this.get(`/api/levelhead/players`,{
@@ -85,10 +85,10 @@ export async function getLevelheadProfiles(this:RumpusCE
     query:cleanQuery(query)
   });
   if(res.status==200){
-    const players = res.data as LevelheadProfileDownload[];
+    const players = res.data as LevelheadPlayerDownload[];
     return players.map(player=>addPlayerFunctionality(this,player));
   }
   else{
-    throw new Error(`Profile search failed with status ${res.status}`);
+    throw new Error(`Player search failed with status ${res.status}`);
   }
 }

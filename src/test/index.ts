@@ -119,17 +119,17 @@ describe("Rumpus CE Client", async function(){
         expect(totalFavorites).to.equal(pagedFavorites);
       });
     });
-    describe("Profiles", async function(){
-      it("can search profiles", async function(){
-        const profiles = await rce.levelhead.profiles.search({userIds:'bscotch404'});
-        expect(profiles.length).to.equal(1);
-        expect(profiles[0].userId).to.equal('bscotch404');
+    describe("Players", async function(){
+      it("can search players", async function(){
+        const players = await rce.levelhead.players.search({userIds:'bscotch404'});
+        expect(players.length).to.equal(1);
+        expect(players[0].userId).to.equal('bscotch404');
       });
       it("can fetch player's liked levels ",async function(){
-        const player = (await rce.levelhead.profiles.search({limit:1,sort:'Subscribers'}))[0];
+        const player = (await rce.levelhead.players.search({limit:1,sort:'Subscribers'}))[0];
         expect(player).to.exist;
         const {userId} = player;
-        const likes = await rce.levelhead.profiles.getLikedLevels(userId);
+        const likes = await rce.levelhead.players.getLikedLevels(userId);
         expect(likes.length,
           'level should have at least one Like'
         ).to.be.greaterThan(0);

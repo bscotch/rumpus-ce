@@ -9,10 +9,10 @@ import {
   getLevelheadLevelFavorites
 } from "./levelhead/levels";
 import {
-  getLevelheadProfiles,
+  getLevelheadPlayers,
   getLevelheadLikedLevels,
   getLevelheadFavoritedLevels
-} from "./levelhead/profiles";
+} from "./levelhead/players";
 
 export interface ResultsPage<t> extends Array<t> {
   /** Fetch the next page of results from the API. */
@@ -36,8 +36,8 @@ export function createLevelheadAPI(client:RumpusCE){
       getLikes: getLevelheadLevelLikes.bind(client),
       getFavorites: getLevelheadLevelFavorites.bind(client),
     },
-    profiles:{
-      search: getLevelheadProfiles.bind(client),
+    players:{
+      search: getLevelheadPlayers.bind(client),
       getLikedLevels: getLevelheadLikedLevels.bind(client),
       getFavoritedLevels: getLevelheadFavoritedLevels.bind(client)
     }

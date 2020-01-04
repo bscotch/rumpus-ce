@@ -109,7 +109,7 @@ Full documentation is provided via typings and JSDocs. Below is a quick, non-com
 + `rce.levelhead.levels.getLikes(levelId)`: List the users who like a given Levelhead level. Resulting array has a `nextPage()` function to simplify paging.
 + `rce.levelhead.levels.getFavorites(levelId)`: List the users who favorited a given Levelhead level.
 
-##### Profiles
+##### Players
 
 + `rce.levelhead.profiles.search()`: Search for Levelhead player profiles.
 + `rce.levelhead.profiles.getLikedLevels(userId)`: Page through the levels "liked" by a given user.
