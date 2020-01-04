@@ -62,4 +62,6 @@ export interface LevelheadPlayer extends LevelheadPlayerDownload{
   getFavoritedLevels(): Promise<ResultsPage<ListedLevelId>>,
   getFollowers(): Promise<ResultsPage<ListedUserId>>,
   getFollowing(): Promise<ResultsPage<ListedUserId>>,
+  follow(): Promise<boolean>,
+  unfollow(): Promise<boolean>
 }

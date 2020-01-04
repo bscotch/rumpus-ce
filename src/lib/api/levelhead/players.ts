@@ -48,7 +48,7 @@ async function getLevelheadPlayerLevelList(this:RumpusCE
 
 /** Get the list of levels liked by a user. */
 export async function getLevelheadLikedLevels(this:RumpusCE
-  , userId: string
+  , userId = "@me"
   , query?: LevelheadPlayerLikesSearch
   , options?: DelegationOptions
 ){
@@ -57,7 +57,7 @@ export async function getLevelheadLikedLevels(this:RumpusCE
 
 /** Get the list of levels favorited by a user. */
 export async function getLevelheadFavoritedLevels(this:RumpusCE
-  , userId: string
+  , userId = "@me"
   , query?: LevelheadPlayerLikesSearch
   , options?: DelegationOptions
 ){
@@ -96,13 +96,14 @@ async function getLevelheadPlayerFollows(this:RumpusCE
     return players;
   }
   else{
+    console.log(res,query);
     throw new Error(`Player ${listType} search failed with status ${res.status}`);
   }
 }
 
 /** Get the list of users following a given user. */
 export async function getLevelheadPlayerFollowers(this:RumpusCE
-  , userId: string
+  , userId = "@me"
   , query?: LevelheadPlayerFollowsSearch
   , options?: DelegationOptions
 ){
@@ -111,11 +112,34 @@ export async function getLevelheadPlayerFollowers(this:RumpusCE
 
 /** Get the list of users followed by a given user. */
 export async function getLevelheadPlayerFollowing(this:RumpusCE
-  , userId: string
+  , userId = "@me"
   , query?: LevelheadPlayerFollowsSearch
   , options?: DelegationOptions
 ){
   return getLevelheadPlayerFollows.call(this,'following',userId,query,options);
+}
+
+export async function followLevelheadPlayer(this:RumpusCE
+  , userId: string
+  , options?: DelegationOptions
+){
+  const res = await this.put(`/api/levelhead/following/${userId}`,options);
+  if(res.status !=204){
+    console.log(res);
+    throw new Error(res.status==404 ? 'Player does not exist!' : 'Unable to follow player');
+  }
+  return true;
+}
+
+export async function unfollowLevelheadPlayer(this:RumpusCE
+  , userId: string
+  , options?: DelegationOptions
+){
+  const res = await this.delete(`/api/levelhead/following/${userId}`,options);
+  if(res.status !=204){
+    throw new Error('Unable to unfollow player');
+  }
+  return true;
 }
 
 function addPlayerFunctionality(client:RumpusCE
@@ -143,6 +167,14 @@ function addPlayerFunctionality(client:RumpusCE
     options?: DelegationOptions
   )=>getLevelheadPlayerFollowing.call(client,player.userId,query,options);
 
+  fancyPlayer.follow = (
+    options?: DelegationOptions
+  ) => followLevelheadPlayer.call(client,player.userId,options);
+
+  fancyPlayer.unfollow = (
+    options?: DelegationOptions
+  ) => unfollowLevelheadPlayer.call(client,player.userId,options);
+
   return fancyPlayer;
 }
 
@@ -161,4 +193,15 @@ export async function getLevelheadPlayers(this:RumpusCE
   else{
     throw new Error(`Player search failed with status ${res.status}`);
   }
+}
+
+export async function getLevelheadPlayer(this:RumpusCE
+  , userId = "@me"
+  , options?: DelegationOptions
+){
+  const players = await getLevelheadPlayers.call(this,{userIds:userId,limit:1},options);
+  if(!players.length){
+    throw new Error("That player does not exist");
+  }
+  return players[0];
 }
