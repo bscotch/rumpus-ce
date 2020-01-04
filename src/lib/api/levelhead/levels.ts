@@ -9,18 +9,12 @@ import {
 } from "./levels.d";
 import {ResultsPage, blankResultsPage} from "..";
 
-let _cachedlocalizedTags: {[tag:string]:string} = {};
-
 export async function getLevelheadLevelTags(this:RumpusCE
   , options?: DelegationOptions
 ){
   const res = await this.get(`/api/levelhead/level-tags/counts`,{...options});
   if(res.status==200){
     const tags = res.data as LevelheadLevelTag[];
-    _cachedlocalizedTags = {};
-    for(const tag of tags){
-      _cachedlocalizedTags[tag.tag] = tag.name;
-    }
     return tags;
   }
   else{
@@ -105,14 +99,6 @@ export async function getLevelheadLevels(this:RumpusCE
   });
   if(res.status==200){
     const levels = res.data as LevelheadLevel[];
-    for(const level of levels){
-      const localizedTags = [];
-      for(const tag of level.tags){
-        localizedTags.push(_cachedlocalizedTags[tag]);
-      }
-      level.localizedTags = localizedTags.filter(x=>x);
-      addLevelFunctionality(this,level);
-    }
     return levels;
   }
   else{

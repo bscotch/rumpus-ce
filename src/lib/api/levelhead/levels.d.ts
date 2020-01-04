@@ -85,7 +85,7 @@ export interface LevelheadLevelDownload {
   creatorTime: number,
   gameVersion: number,
   tags: string[],
-  localizedTags: string[],
+  tagNames: string[],
   content: {
     World: number,
     Movement: number,
