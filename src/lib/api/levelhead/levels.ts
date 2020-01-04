@@ -11,19 +11,6 @@ import {ResultsPage, blankResultsPage} from "..";
 
 let _cachedlocalizedTags: {[tag:string]:string} = {};
 
-export function addLevelFunctionality(client:RumpusCE,level:LevelheadLevelDownload){
-  const fancyLevel = level as LevelheadLevel ;
-  fancyLevel.getLikes = (
-    query?: LevelheadLevelLikesSearch,
-    options?: DelegationOptions
-  )=>getLevelheadLevelLikes.call(client,level.levelId,query,options);
-  fancyLevel.getFavorites = (
-    query?: LevelheadLevelLikesSearch,
-    options?: DelegationOptions
-  )=>getLevelheadLevelFavorites.call(client,level.levelId,query,options);
-  return fancyLevel;
-}
-
 export async function getLevelheadLevelTags(this:RumpusCE
   , options?: DelegationOptions
 ){
@@ -38,31 +25,6 @@ export async function getLevelheadLevelTags(this:RumpusCE
   }
   else{
     throw new Error(`Level tags request failed with status ${res.status}`);
-  }
-}
-
-export async function getLevelheadLevels(this:RumpusCE
-  , query?: LevelheadLevelSearch
-  , options?: DelegationOptions
-){
-  const res = await this.get(`/api/levelhead/levels`,{
-    ...options,
-    query:cleanQuery(query)
-  });
-  if(res.status==200){
-    const levels = res.data as LevelheadLevel[];
-    for(const level of levels){
-      const localizedTags = [];
-      for(const tag of level.tags){
-        localizedTags.push(_cachedlocalizedTags[tag]);
-      }
-      level.localizedTags = localizedTags.filter(x=>x);
-      addLevelFunctionality(this,level);
-    }
-    return levels;
-  }
-  else{
-    throw new Error(`Level search failed with status ${res.status}`);
   }
 }
 
@@ -120,3 +82,40 @@ export async function getLevelheadLevelFavorites(this:RumpusCE
   return getLevelheadLevelUserList.call(this,'favorites',levelId,query,options);
 }
 
+export function addLevelFunctionality(client:RumpusCE,level:LevelheadLevelDownload){
+  const fancyLevel = level as LevelheadLevel ;
+  fancyLevel.getLikes = (
+    query?: LevelheadLevelLikesSearch,
+    options?: DelegationOptions
+  )=>getLevelheadLevelLikes.call(client,level.levelId,query,options);
+  fancyLevel.getFavorites = (
+    query?: LevelheadLevelLikesSearch,
+    options?: DelegationOptions
+  )=>getLevelheadLevelFavorites.call(client,level.levelId,query,options);
+  return fancyLevel;
+}
+
+export async function getLevelheadLevels(this:RumpusCE
+  , query?: LevelheadLevelSearch
+  , options?: DelegationOptions
+){
+  const res = await this.get(`/api/levelhead/levels`,{
+    ...options,
+    query:cleanQuery(query)
+  });
+  if(res.status==200){
+    const levels = res.data as LevelheadLevel[];
+    for(const level of levels){
+      const localizedTags = [];
+      for(const tag of level.tags){
+        localizedTags.push(_cachedlocalizedTags[tag]);
+      }
+      level.localizedTags = localizedTags.filter(x=>x);
+      addLevelFunctionality(this,level);
+    }
+    return levels;
+  }
+  else{
+    throw new Error(`Level search failed with status ${res.status}`);
+  }
+}
