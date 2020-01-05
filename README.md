@@ -147,6 +147,7 @@ Full documentation is provided via types and JSDocs. Below is a quick, non-compr
 
 + `rce.levelhead.players.search()`: Search for Levelhead players.
 + `rce.levelhead.players.getLikedLevels(userId)`: Page through the levels "liked" by a given player.
+<<<<<<< HEAD
 + `rce.levelhead.players.getFavoritedLevels(userId)`
 + `rce.levelhead.players.getFollowers(userId)`: Page through the users who follow a given player.
 + `rce.levelhead.players.getFollowing(userId)`: Page through the users a given user follows.
@@ -158,3 +159,11 @@ Full documentation is provided via types and JSDocs. Below is a quick, non-compr
 + `rce.levelhead.bookmarks.search()`: Search the current user's bookmarks.
 + `rce.levelhead.bookmarks.add(levelId)`: Add a level to the current user's bookmarks.
 + `rce.levelhead.bookmarks.remove(levelId)`
+=======
++ `rce.levelhead.players.getFavoritedLevels(userId)`: Page through the levels "favorited" by a given player.
++ `rce.levelhead.players.getFollowers(userId)`: Page through the users who follow a given player.
++ `rce.levelhead.players.getFollowing(userId)`: Page through the users a given user follows.
++ `rce.levelhead.players.follow(userId)`: Follow a player.
++ `rce.levelhead.players.unfollow(userId)`: Unfollow a player.
+
+>>>>>>> 4148b7ecdfb34a00db61796727f6e807888e81f9
