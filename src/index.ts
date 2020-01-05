@@ -1,1 +1,3 @@
-export {default as RumpusCE} from "./lib/RumpusCE";
+import RCE from "./lib/RumpusCE";
+export const RumpusCE = RCE;
+export default RumpusCE;

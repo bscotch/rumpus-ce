@@ -46,12 +46,12 @@ Or install with npm: `npm i @bscotch/rumpus-ce`
 And then in JavaScript/Node:
 
 ```js
-const RumpusCE = require('@rumpus-ce');
+const {RumpusCE} = require('@rumpus-ce');
 const rce = new RumpusCE();
 ```
 
 ```ts
-import RumpusCE from "@rumpus-ce";
+import {RumpusCE} from "@rumpus-ce";
 const rce = new RumpusCE();
 ```
 
