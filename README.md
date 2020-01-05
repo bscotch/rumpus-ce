@@ -1,14 +1,26 @@
-# UNDER ACTIVE DEVELOPMENT -- HIGHLY UNSTABLE
+## Rumpus Community Edition API Client
 
-# Rumpus Community Edition API Client
-
-"Rumpus Community Edition" (Rumpus CE) is a subset of Butterscotch Shenanigans' Rumpus API. The Rumpus API manages all user and game data for Bscotch games. Currently, Rumpus CE allows access to [Levelhead](https://www.bscotch.net/games/levelhead) data only.
+**Rumpus Community Edition** ("Rumpus CE") is a subset of the Rumpus API by Butterscotch Shenanigans ("Bscotch"). The broader Rumpus API manages all user and game data for Bscotch games. Currently, Rumpus CE allows access to [Levelhead](https://www.bscotch.net/games/levelhead) data only.
 
 This project is designed to help jump-start community-created projects by providing easy access to Rumpus CE data -- learn more about Rumpus CE on the [Bscotch website](https://beta.bscotch.net/rumpus-ce) and check out the [Rumpus CE documentation](https://beta.bscotch.net/api/docs/community-edition/) for all the technical details.
 
+*It may be tempting to use this module and Rumpus CE in ways that violate our Terms or Code of Conduct. **Don't!** If you're unsure about something, pop into the official Bscotch Discord to ask about your use case.*
+
+## Relevant Links
+
++ [Rumpus CE Homepage](https://beta.bscotch.net/rumpus-ce)
++ [Rumpus CE Newsletter](https://beta.bscotch.net/telegrams?subscribe=rumpus-ce)
++ [Rumpus CE Documentation](https://beta.bscotch.net/api/docs/community-edition) - Full documentation for Rumpus CE.
++ [Rumpus CE Terms](https://beta.bscotch.net/terms-rce) - Terms and Conditions that apply specifically to use of Rumpus Community Edition.
++ [Bscotch Discord](https://discord.gg/bscotch) - Head to the #levelhead-api channel to share your work with others.
++ [Code of Conduct](https://beta.bscotch.net/conduct)
++ [Bscotch Terms](https://beta.bscotch.net/terms) - The broader Terms and Conditions for all software and services run by Bscotch.
++ [Bscotch Privacy Policy](https://beta.bscotch.net/privacy)
++ [Feedback](https://beta.bscotch.net/feedbag/rumpus?tags=rce,github) - Our official channel for collecting feedback. You can also create Issues on Github.
+
 ## Browser vs. Server
 
-This project is meant to be used in either a browser or non-browser (server/Node) context. However, differences between those two contexts, in particular with CORS in browsers and JavaScript feature variation across browsers, means that not everything will work in all contexts.
+This project can be used in both a browser and non-browser (server/nodejs) context. However, differences between those two contexts, in particular with CORS and JavaScript feature variation across browsers, may create problems in some contexts.
 
 ## Authentication
 
@@ -16,9 +28,11 @@ This project supports unauthenticated requests (for those Rumpus CE endpoints th
 
 Users opt into different sets of permissions when they create delegation keys -- if there is a mismatch between what is allowed by a delegation key and what you're trying to do, you'll get back `403` statuses from your request.
 
+Some methods and Rumpus CE endpoints can be used without any authentication.
+
 ## Installation
 
-To use directly in the browser via CDN:
+To use directly in the browser via the JSDelivr CDN:
 
 ```html
 <script src='https://cdn.jsdelivr.net/npm/@bscotch/rumpus-ce@latest'></script>
@@ -81,7 +95,17 @@ rce.get('/api/some/endpoint',{doNotUseKey:true});
 
 Some of the arrays and objects returned by Rumpus CE methods have methods attached to them to simplify subsequent API interaction. If you use an IDE that reveals type information you'll be able to infer this on a method/object-specific basis. Example extended objects:
 
-+ `ResultsPage`: An array with the addition of an async `.nextPage()` method.
++ `ResultsPage`: An array with the addition of an async `.nextPage()` method. Calling this method will trigger another API request to fetch the next page of results.
++ `LevelheadPlayer`
+  + `getLikedLevels()`: Pageable list of levelIds.
+  + `getFavoritedLevels()`
+  + `getFollowers()`: Pageable list of userIds of users following this user.
+  + `getFollowing()`: List of userIds this user follows.
+  + `follow()`: Acting on behalf of the current user (the one matching the Delegation Key), follow this user.
+  + `unfollow()`
++ `LevelheadLevel`
+  + `getLikes()`: Pageable list of userIds for players who like this level.
+  + `getFavorites()`
 
 ### Methods
 

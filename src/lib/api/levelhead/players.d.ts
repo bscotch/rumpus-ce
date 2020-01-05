@@ -58,10 +58,16 @@ export interface ListedUserId {
 }
 
 export interface LevelheadPlayer extends LevelheadPlayerDownload{
+  /** Get the levels liked by this user. */
   getLikedLevels(): Promise<ResultsPage<ListedLevelId>>,
+  /** Get the levels favorited by this user. */
   getFavoritedLevels(): Promise<ResultsPage<ListedLevelId>>,
+  /** Get the users who follow this user. */
   getFollowers(): Promise<ResultsPage<ListedUserId>>,
+  /** Get the users this user follows. */
   getFollowing(): Promise<ResultsPage<ListedUserId>>,
+  /** Follow this user. */
   follow(): Promise<boolean>,
+  /** Unfollow this user. */
   unfollow(): Promise<boolean>
 }
