@@ -106,6 +106,8 @@ Some of the arrays and objects returned by Rumpus CE methods have methods attach
 + `LevelheadLevel`
   + `getLikes()`: Pageable list of userIds for players who like this level.
   + `getFavorites()`
+  + `bookmark()`: Bookmark this level on the current user's behalf.
+  + `unbookmark()`
 
 ### Methods
 

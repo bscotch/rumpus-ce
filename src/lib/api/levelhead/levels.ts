@@ -15,6 +15,10 @@ import {
   ListedUserId
 } from "../../../types/players";
 import {
+  bookmarkLevelheadLevel,
+  unbookmarkLevelheadLevel
+} from "./bookmarks";
+import {
   addNextPageSearchFunction
 } from "../paging";
 import {ResultsPage, blankResultsPage} from "../paging";
@@ -88,14 +92,25 @@ export async function getLevelheadLevelFavorites(this:RumpusCE
 
 function addLevelFunctionality(client:RumpusCE,level:LevelheadLevelDownload){
   const fancyLevel = level as LevelheadLevel ;
+
   fancyLevel.getLikes = (
     query?: LevelheadLevelLikesSearch,
     options?: DelegationOptions
   )=>getLevelheadLevelLikes.call(client,level.levelId,query,options);
+
   fancyLevel.getFavorites = (
     query?: LevelheadLevelLikesSearch,
     options?: DelegationOptions
   )=>getLevelheadLevelFavorites.call(client,level.levelId,query,options);
+
+  fancyLevel.bookmark = (
+    options?: DelegationOptions
+  )=>bookmarkLevelheadLevel.call(client,level.levelId,options);
+
+  fancyLevel.unbookmark = (
+    options?: DelegationOptions
+  )=>unbookmarkLevelheadLevel.call(client,level.levelId,options);
+
   return fancyLevel;
 }
 

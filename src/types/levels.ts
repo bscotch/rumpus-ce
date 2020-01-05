@@ -132,5 +132,8 @@ export interface LevelheadLevel extends LevelheadLevelDownload {
   getLikes(): Promise<ResultsPage<ListedUserId>>,
   /** Fetch the list of users who favorited this level. Includes paging. */
   getFavorites(): Promise<ResultsPage<ListedUserId>>,
-  // toggleBookmark(): Promise<boolean> // TODO: Implement
+  /** Add this level to the current user's bookmarks */
+  bookmark(): Promise<boolean>,
+  /** Remove this level from the current user's bookmarks */
+  unbookmark(): Promise<boolean>
 }
