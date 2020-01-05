@@ -18,6 +18,12 @@ This project is designed to help jump-start community-created projects by provid
 + [Bscotch Privacy Policy](https://beta.bscotch.net/privacy)
 + [Feedback](https://beta.bscotch.net/feedbag/rumpus?tags=rce,github) - Our official channel for collecting feedback. You can also create Issues on Github.
 
+## Rate Limits
+
+The Rumpus APIs enforce strict rate limiting, but if you are using the APIs responsibly you shouldn't have to worry about them. The exact numbers are subject to change at any moment, so they are not listed here. If you run into limits, optimize your requests by caching responses, making batch requests, and throttling requests.
+
+Rate limits are on a per-user basis. Anonymous requests are limited at the IP address level.
+
 ## Browser vs. Server
 
 This project can be used in both a browser and non-browser (server/nodejs) context. However, differences between those two contexts, in particular with CORS and JavaScript feature variation across browsers, may create problems in some contexts.
