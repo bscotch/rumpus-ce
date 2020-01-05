@@ -1,22 +1,16 @@
 import {default as RumpusCE, DelegationOptions} from "../../RumpusCE";
-import {cleanQuery,csv} from "../../utility";
-
-export type AliasSearchOptions = {
-  userIds: string[]|string,
-  onlySafe?: boolean,
-  maxReports?: number
-}
-
-export interface Alias {
-  userId: string,
-  alias: string,
-  avatarId: string,
-  context: string
-}
+import {
+  cleanQuery,
+  csv
+} from "../../utility";
+import {
+  AliasSearch,
+  Alias
+} from "../../../types/aliases";
 
 export async function getLevelheadAliases(this:RumpusCE
   , userIds: string|string[]
-  , query?: AliasSearchOptions
+  , query?: AliasSearch
   , options?: DelegationOptions
 ){
   const res = await this.get(`/api/levelhead/aliases`,{

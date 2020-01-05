@@ -18,11 +18,21 @@ import {
   followLevelheadPlayer,
   unfollowLevelheadPlayer
 } from "./levelhead/players";
+import {
+  getLevelheadBookmarks,
+  bookmarkLevelheadLevel,
+  unbookmarkLevelheadLevel
+} from "./levelhead/bookmarks";
 
 export function createLevelheadAPI(client:RumpusCE){
-  return {
+  const api = {
     aliases:{
       search: getLevelheadAliases.bind(client)
+    },
+    bookmarks:{
+      search: getLevelheadBookmarks.bind(client),
+      add: bookmarkLevelheadLevel.bind(client),
+      remove: unbookmarkLevelheadLevel.bind(client)
     },
     levels:{
       search: getLevelheadLevels.bind(client),
@@ -41,7 +51,7 @@ export function createLevelheadAPI(client:RumpusCE){
       unfollow: unfollowLevelheadPlayer.bind(client)
     }
   };
+  return api;
 }
 
-const lhAPIDummy = (false as true) && createLevelheadAPI(new RumpusCE());
-export type LevelheadAPI = typeof lhAPIDummy;
+export type LevelheadAPI = ReturnType<typeof createLevelheadAPI>;

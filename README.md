@@ -117,10 +117,10 @@ Full documentation is provided via types and JSDocs. Below is a quick, non-compr
 + `rce.delegationKeyPermissions()`: Get permissions information for a given delegation key.
 + `rce.request()`: Generic method for sending requests to Rumpus.
 + `rce.get()`: Shortcut method for sending GET requests to Rumpus.
-+ `rce.post()`: Shortcut method for sending POST requests to Rumpus.
-+ `rce.patch()`: Shortcut method for sending PATCH requests to Rumpus.
-+ `rce.put()`: Shortcut method for sending PUT requests to Rumpus.
-+ `rce.delete()`: Shortcut method for sending DELETE requests to Rumpus.
++ `rce.post()`
++ `rce.patch()`
++ `rce.put()`
++ `rce.delete()`
 
 #### Levelhead
 
@@ -133,15 +133,20 @@ Full documentation is provided via types and JSDocs. Below is a quick, non-compr
 + `rce.levelhead.levels.getTags()`: Level tags are machine-friendly tokens -- this returns the current set of level tags along with their statistical frequencies across all levels, and their name and description in the requester's language.
 + `rce.levelhead.levels.search()`: Search for Levelhead levels. Level tags are automatically translated into the requester's preferred language (English fallback).
 + `rce.levelhead.levels.getLikes(levelId)`: List the users who like a given Levelhead level. Resulting array has a `nextPage()` function to simplify paging.
-+ `rce.levelhead.levels.getFavorites(levelId)`: List the users who favorited a given Levelhead level.
++ `rce.levelhead.levels.getFavorites(levelId)`:
 
 ##### Players
 
 + `rce.levelhead.players.search()`: Search for Levelhead players.
 + `rce.levelhead.players.getLikedLevels(userId)`: Page through the levels "liked" by a given player.
-+ `rce.levelhead.players.getFavoritedLevels(userId)`: Page through the levels "favorited" by a given player.
++ `rce.levelhead.players.getFavoritedLevels(userId)`
 + `rce.levelhead.players.getFollowers(userId)`: Page through the users who follow a given player.
 + `rce.levelhead.players.getFollowing(userId)`: Page through the users a given user follows.
 + `rce.levelhead.players.follow(userId)`: Follow a player.
-+ `rce.levelhead.players.unfollow(userId)`: Unfollow a player.
++ `rce.levelhead.players.unfollow(userId)`
 
+##### Bookmarks
+
++ `rce.levelhead.bookmarks.search()`: Search the current user's bookmarks.
++ `rce.levelhead.bookmarks.add(levelId)`: Add a level to the current user's bookmarks.
++ `rce.levelhead.bookmarks.remove(levelId)`

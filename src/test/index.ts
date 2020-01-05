@@ -19,7 +19,7 @@ const betaClient = new RumpusCE();
 
 describe("Rumpus CE Client", async function(){
 
-  const rce = betaClient;
+  const rce = devClient;
 
   describe("General", async function(){
     it("can fetch the server version", async function(){
@@ -47,6 +47,29 @@ describe("Rumpus CE Client", async function(){
         expect(aliases.length).to.equal(1);
         const [alias] = aliases;
         expect(alias.userId).to.equal('bscotch404');
+      });
+    });
+    describe("Bookmarks",async function(){
+      it("can add and remove bookmarks", async function(){
+        this.timeout(8000); // TODO: Find out why this takes so dang long.
+        // Grab some terrible levels to add to bookmarks
+        const topLevels = await rce.levelhead.levels.search({sort:'-QAScore',minPlayers:20,limit:5});
+        for(const level of topLevels){
+
+          // Make sure it isn't already in bookmarks
+          await rce.levelhead.bookmarks.remove(level.levelId);
+
+          // Add it, and make sure it's in there
+          await rce.levelhead.bookmarks.add(level.levelId);
+          let bookmarked = await rce.levelhead.bookmarks.search({levelIds:level.levelId});
+          expect(bookmarked.length,'bookmark search should work').to.equal(1);
+          expect(bookmarked[0],'bookmark must be the one we added').to.equal(level.levelId);
+
+          // Remove it, and make sure it's GONE.
+          await rce.levelhead.bookmarks.remove(level.levelId);
+          bookmarked = await rce.levelhead.bookmarks.search({levelIds:level.levelId});
+          expect(bookmarked.length,'bookmark search should return nothing').to.equal(0);
+        }
       });
     });
     describe("Levels", async function(){

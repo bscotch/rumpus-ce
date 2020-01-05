@@ -1,4 +1,4 @@
-import { Alias } from "../lib/api/levelhead/aliases";
+import { Alias } from "./aliases";
 import { ResultsPage } from "../lib/api/paging";
 import { ListedUserId } from "./players";
 
