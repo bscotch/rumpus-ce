@@ -1,6 +1,6 @@
-import { Alias } from "./aliases";
-import { ResultsPage } from "../paging";
-import { ListedUserId } from "./players.d";
+import { Alias } from "../lib/api/levelhead/aliases";
+import { ResultsPage } from "../lib/api/paging";
+import { ListedUserId } from "./players";
 
 export type LevelSearchSortField = 'createdAt'|'updatedAt'|'gameVersion'|'Attempts'|'Players'|'Playtime'|'TimePerWin'|'Difficulty'|'ReplayValue'|'ExposureBucks'|'QAScore'|'HiddenGem'|'Likes'|'Favorites'|'FailureRate';
 type LevelSearchSortOption = LevelSearchSortField |'-createdAt'|'-updatedAt'|'-gameVersion'|'-Attempts'|'-Players'|'-Playtime'|'-TimePerWin'|'-Difficulty'|'-ReplayValue'|'-ExposureBucks'|'-QAScore'|'-HiddenGem'|'-Likes'|'-Favorites'|'-FailureRate';
@@ -132,7 +132,5 @@ export interface LevelheadLevel extends LevelheadLevelDownload {
   getLikes(): Promise<ResultsPage<ListedUserId>>,
   /** Fetch the list of users who favorited this level. Includes paging. */
   getFavorites(): Promise<ResultsPage<ListedUserId>>,
-  // toggleLike(): Promise<boolean>, // TODO: Implement
-  // toggleFavorite(): Promise<boolean>, // TODO: Implement
   // toggleBookmark(): Promise<boolean> // TODO: Implement
 }

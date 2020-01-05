@@ -2,7 +2,7 @@
 import {
   capitalize
 } from "../utility";
-import { RumpusCE } from "../..";
+import RumpusCE from "../RumpusCE";
 
 interface BaseQueryAuto {
   nextPageToken?:string,

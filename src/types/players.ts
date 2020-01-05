@@ -1,6 +1,6 @@
-import {Alias} from "./aliases";
-import { ResultsPage } from "../paging";
-import {ListedLevelId} from "./levels.d";
+import {Alias} from "../lib/api/levelhead/aliases";
+import { ResultsPage } from "../lib/api/paging";
+import {ListedLevelId} from "./levels";
 
 type PlayerSearchSortOption = 'createdAt'|'updatedAt'|'Subscribers'|'PlayTime'|'Trophies'|'-createdAt'|'-updatedAt'|'-Subscribers'|'-PlayTime'|'-Trophies';
 

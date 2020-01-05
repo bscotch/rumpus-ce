@@ -5,10 +5,10 @@ import {
   LevelheadPlayer,
   LevelheadPlayerSearch,
   ListedUserId
-} from "./players.d";
+} from "../../../types/players";
 import {
   ListedLevelId
-} from "./levels.d";
+} from "../../../types/levels";
 import {
   ResultsPage,
   blankResultsPage,

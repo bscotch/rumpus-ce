@@ -10,10 +10,10 @@ import {
   LevelheadLevelTag,
   LevelheadLevelSearch,
   LevelheadLevelDownload
-} from "./levels.d";
+} from "../../../types/levels";
 import {
   ListedUserId
-} from "./players.d";
+} from "../../../types/players";
 import {
   addNextPageSearchFunction
 } from "../paging";
