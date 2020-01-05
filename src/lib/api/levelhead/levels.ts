@@ -1,5 +1,10 @@
-import {default as RumpusCE, DelegationOptions} from "../../RumpusCE";
-import {cleanQuery} from "../../utility";
+import {
+  default as RumpusCE,
+  DelegationOptions
+} from "../../RumpusCE";
+import {
+  cleanQuery
+} from "../../utility";
 import {
   LevelheadLevel,
   LevelheadLevelTag,
@@ -9,7 +14,10 @@ import {
 import {
   ListedUserId
 } from "./players.d";
-import {ResultsPage, blankResultsPage} from "..";
+import {
+  addNextPageSearchFunction
+} from "../paging";
+import {ResultsPage, blankResultsPage} from "../paging";
 
 export async function getLevelheadLevelTags(this:RumpusCE
   , options?: DelegationOptions
@@ -95,13 +103,17 @@ export async function getLevelheadLevels(this:RumpusCE
   , query?: LevelheadLevelSearch
   , options?: DelegationOptions
 ){
+  const queryParams: LevelheadLevelSearch = {...query};
+  queryParams.sort = queryParams.sort || "createdAt";
   const res = await this.get(`/api/levelhead/levels`,{
     ...options,
-    query:cleanQuery(query)
+    query:cleanQuery(queryParams)
   });
   if(res.status==200){
-    const levels = res.data as LevelheadLevelDownload[];
-    return levels.map(level=>addLevelFunctionality(this,level));
+    const levels = (res.data as LevelheadLevelDownload[])
+      .map(level=>addLevelFunctionality(this,level)) as ResultsPage<LevelheadLevel>;
+    addNextPageSearchFunction(this,levels,res.next,queryParams,options,getLevelheadLevels);
+    return levels;
   }
   else{
     throw new Error(`Level search failed with status ${res.status}`);

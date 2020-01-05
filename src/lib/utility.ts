@@ -23,3 +23,10 @@ export function cleanQuery (query?:{[param:string]:string|boolean|string[]|numbe
   }
   return cleanQuery;
 }
+
+export function capitalize (string:string){
+  if(!string || typeof string != 'string'){
+    return '';
+  }
+  return `${string[0].toLocaleUpperCase()}${string.slice(1)}`;
+}

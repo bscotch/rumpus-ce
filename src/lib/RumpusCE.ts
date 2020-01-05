@@ -55,6 +55,10 @@ export default class RumpusCE {
     this._levelheadAPI = createLevelheadAPI(this);
   }
 
+  get server(){
+    return this._server;
+  }
+
   get baseUrl(){ return this._baseUrl; }
 
   get levelhead(){ return this._levelheadAPI; }

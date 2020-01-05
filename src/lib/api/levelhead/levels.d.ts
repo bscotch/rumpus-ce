@@ -1,8 +1,9 @@
-import {Alias} from "./aliases";
-import { ResultsPage } from "..";
-import {ListedUserId} from "./players.d";
+import { Alias } from "./aliases";
+import { ResultsPage } from "../paging";
+import { ListedUserId } from "./players.d";
 
-type LevelSearchSortOption = 'createdAt'|'updatedAt'|'gameVersion'|'Attempts'|'Players'|'Playtime'|'TimePerWin'|'Difficulty'|'ReplayValue'|'ExposureBucks'|'QAScore'|'HiddenGem'|'Likes'|'Favorites'|'FailureRate'|'-createdAt'|'-updatedAt'|'-gameVersion'|'-Attempts'|'-Players'|'-Playtime'|'-TimePerWin'|'-Difficulty'|'-ReplayValue'|'-ExposureBucks'|'-QAScore'|'-HiddenGem'|'-Likes'|'-Favorites'|'-FailureRate';
+export type LevelSearchSortField = 'createdAt'|'updatedAt'|'gameVersion'|'Attempts'|'Players'|'Playtime'|'TimePerWin'|'Difficulty'|'ReplayValue'|'ExposureBucks'|'QAScore'|'HiddenGem'|'Likes'|'Favorites'|'FailureRate';
+type LevelSearchSortOption = LevelSearchSortField |'-createdAt'|'-updatedAt'|'-gameVersion'|'-Attempts'|'-Players'|'-Playtime'|'-TimePerWin'|'-Difficulty'|'-ReplayValue'|'-ExposureBucks'|'-QAScore'|'-HiddenGem'|'-Likes'|'-Favorites'|'-FailureRate';
 
 
 export interface LevelheadLevelTag {

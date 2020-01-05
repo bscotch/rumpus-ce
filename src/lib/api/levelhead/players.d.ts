@@ -1,5 +1,5 @@
 import {Alias} from "./aliases";
-import { ResultsPage } from "..";
+import { ResultsPage } from "../paging";
 import {ListedLevelId} from "./levels.d";
 
 type PlayerSearchSortOption = 'createdAt'|'updatedAt'|'Subscribers'|'PlayTime'|'Trophies'|'-createdAt'|'-updatedAt'|'-Subscribers'|'-PlayTime'|'-Trophies';

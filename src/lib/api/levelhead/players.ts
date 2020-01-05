@@ -9,7 +9,11 @@ import {
 import {
   ListedLevelId
 } from "./levels.d";
-import {ResultsPage, blankResultsPage} from "..";
+import {
+  ResultsPage,
+  blankResultsPage,
+  addNextPageSearchFunction
+} from "../paging";
 
 export type LevelheadPlayerLikesSearch = {
   limit?:number,
@@ -182,13 +186,17 @@ export async function getLevelheadPlayers(this:RumpusCE
   , query?: LevelheadPlayerSearch
   , options?: DelegationOptions
 ){
+  const queryParams: LevelheadPlayerSearch = {...query};
+  queryParams.sort = queryParams.sort || "createdAt";
   const res = await this.get(`/api/levelhead/players`,{
     ...options,
-    query:cleanQuery(query)
+    query:cleanQuery(queryParams)
   });
   if(res.status==200){
-    const players = res.data as LevelheadPlayerDownload[];
-    return players.map(player=>addPlayerFunctionality(this,player));
+    const players = (res.data as LevelheadPlayerDownload[])
+      .map(player=>addPlayerFunctionality(this,player)) as ResultsPage<LevelheadPlayer>;
+    addNextPageSearchFunction(this,players,res.next,queryParams,options,getLevelheadPlayers);
+    return players;
   }
   else{
     throw new Error(`Player search failed with status ${res.status}`);

@@ -19,7 +19,7 @@ const betaClient = new RumpusCE();
 
 describe("Rumpus CE Client", async function(){
 
-  const rce = devClient;
+  const rce = betaClient;
 
   describe("General", async function(){
     it("can fetch the server version", async function(){
@@ -59,6 +59,18 @@ describe("Rumpus CE Client", async function(){
         expect(levels.length).to.be.at.least(1);
         expect(levels.length).to.be.lessThan(6);
       });
+      it("can page levels",async function(){
+        const limit = 5;
+        const levels = await rce.levelhead.levels.search({limit});
+        expect(levels.length).to.equal(limit);
+        const nextLevels = await levels.nextPage();
+        expect(nextLevels.length).to.equal(limit);
+        const maxDate = new Date(levels[limit-1].createdAt);
+        for(let i=0; i<limit; i++){
+          expect(levels.map(l=>l._id)).not.to.include(nextLevels[i]._id);
+          expect(maxDate).to.be.greaterThan(new Date(nextLevels[i].createdAt));
+        }
+      });
       it("can fetch level likes",async function(){
         const likedLevel = (await rce.levelhead.levels.search({limit:1,sort:'Likes'}))[0];
         expect(likedLevel).to.exist;
@@ -79,9 +91,10 @@ describe("Rumpus CE Client", async function(){
       });
       it("can page level favorites", async function(){
         // Find a favorited level
+        this.timeout(6000);
         let levelId = '';
         let totalFavorites = 0;
-        let minFavorites = 6;
+        let minFavorites = rce.server=='beta'? 6 : 2;
         const maxFavorites = 18;
         while(minFavorites<maxFavorites){
           // The tally on the level can be pretty different from the
@@ -125,16 +138,16 @@ describe("Rumpus CE Client", async function(){
       });
     });
     describe("Players", async function(){
+      // Use Seth as the test case.
+      const dev = 'bscotch007';
       it("can search players", async function(){
-        const players = await rce.levelhead.players.search({userIds:'bscotch404'});
-        expect(players.length).to.equal(1);
-        expect(players[0].userId).to.equal('bscotch404');
+        const players = await rce.levelhead.players.search({userIds:dev});
+        expect(players.length,'Adam should exist').to.equal(1);
+        expect(players[0].userId).to.equal(dev);
       });
       it("can (un)follow a player",async function(){
-        // Use Seth as the test case. Have the test end up
-        // back where it started so that anyone running the
+        // Have the test end up back where it started so that anyone running the
         // test doesn't have a permanent side effect.
-        const dev = 'bscotch007';
         const {userId} = await rce.delegationKeyPermissions();
         const isFollowingDev = async ()=>{
           const follows = await rce.levelhead.players.getFollowing(userId,{userIds:dev});
