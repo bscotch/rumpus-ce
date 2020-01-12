@@ -3,8 +3,7 @@ import {
   DelegationOptions
 } from "../../RumpusCE";
 import {
-  cleanQuery,
-  csv
+  cleanQuery
 } from "../../utility";
 import {
   BookmarkSearch,
@@ -19,14 +18,12 @@ export async function getLevelheadBookmarks(this:RumpusCE
   queryParams.sort = queryParams.sort || 'createdAt';
   const res = await this.get(`/api/levelhead/bookmarks`,{
     ...options,
-    query: cleanQuery()
+    query: cleanQuery(query)
   });
   if(res.status==200){
     return res.data as Bookmark[];
   }
-  else{
-    throw new Error(`Bookmark search failed with status ${res.status}`);
-  }
+  throw new Error(`Bookmark search failed with status ${res.status}`);
 }
 
 

@@ -19,7 +19,7 @@ const betaClient = new RumpusCE();
 
 describe("Rumpus CE Client", async function(){
 
-  const rce = devClient;
+  const rce = betaClient;
 
   describe("General", async function(){
     it("can fetch the server version", async function(){
@@ -160,7 +160,7 @@ describe("Rumpus CE Client", async function(){
         expect(totalFavorites).to.equal(pagedFavorites);
       });
     });
-    describe("Players", async function(){
+    describe.only("Players", async function(){
       // Use Seth as the test case.
       const dev = 'bscotch007';
       it("can search players", async function(){
@@ -174,6 +174,7 @@ describe("Rumpus CE Client", async function(){
         const {userId} = await rce.delegationKeyPermissions();
         const isFollowingDev = async ()=>{
           const follows = await rce.levelhead.players.getFollowing(userId,{userIds:dev});
+          console.log({follows})
           return Boolean(follows.length);
         };
         if(await isFollowingDev()){
@@ -187,29 +188,6 @@ describe("Rumpus CE Client", async function(){
           expect(await isFollowingDev(),'should now be following').to.be.true;
           await rce.levelhead.players.unfollow(dev);
           expect(await isFollowingDev(),'should not be following again').to.be.false;
-        }
-      });
-      it("can (un)follow a player",async function(){
-        // Use Seth as the test case. Have the test end up
-        // back where it started so that anyone running the
-        // test doesn't have a permanent side effect.
-        const seth = 'bscotch101';
-        const {userId} = await rce.delegationKeyPermissions();
-        const isFollowingSeth = async ()=>{
-          const follows = await rce.levelhead.players.getFollowing(userId,{userIds:seth});
-          return Boolean(follows.length);
-        };
-        if(await isFollowingSeth()){
-          await rce.levelhead.players.unfollow(seth);
-          expect(await isFollowingSeth).to.be.false;
-          await rce.levelhead.players.follow(seth);
-          expect(await isFollowingSeth).to.be.true;
-        }
-        else{
-          await rce.levelhead.players.follow(seth);
-          expect(await isFollowingSeth).to.be.true;
-          await rce.levelhead.players.unfollow(seth);
-          expect(await isFollowingSeth).to.be.false;
         }
       });
       it("can fetch player's follower list",async function(){

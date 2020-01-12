@@ -100,7 +100,6 @@ async function getLevelheadPlayerFollows(this:RumpusCE
     return players;
   }
   else{
-    console.log(res,query);
     throw new Error(`Player ${listType} search failed with status ${res.status}`);
   }
 }
@@ -129,7 +128,6 @@ export async function followLevelheadPlayer(this:RumpusCE
 ){
   const res = await this.put(`/api/levelhead/following/${userId}`,options);
   if(res.status !=204){
-    console.log(res);
     throw new Error(res.status==404 ? 'Player does not exist!' : 'Unable to follow player');
   }
   return true;

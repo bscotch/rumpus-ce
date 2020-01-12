@@ -22,7 +22,7 @@ interface RequestOptions extends DelegationOptions {
   query?: {[param:string]:string|number|boolean|undefined}
 }
 
-interface RumpusResponse {
+export interface RumpusResponse {
   status: number,
   data: any,
   meta?: any,
@@ -114,7 +114,7 @@ export default class RumpusCE {
     return this.request('delete',url,options);
   }
 
-  async request(method:Method,url:string,options?:RequestOptions): Promise<RumpusResponse>{
+  async request(method:Method,url:string,options?:RequestOptions){
     const headers: {'Rumpus-Delegation-Key'?:string} = {};
     const key = options?.delegationKey || this.defaultDelegationKey;
     if(!options?.doNotUseKey && key){
@@ -147,6 +147,6 @@ export default class RumpusCE {
       status: res.status,
       requestId: res.headers['x-request-id'],
       remainingRequests: res.headers['x-rate-limit-remaining']
-    };
+    } as RumpusResponse;
   }
 }
