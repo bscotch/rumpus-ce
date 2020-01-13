@@ -160,7 +160,7 @@ describe("Rumpus CE Client", async function(){
         expect(totalFavorites).to.equal(pagedFavorites);
       });
     });
-    describe.only("Players", async function(){
+    describe("Players", async function(){
       // Use Seth as the test case.
       const dev = 'bscotch007';
       it("can search players", async function(){
@@ -174,7 +174,6 @@ describe("Rumpus CE Client", async function(){
         const {userId} = await rce.delegationKeyPermissions();
         const isFollowingDev = async ()=>{
           const follows = await rce.levelhead.players.getFollowing(userId,{userIds:dev});
-          console.log({follows})
           return Boolean(follows.length);
         };
         if(await isFollowingDev()){
