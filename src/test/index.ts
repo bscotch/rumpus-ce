@@ -47,6 +47,7 @@ describe("Rumpus CE Client", async function(){
         expect(aliases.length).to.equal(1);
         const [alias] = aliases;
         expect(alias.userId).to.equal('bscotch404');
+        expect(alias.avatarUrl()).to.be.a('string');
       });
     });
     describe("Bookmarks",async function(){
@@ -81,6 +82,7 @@ describe("Rumpus CE Client", async function(){
         const levels = await rce.levelhead.levels.search({limit:5});
         expect(levels.length).to.be.at.least(1);
         expect(levels.length).to.be.lessThan(6);
+        expect(levels[0].avatarUrl()).to.be.a('string');
       });
       it("can page levels",async function(){
         const limit = 5;

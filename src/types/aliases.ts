@@ -8,5 +8,6 @@ export interface Alias {
   userId: string,
   alias: string,
   avatarId: string,
-  context: string
+  context: string,
+  avatarUrl(pixels?:number):string
 }

@@ -82,6 +82,7 @@ export interface LevelheadLevelDownload {
   _id: string,
   levelId: string,
   avatarId: string,
+  avatarUrl(pixels?:number):string,
   userId: string,
   alias: Alias,
   title: string,

@@ -3,7 +3,8 @@ import {
   DelegationOptions
 } from "../../RumpusCE";
 import {
-  cleanQuery
+  cleanQuery,
+  attachAvatarUrlToArrayItems
 } from "../../utility";
 import {
   LevelheadLevel,
@@ -127,6 +128,7 @@ export async function getLevelheadLevels(this:RumpusCE
   if(res.status==200){
     const levels = (res.data as LevelheadLevelDownload[])
       .map(level=>addLevelFunctionality(this,level)) as ResultsPage<LevelheadLevel>;
+    attachAvatarUrlToArrayItems(levels);
     addNextPageSearchFunction(this,levels,res.next,queryParams,options,getLevelheadLevels);
     return levels;
   }

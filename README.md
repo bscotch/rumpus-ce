@@ -102,6 +102,8 @@ rce.get('/api/some/endpoint',{doNotUseKey:true});
 Some of the arrays and objects returned by Rumpus CE methods have methods attached to them to simplify subsequent API interaction. If you use an IDE that reveals type information you'll be able to infer this on a method/object-specific basis. Example extended objects:
 
 + `ResultsPage`: An array with the addition of an async `.nextPage()` method. Calling this method will trigger another API request to fetch the next page of results.
++ `Alias`
+  + `avatarUrl()`: Retrieve the image URL (defaults to PNG of width 128px) for this users's avatar, hosted on Bscotch servers.
 + `LevelheadPlayer`
   + `getLikedLevels()`: Pageable list of levelIds.
   + `getFavoritedLevels()`
@@ -110,6 +112,7 @@ Some of the arrays and objects returned by Rumpus CE methods have methods attach
   + `follow()`: Acting on behalf of the current user (the one matching the Delegation Key), follow this user.
   + `unfollow()`
 + `LevelheadLevel`
+  + `avatarUrl()`: Retrieve the image URL for this level's icon.
   + `getLikes()`: Pageable list of userIds for players who like this level.
   + `getFavorites()`
   + `bookmark()`: Bookmark this level on the current user's behalf.

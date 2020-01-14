@@ -1,7 +1,8 @@
 import {default as RumpusCE, DelegationOptions} from "../../RumpusCE";
 import {
   cleanQuery,
-  csv
+  csv,
+  attachAvatarUrlToArrayItems
 } from "../../utility";
 import {
   AliasSearch,
@@ -18,7 +19,9 @@ export async function getLevelheadAliases(this:RumpusCE
     query: cleanQuery({...query,userIds:csv(userIds)})
   });
   if(res.status==200){
-    return res.data as Alias[];
+    const aliases = res.data as Alias[];
+    attachAvatarUrlToArrayItems(aliases);
+    return aliases;
   }
   else{
     throw new Error(`Alias search failed with status ${res.status}`);
