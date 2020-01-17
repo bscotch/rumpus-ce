@@ -21,18 +21,19 @@ interface Item {
   _id: string
 }
 
+/** An array that incluedes a `nextPage()` function, representing a "page" of search results. */
 export interface ResultsPage<t> extends Array<t> {
   /** Fetch the next page of results from the API. */
   nextPage():Promise<ResultsPage<t>>
 }
 
+/** Return a ResultsPage whose `nextPage()` method always returns an empty ResultsPage. For exhausted searches. */
 export async function blankResultsPage(){
   const results = [] as ResultsPage<never>;
   results.nextPage = blankResultsPage;
   return results;
 }
 
-// type SearchFunction = <query extends BaseQuery,item extends Item,options>(this:RumpusCE, query?: query,options?:options)=>Promise<ResultsPage<item>>;
 interface SearchFunction {
   call<item extends Item,query extends BaseQuery,options>(client:RumpusCE, query?: query,options?:options):Promise<ResultsPage<item>>;
 }

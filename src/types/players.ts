@@ -52,6 +52,7 @@ export interface LevelheadPlayerDownload {
 }
 
 export interface ListedUserId {
+  /** Internal identifier for this listing (not associated with the actual user). */
   _id:string,
   userId:string,
   alias?:string

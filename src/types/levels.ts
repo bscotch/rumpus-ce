@@ -7,38 +7,47 @@ type LevelSearchSortOption = LevelSearchSortField |'-createdAt'|'-updatedAt'|'-g
 
 
 export interface LevelheadLevelTag {
+  /** Unique, internal identifier. */
   tag:string,
+  /** In-game, localized, human-friendly form for this tag. */
   name:string,
+  /** In-game, localized description for this tag. */
   description:string,
+  /** Number of levels that have this tag. */
   count:number,
+  /** Fraction of levels that have this tag. */
   freq:number
 }
 
 interface CrateItemRecord {
   userId: string,
-  alias: {
-    userId: string,
-    alias: string,
-    anonymous: true,
-    context: string
-  },
+  /** Alias information for the user who has this record. */
+  alias: Alias,
   value: number,
+  /** When this record was set. */
   createdAt: string
 }
 
 export type LevelheadLevelSearch = {
   sort?: LevelSearchSortOption,
   limit?: number,
+  /** Only include levels created by these users. */
   userIds?: string|string[],
   levelIds?: string|string[],
+  /** Only include levels with *all* of these tags. */
   tags?: string|string[],
   excludeTags?: string|string[],
   tiebreakerItemId?: string,
   nextPageToken?: string,
+  /** Optionally turn on server-based paging, which results in a `nextPageToken`. */
   paging?: boolean,
+  /** Only include levels in the Tower. */
   tower?: boolean,
+  /** Only include levels in the Marketing Department. */
   marketing?: boolean,
+  /** Only include levels made for a daily build challenge. */
   dailyBuild?: boolean,
+  /** Only include levels that have been selected for the Tower Trial. */
   towerTrial?: boolean,
   includeStats?: boolean,
   includeRecords?: boolean,
@@ -50,11 +59,15 @@ export type LevelheadLevelSearch = {
   maxGameVersion?: number,
   minAttempts?: number,
   maxAttempts?: number,
+  /** Only include levels played by at least this many people. */
   minPlayers?: number,
+  /** Only include levels played by at most this many people. */
   maxPlayers?: number,
   minPlayTime?: number,
   maxPlayTime?: number,
+  /** Only include levels with at least this average time to win (seconds). */
   minTimePerWin?: number,
+  /** Only include levels with at most this average time to win (seconds). */
   maxTimePerWin?: number,
   minExposureBucks?: number,
   maxExposureBucks?: number,
@@ -62,7 +75,9 @@ export type LevelheadLevelSearch = {
   maxReplayValue?: number,
   minHiddenGem?: number,
   maxHiddenGem?: number,
+  /** Only include levels published at least this many seconds ago. */
   minSecondsAgo?: number,
+  /** Only include levels published at most this many seconds ago. */
   maxSecondsAgo?: number,
   minDiamonds?: number,
   maxDiamonds?: number,
@@ -82,7 +97,6 @@ export interface LevelheadLevelDownload {
   _id: string,
   levelId: string,
   avatarId: string,
-  avatarUrl(pixels?:number):string,
   userId: string,
   alias: Alias,
   title: string,
@@ -91,10 +105,14 @@ export interface LevelheadLevelDownload {
   tower: true,
   dailyBuild: true,
   towerTrial: true,
+  /** Minimum number of players required to play this level. */
   requiredPlayers: number,
+  /** Number of seconds the creator took to beat the game prior to publishing. */
   creatorTime: number,
   gameVersion: number,
+  /** Internal, machine-friendly tags associated with this level. */
   tags: string[],
+  /** Public, human-friendly, localized tags associated with this level. */
   tagNames: string[],
   content: {
     World: number,
@@ -124,11 +142,14 @@ export interface LevelheadLevelDownload {
 }
 
 export interface ListedLevelId {
+  /** Internal ID for this listing (not associated with the actual level). */
   _id:string,
   levelId:string
 }
 
 export interface LevelheadLevel extends LevelheadLevelDownload {
+  /** Generate an image URL for the avatar/icon associated with this Level. */
+  avatarUrl(pixels?:number):string,
   /** Fetch the list of users who like this Level. Includes paging. */
   getLikes(): Promise<ResultsPage<ListedUserId>>,
   /** Fetch the list of users who favorited this level. Includes paging. */

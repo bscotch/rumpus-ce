@@ -9,6 +9,7 @@ import {
   Alias
 } from "../../../types/aliases";
 
+/** Search Levelhead aliases. */
 export async function getLevelheadAliases(this:RumpusCE
   , userIds: string|string[]
   , query?: AliasSearch

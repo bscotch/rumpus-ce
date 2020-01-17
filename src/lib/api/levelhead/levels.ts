@@ -22,8 +22,12 @@ import {
 import {
   addNextPageSearchFunction
 } from "../paging";
-import {ResultsPage, blankResultsPage} from "../paging";
+import {
+  ResultsPage,
+  blankResultsPage
+} from "../paging";
 
+/** Fetch stats and information about all the creator-chosen level tags. */
 export async function getLevelheadLevelTags(this:RumpusCE
   , options?: DelegationOptions
 ){
@@ -37,10 +41,18 @@ export async function getLevelheadLevelTags(this:RumpusCE
   }
 }
 
+export type LevelheadLevelLikesSearch = {
+  limit?:number,
+  userIds?:string|string[],
+  beforeId?:string,
+  includeAliases?:boolean
+};
+
+/** Get the list of users who liked or favorited a given Level. */
 async function getLevelheadLevelUserList(this:RumpusCE
   , listType: 'likes'|'favorites'
   , levelId: string
-  , query?: {limit?:number,userIds?:string|string[],beforeId?:string,includeAliases?:boolean}
+  , query?: LevelheadLevelLikesSearch
   , options?: DelegationOptions
 ){
   const res = await this.get(`/api/levelhead/levels/${levelId}/${listType}`,{
@@ -66,13 +78,6 @@ async function getLevelheadLevelUserList(this:RumpusCE
   }
 }
 
-export interface LevelheadLevelLikesSearch{
-  limit?:number,
-  userIds?:string|string[],
-  beforeId?:string,
-  includeAliases?:boolean
-}
-
 /** Get the list of userIds for users who liked this level. */
 export async function getLevelheadLevelLikes(this:RumpusCE
   , levelId: string
@@ -91,6 +96,7 @@ export async function getLevelheadLevelFavorites(this:RumpusCE
   return getLevelheadLevelUserList.call(this,'favorites',levelId,query,options);
 }
 
+/** Decorate Level object withs additional convenience functions. */
 function addLevelFunctionality(client:RumpusCE,level:LevelheadLevelDownload){
   const fancyLevel = level as LevelheadLevel ;
 
@@ -115,6 +121,7 @@ function addLevelFunctionality(client:RumpusCE,level:LevelheadLevelDownload){
   return fancyLevel;
 }
 
+/** Search for Levelhead levels. */
 export async function getLevelheadLevels(this:RumpusCE
   , query?: LevelheadLevelSearch
   , options?: DelegationOptions

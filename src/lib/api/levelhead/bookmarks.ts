@@ -10,6 +10,7 @@ import {
   Bookmark
 } from "../../../types/bookmarks";
 
+/** Search the current user's bookmarks. */
 export async function getLevelheadBookmarks(this:RumpusCE
   , query?: BookmarkSearch
   , options?: DelegationOptions
@@ -26,7 +27,7 @@ export async function getLevelheadBookmarks(this:RumpusCE
   throw new Error(`Bookmark search failed with status ${res.status}`);
 }
 
-
+/** Bookmark a given Levelhead level. */
 export async function bookmarkLevelheadLevel(this:RumpusCE
   , levelId: string
   , options?: DelegationOptions
@@ -39,6 +40,7 @@ export async function bookmarkLevelheadLevel(this:RumpusCE
   return true;
 }
 
+/** Remove the bookmark for a given Levelhead level (if that bookmark exists). */
 export async function unbookmarkLevelheadLevel(this:RumpusCE
   , levelId: string
   , options?: DelegationOptions

@@ -8,8 +8,8 @@ import {
   LevelheadAPI
 } from "./api";
 
-type Method = "get"|"post"|"patch"|"put"|"delete";
-type Server = "local"|"dev"|"beta";
+type HttpMethod = "get"|"post"|"patch"|"put"|"delete";
+type RumpusServer = "local"|"dev"|"beta";
 export type VersionedItem = 'privacy'|'terms'|'terms-rce'|'rumpus';
 
 export interface DelegationOptions {
@@ -17,7 +17,7 @@ export interface DelegationOptions {
   doNotUseKey?: boolean
 }
 
-interface RequestOptions extends DelegationOptions {
+export interface RequestOptions extends DelegationOptions {
   body?: any,
   query?: {[param:string]:string|number|boolean|undefined}
 }
@@ -35,16 +35,17 @@ export interface RumpusResponse {
   remainingRequests: number,
 }
 
+/** Class for interacting with the Rumpus CE API. */
 export default class RumpusCE {
 
-  private _server: Server;
+  private _server: RumpusServer;
   private _request: AxiosInstance;
   private _levelheadAPI: LevelheadAPI;
   private _baseUrl: string;
 
   constructor(
     public defaultDelegationKey:string|undefined = process.env.RUMPUS_DELEGATION_KEY,
-    server:Server = 'beta',
+    server:RumpusServer = 'beta',
     auth?:{username:string,password:string}
   ){
     this._server = server;
@@ -55,14 +56,22 @@ export default class RumpusCE {
     this._levelheadAPI = createLevelheadAPI(this);
   }
 
+  /** Rumpus has multiple servers for different stages of development. */
   get server(){
     return this._server;
   }
 
+  /** Given the specific Rumpus server this RumpusCE instance is talking to, the base URL making up the root of all requests. */
   get baseUrl(){ return this._baseUrl; }
 
+  /** The Rumpus CE Levelhead API, as a nested collection of methods. */
   get levelhead(){ return this._levelheadAPI; }
 
+  /** Fetch version information from Rumpus, including server and legal doc versions.
+   * Useful for triggering events on change (e.g. when the server version changes,
+   * that might indicate broken or new funcionality; when legal docs change, the change
+   * in version is considered your notice).
+   * */
   async version(){
     const res = await this.get('/api/version',{doNotUseKey:true});
     return {
@@ -74,6 +83,9 @@ export default class RumpusCE {
     };
   }
 
+  /** Get the list of permissions for a given Delegation Key.
+   * Useful for verifying that your calls to Rumpus CE will succeed.
+   */
   async delegationKeyPermissions(delegationKey?:string){
     const res = await this.get('/api/delegation/keys/@this',{delegationKey});
     if(res.status==200){
@@ -94,18 +106,22 @@ export default class RumpusCE {
     }
   }
 
+  /** Send a GET request to Rumpus CE. */
   get (url:string,options?:RequestOptions){
     return this.request('get',url,options);
   }
 
+  /** Send a POST request to Rumpus CE. */
   post (url:string,options?:RequestOptions){
     return this.request('post',url,options);
   }
 
+  /** Send a PUT request to Rumpus CE. */
   put (url:string,options?:RequestOptions){
     return this.request('put',url,options);
   }
 
+  /** Send a PATCH request to Rumpus CE. */
   patch (url:string,options?:RequestOptions){
     return this.request('patch',url,options);
   }
@@ -114,7 +130,8 @@ export default class RumpusCE {
     return this.request('delete',url,options);
   }
 
-  async request(method:Method,url:string,options?:RequestOptions){
+  /** Send a request to Rumpus CE. */
+  async request(method:HttpMethod,url:string,options?:RequestOptions){
     const headers: {'Rumpus-Delegation-Key'?:string} = {};
     const key = options?.delegationKey || this.defaultDelegationKey;
     if(!options?.doNotUseKey && key){

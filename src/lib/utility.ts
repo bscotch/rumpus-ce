@@ -18,13 +18,21 @@ interface AvatarItemBase {
   avatarUrl(pixels?:number,imgType?:ImageType): string
 }
 
+/** Add an avatar-URL-generating `avatarUrl()` method to an object that has an `avatarId` field. */
+export function attachAvatarUrlToItem <item extends AvatarItemBase> (item:item){
+  item.avatarUrl = (pixels?:number,imgType:ImageType='png')=>avatarUrl(item.avatarId,pixels,imgType);
+  return item;
+}
+
+/** Add avatar-URL-generating `avatarUrl()` methods to an objects that have an `avatarId` field. */
 export function attachAvatarUrlToArrayItems <item extends AvatarItemBase> (items:item[]){
   for(const item of items){
-    item.avatarUrl = (pixels?:number,imgType:ImageType='png')=>avatarUrl(item.avatarId,pixels,imgType);
+    attachAvatarUrlToItem(item);
   }
   return items;
 }
 
+/** For an HTTP query object, convert all array values into CSVs. */
 export function cleanQuery (query?:{[param:string]:string|boolean|string[]|number|null|undefined}){
   const cleanQuery: {[param:string]:string|boolean|number} = {};
   if(!query){

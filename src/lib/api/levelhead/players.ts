@@ -21,6 +21,7 @@ export type LevelheadPlayerLikesSearch = {
   beforeId?:string
 }
 
+/** Fetch the levels liked or favorited by a given user. */
 async function getLevelheadPlayerLevelList(this:RumpusCE
   , listType: 'likes'|'favorites'
   , userId: string
@@ -75,6 +76,7 @@ export type LevelheadPlayerFollowsSearch = {
   includeAliases?:boolean
 };
 
+/** Get the list of followers for a given user, or those the user is following. */
 async function getLevelheadPlayerFollows(this:RumpusCE
   , listType: 'following'|'followers'
   , userId: string
@@ -122,6 +124,7 @@ export async function getLevelheadPlayerFollowing(this:RumpusCE
   return getLevelheadPlayerFollows.call(this,'following',userId,query,options);
 }
 
+/** Add a user to the current user's following list. */
 export async function followLevelheadPlayer(this:RumpusCE
   , userId: string
   , options?: DelegationOptions
@@ -133,6 +136,7 @@ export async function followLevelheadPlayer(this:RumpusCE
   return true;
 }
 
+/** Remove a user from the current user's following list. */
 export async function unfollowLevelheadPlayer(this:RumpusCE
   , userId: string
   , options?: DelegationOptions
@@ -144,6 +148,7 @@ export async function unfollowLevelheadPlayer(this:RumpusCE
   return true;
 }
 
+/** Add convenience functions to Player objects. */
 function addPlayerFunctionality(client:RumpusCE
   , player: LevelheadPlayerDownload
 ){
@@ -180,6 +185,7 @@ function addPlayerFunctionality(client:RumpusCE
   return fancyPlayer;
 }
 
+/** Search for Levelhead player profiles. */
 export async function getLevelheadPlayers(this:RumpusCE
   , query?: LevelheadPlayerSearch
   , options?: DelegationOptions
@@ -201,6 +207,7 @@ export async function getLevelheadPlayers(this:RumpusCE
   }
 }
 
+/** Get a specific Levelhead player's profile information. */
 export async function getLevelheadPlayer(this:RumpusCE
   , userId = "@me"
   , options?: DelegationOptions
