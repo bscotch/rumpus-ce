@@ -55,7 +55,7 @@ export function createLevelheadAPI(client:RumpusCE){
       /** Search Levelhead Player profiles. */
       search: getLevelheadPlayers.bind(client),
       /** Find a Levelhead Player profile. */
-      getPlayer: getLevelheadPlayer.bind(client),
+      getPlayer: getLevelheadPlayer.bind(client) as typeof getLevelheadPlayer,
       /** List the levels liked by a player. */
       getLikedLevels: getLevelheadLikedLevels.bind(client),
       /** List the levels favorited by a player. */

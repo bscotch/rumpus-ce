@@ -63,6 +63,27 @@ const rce = new RumpusCE();
 
 ## Usage
 
+### New to Programming and/or Javascript?
+
+While this project is meant to help jump-start community use
+of Rumpus CE, it is not designed specifically for people new
+to programming or new to Javascript/Typescript.
+
+Most of the documentation for this project is internal, via
+JSDoc and Typescript, because external documentation is prone
+to becoming inaccurate over time. Good development software makes
+internal documentation visible to you via auto-complete and hover-text.
+So, to make it as easy as possible to make use of this package,
+you'll need a development environment that understands
+Javascript and Typescript, such as
+[Visual Studio Code](https://code.visualstudio.com/).
+
+Many of the methods in this project return Javascript Promises.
+If you aren't familiar with async programming in Javascript,
+you'll need to
+[do some studying](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Using_promises)
+before diving in!
+
 ### Creating a client instance
 
 All usage is centered around instances of the RumpusCE client.

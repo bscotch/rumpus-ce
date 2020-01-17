@@ -1,10 +1,32 @@
+html {
+  box-sizing: border-box;
+}
+*, *:before, *:after {
+  box-sizing: inherit;
+}
 
-.logo{
+body{
+  max-width: 960px;
+  margin: 0 auto;
+}
+
+#content{
+  overflow:auto;
+  min-height: 100vh;
+  padding: 0 20px 0 20px;
+}
+
+#logo{
   vertical-align: top;
   height: 36px;
   width: auto;
 }
-.powered-by{
+#powered-by{
   margin-left: 10px;
   font-weight: bold;
+}
+
+#footer{
+  position: absolute;
+  bottom: 0;
 }
