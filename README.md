@@ -1,4 +1,4 @@
-## Rumpus Community Edition API Client
+## Rumpus Community Edition SDK
 
 **Rumpus Community Edition** ("Rumpus CE") is a subset of the Rumpus API by Butterscotch Shenanigans ("Bscotch"). The broader Rumpus API manages all user and game data for Bscotch games. Currently, Rumpus CE allows access to [Levelhead](https://www.bscotch.net/games/levelhead) data only.
 
@@ -86,7 +86,7 @@ before diving in!
 
 ### Creating a client instance
 
-All usage is centered around instances of the RumpusCE client.
+All usage is centered around instances of the RumpusCE SDK client.
 
 Delegation keys are optional in general, but are required for
 many specific actions. You can set a default delegation key
@@ -103,11 +103,11 @@ it by setting one of the override options: `doNotUseKey: true` or `delegationKey
 const rce = new RumpusCE();
 
 // Or explicitly specify the default key.
-const myDelegationToken = 'AWholeBunchOfNonsense';
+const myDelegationToken = 'ADelegationKey';
 const rce = new RumpusCE(myDelegationToken);
 
 // You can change the default key at any time.
-rce.defaultDelegationKey = 'SomeNewNonsense';
+rce.defaultDelegationKey = 'SomeOtherDelegationKey';
 
 // You can override the default key on a per-request basis.
 rce.levelhead.aliases.search("bscotch404",{},{delegationKey:'AnOverrideKey'});
