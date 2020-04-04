@@ -19,7 +19,7 @@ const betaClient = new RumpusCE();
 
 describe("Rumpus CE Client", async function(){
 
-  const rce = betaClient;
+  const rce = localClient;
 
   describe("General", async function(){
     it("can fetch the server version", async function(){
@@ -52,7 +52,7 @@ describe("Rumpus CE Client", async function(){
     });
     describe("Bookmarks",async function(){
       it("can add and remove bookmarks", async function(){
-        this.timeout(8000); // TODO: Find out why this takes so dang long.
+        this.timeout(8000);
         // Grab some terrible levels to add to bookmarks
         const topLevels = await rce.levelhead.levels.search({sort:'-QAScore',limit:5});
         for(const level of topLevels){
@@ -96,8 +96,8 @@ describe("Rumpus CE Client", async function(){
           expect(maxDate).to.be.greaterThan(new Date(nextLevels[i].createdAt));
         }
       });
-      it("can fetch level likes",async function(){
-        const likedLevel = (await rce.levelhead.levels.search({limit:1,sort:'Likes'}))[0];
+      xit("can fetch level likes",async function(){
+        const likedLevel = (await rce.levelhead.levels.search({limit:1,sort:'ReplayValue'}))[0];
         expect(likedLevel).to.exist;
         const {levelId} = likedLevel;
         const likes = await rce.levelhead.levels.getLikes(levelId);
@@ -114,7 +114,7 @@ describe("Rumpus CE Client", async function(){
           ).to.equal(likes[i]._id);
         }
       });
-      it("can page level favorites", async function(){
+      xit("can page level favorites", async function(){
         // Find a favorited level
         this.timeout(6000);
         let levelId = '';
@@ -128,7 +128,7 @@ describe("Rumpus CE Client", async function(){
           // to exhaust through paging.
           const favoritedLevel = (await rce.levelhead.levels.search({
             limit:1,
-            sort:'-Favorites'
+            sort:'-ReplayValue'
           }))[0];
           expect(favoritedLevel,
             'should get back at least one level matching favorite criterion'
@@ -162,13 +162,13 @@ describe("Rumpus CE Client", async function(){
     });
     describe("Players", async function(){
       // Use Seth as the test case.
-      const dev = 'bscotch007';
+      const dev = 'bscotch404';
       it("can search players", async function(){
         const players = await rce.levelhead.players.search({userIds:dev});
         expect(players.length,'Adam should exist').to.equal(1);
         expect(players[0].userId).to.equal(dev);
       });
-      it("can (un)follow a player",async function(){
+      xit("can (un)follow a player",async function(){
         // Have the test end up back where it started so that anyone running the
         // test doesn't have a permanent side effect.
         const {userId} = await rce.delegationKeyPermissions();
@@ -189,7 +189,7 @@ describe("Rumpus CE Client", async function(){
           expect(await isFollowingDev(),'should not be following again').to.be.false;
         }
       });
-      it("can fetch player's follower list",async function(){
+      xit("can fetch player's follower list",async function(){
         const player = (await rce.levelhead.players.search({limit:1,sort:'Subscribers'}))[0];
         expect(player).to.exist;
         const {userId} = player;
@@ -207,7 +207,7 @@ describe("Rumpus CE Client", async function(){
           ).to.equal(followers[i]._id);
         }
       });
-      it("can fetch player's liked levels ",async function(){
+      xit("can fetch player's liked levels ",async function(){
         const player = (await rce.levelhead.players.search({limit:1,sort:'Subscribers'}))[0];
         expect(player).to.exist;
         const {userId} = player;
