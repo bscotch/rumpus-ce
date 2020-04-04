@@ -51,6 +51,19 @@ export interface LevelheadPlayerDownload {
   }
 }
 
+export type LevelheadPlayerFollowsSearch = {
+  limit?:number,
+  userIds?:string|string[],
+  beforeId?:string,
+  includeAliases?:boolean
+};
+
+export type LevelheadPlayerLikesSearch = {
+  limit?:number,
+  levelIds?:string|string[],
+  beforeId?:string
+}
+
 export interface ListedUserId {
   /** Internal identifier for this listing (not associated with the actual user). */
   _id:string,

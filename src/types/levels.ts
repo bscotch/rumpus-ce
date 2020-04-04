@@ -28,6 +28,13 @@ interface CrateItemRecord {
   createdAt: string
 }
 
+export type LevelheadLevelLikesSearch = {
+  limit?:number,
+  userIds?:string|string[],
+  beforeId?:string,
+  includeAliases?:boolean
+};
+
 export type LevelheadLevelSearch = {
   sort?: LevelSearchSortOption,
   limit?: number,

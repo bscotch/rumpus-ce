@@ -10,7 +10,8 @@ import {
   LevelheadLevel,
   LevelheadLevelTag,
   LevelheadLevelSearch,
-  LevelheadLevelDownload
+  LevelheadLevelDownload,
+  LevelheadLevelLikesSearch,
 } from "../../../types/levels";
 import {
   ListedUserId
@@ -41,12 +42,7 @@ export async function getLevelheadLevelTags(this:RumpusCE
   }
 }
 
-export type LevelheadLevelLikesSearch = {
-  limit?:number,
-  userIds?:string|string[],
-  beforeId?:string,
-  includeAliases?:boolean
-};
+
 
 /** Get the list of users who liked or favorited a given Level. */
 async function getLevelheadLevelUserList(this:RumpusCE

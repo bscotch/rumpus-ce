@@ -1,10 +1,12 @@
 import {default as RumpusCE, DelegationOptions} from "../../RumpusCE";
 import {cleanQuery} from "../../utility";
 import {
-  LevelheadPlayerDownload,
+  ListedUserId,
   LevelheadPlayer,
   LevelheadPlayerSearch,
-  ListedUserId
+  LevelheadPlayerDownload,
+  LevelheadPlayerLikesSearch,
+  LevelheadPlayerFollowsSearch,
 } from "../../../types/players";
 import {
   ListedLevelId
@@ -14,12 +16,6 @@ import {
   blankResultsPage,
   addNextPageSearchFunction
 } from "../paging";
-
-export type LevelheadPlayerLikesSearch = {
-  limit?:number,
-  levelIds?:string|string[],
-  beforeId?:string
-}
 
 /** Fetch the levels liked or favorited by a given user. */
 async function getLevelheadPlayerLevelList(this:RumpusCE
@@ -69,12 +65,6 @@ export async function getLevelheadFavoritedLevels(this:RumpusCE
   return getLevelheadPlayerLevelList.call(this,'favorites',userId,query,options);
 }
 
-export type LevelheadPlayerFollowsSearch = {
-  limit?:number,
-  userIds?:string|string[],
-  beforeId?:string,
-  includeAliases?:boolean
-};
 
 /** Get the list of followers for a given user, or those the user is following. */
 async function getLevelheadPlayerFollows(this:RumpusCE
