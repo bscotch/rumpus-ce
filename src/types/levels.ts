@@ -2,8 +2,8 @@ import { Alias } from "./aliases";
 import { ResultsPage } from "../lib/api/paging";
 import { ListedUserId } from "./players";
 
-export type LevelSearchSortField = 'createdAt'|'updatedAt'|'gameVersion'|'Attempts'|'Players'|'Playtime'|'TimePerWin'|'Difficulty'|'ReplayValue'|'ExposureBucks'|'QAScore'|'HiddenGem'|'Likes'|'Favorites'|'FailureRate';
-type LevelSearchSortOption = LevelSearchSortField |'-createdAt'|'-updatedAt'|'-gameVersion'|'-Attempts'|'-Players'|'-Playtime'|'-TimePerWin'|'-Difficulty'|'-ReplayValue'|'-ExposureBucks'|'-QAScore'|'-HiddenGem'|'-Likes'|'-Favorites'|'-FailureRate';
+export type LevelSearchSortField = 'createdAt'|'Playtime'|'Difficulty'|'ReplayValue'|'ExposureBucks'|'QAScore'|'HiddenGem';
+type LevelSearchSortOption = LevelSearchSortField |'-createdAt'|'-Playtime'|'-Difficulty'|'-ReplayValue'|'-ExposureBucks'|'-QAScore'|'-HiddenGem';
 
 
 export interface LevelheadLevelTag {
@@ -53,22 +53,8 @@ export type LevelheadLevelSearch = {
   includeRecords?: boolean,
   includeAliases?: boolean,
   includeUnlisted?: boolean,
-  maxClearRate?: number,
-  minClearRate?: number,
-  minGameVersion?: number,
-  maxGameVersion?: number,
-  minAttempts?: number,
-  maxAttempts?: number,
-  /** Only include levels played by at least this many people. */
-  minPlayers?: number,
-  /** Only include levels played by at most this many people. */
-  maxPlayers?: number,
   minPlayTime?: number,
   maxPlayTime?: number,
-  /** Only include levels with at least this average time to win (seconds). */
-  minTimePerWin?: number,
-  /** Only include levels with at most this average time to win (seconds). */
-  maxTimePerWin?: number,
   minExposureBucks?: number,
   maxExposureBucks?: number,
   minReplayValue?: number,
@@ -81,14 +67,6 @@ export type LevelheadLevelSearch = {
   maxSecondsAgo?: number,
   minDiamonds?: number,
   maxDiamonds?: number,
-  minLikes?: number,
-  maxLikes?: number,
-  minFavorites?: number,
-  maxFavorites?: number,
-  minFailureRate?: number,
-  maxFailureRate?: number,
-  minUpdatedAt?: string,
-  maxUpdatedAt?: string,
   minCreatedAt?: string,
   maxCreatedAt?: string,
 };

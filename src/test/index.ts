@@ -54,7 +54,7 @@ describe("Rumpus CE Client", async function(){
       it("can add and remove bookmarks", async function(){
         this.timeout(8000); // TODO: Find out why this takes so dang long.
         // Grab some terrible levels to add to bookmarks
-        const topLevels = await rce.levelhead.levels.search({sort:'-QAScore',minPlayers:20,limit:5});
+        const topLevels = await rce.levelhead.levels.search({sort:'-QAScore',limit:5});
         for(const level of topLevels){
 
           // Make sure it isn't already in bookmarks
@@ -128,9 +128,7 @@ describe("Rumpus CE Client", async function(){
           // to exhaust through paging.
           const favoritedLevel = (await rce.levelhead.levels.search({
             limit:1,
-            sort:'-Favorites',
-            minFavorites,
-            maxFavorites
+            sort:'-Favorites'
           }))[0];
           expect(favoritedLevel,
             'should get back at least one level matching favorite criterion'
