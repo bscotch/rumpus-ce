@@ -1,6 +1,6 @@
 {
   "name": "@bscotch/rumpus-ce",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "Rumpus Community Edition SDK (Rumpus CE SDK), for writing applications that use Levelhead data.",
   "main": "build/index.js",
   "browser": "browser/index.js",
