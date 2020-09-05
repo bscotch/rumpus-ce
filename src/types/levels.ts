@@ -45,9 +45,6 @@ export type LevelheadLevelSearch = {
   tags?: string|string[],
   excludeTags?: string|string[],
   tiebreakerItemId?: string,
-  nextPageToken?: string,
-  /** Optionally turn on server-based paging, which results in a `nextPageToken`. */
-  paging?: boolean,
   /** Only include levels in the Tower. */
   tower?: boolean,
   /** Only include levels in the Marketing Department. */

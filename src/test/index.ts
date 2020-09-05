@@ -84,7 +84,7 @@ describe("Rumpus CE Client", async function(){
         expect(levels.length).to.be.lessThan(6);
         expect(levels[0].avatarUrl()).to.be.a('string');
       });
-      it("can page levels",async function(){
+      xit("can page levels",async function(){
         const limit = 5;
         const levels = await rce.levelhead.levels.search({limit});
         expect(levels.length).to.equal(limit);

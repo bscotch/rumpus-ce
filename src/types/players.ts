@@ -8,8 +8,6 @@ export type LevelheadPlayerSearch = {
   userIds?:string,
   sort?:PlayerSearchSortOption,
   limit?:number,
-  paging?: boolean,
-  nextPageToken?: string,
   includeAliases?:boolean,
   tiebreakerItemId?:string,
   minSubscribers?:number,

@@ -12,15 +12,15 @@ This project is designed to help jump-start community-created projects by provid
 + [Rumpus CE Newsletter](https://beta.bscotch.net/telegrams?subscribe=rumpus-ce)
 + [Rumpus CE Documentation](https://beta.bscotch.net/api/docs/community-edition) - Full documentation for Rumpus CE.
 + [Rumpus CE Terms](https://beta.bscotch.net/terms-rce) - Terms and Conditions that apply specifically to use of Rumpus Community Edition.
++ [Bscotch Terms](https://beta.bscotch.net/terms) - The broader Terms and Conditions for all software and services run by Bscotch.
 + [Bscotch Discord](https://discord.gg/bscotch) - Head to the #levelhead-api channel to share your work with others.
 + [Code of Conduct](https://beta.bscotch.net/conduct)
-+ [Bscotch Terms](https://beta.bscotch.net/terms) - The broader Terms and Conditions for all software and services run by Bscotch.
 + [Bscotch Privacy Policy](https://beta.bscotch.net/privacy)
 + [Feedback](https://beta.bscotch.net/feedbag/rumpus?tags=rce,github) - Our official channel for collecting feedback. You can also create Issues on Github.
 
 ## Rate Limits
 
-The Rumpus APIs enforce strict rate limiting, but if you are using the APIs responsibly you shouldn't have to worry about them. The exact numbers are subject to change at any moment, so they are not listed here. If you run into limits, optimize your requests by caching responses, making batch requests, and throttling requests.
+The Rumpus APIs enforce strict rate limiting, but if you are using the APIs responsibly you shouldn't have to worry about them. The exact numbers are subject to change at any moment, so they are not listed here. If you run into limits, optimize your requests by caching responses, making batch requests, and throttling requests. The [headers returned in each response](https://beta.bscotch.net/api/docs/community-edition/#header-headers-1) will tell you how many requests you have left until your counter is reset.
 
 Rate limits are on a per-user basis. Anonymous requests are limited at the IP address level.
 
@@ -30,7 +30,7 @@ This project can be used in both a browser and non-browser (server/nodejs) conte
 
 ## Authentication
 
-This project supports unauthenticated requests (for those Rumpus CE endpoints that allow for that) and Delegation Key-authenticated requests. Delegation Keys provide well-defined and extremely limited access to Rumpus accounts, so that players can hand keys over to unofficial 3rd parties without having to worry *too* much about privacy and security issues. Delegation Keys are created via Rumpus [account settings](https://beta.bscotch.net/account).
+This project supports unauthenticated requests (for those Rumpus CE endpoints that allow for that) and Delegation Key-authenticated requests. Delegation Keys provide well-defined and extremely limited access to Rumpus accounts, so that players can hand keys over to unofficial 3rd parties without having to worry *too* much about privacy and security issues. Delegation Keys are created via a user's [Rumpus account settings](https://beta.bscotch.net/account).
 
 Users opt into different sets of permissions when they create delegation keys -- if there is a mismatch between what is allowed by a delegation key and what you're trying to do, you'll get back `403` statuses from your request.
 
@@ -63,11 +63,11 @@ const rce = new RumpusCE();
 
 ## Usage
 
-### New to Programming and/or Javascript?
+### New to Programming and/or JavaScript?
 
 While this project is meant to help jump-start community use
 of Rumpus CE, it is not designed specifically for people new
-to programming or new to Javascript/Typescript.
+to programming or new to JavaScript/Typescript.
 
 Most of the documentation for this project is internal, via
 JSDoc and Typescript, because external documentation is prone
@@ -75,11 +75,11 @@ to becoming inaccurate over time. Good development software makes
 internal documentation visible to you via auto-complete and hover-text.
 So, to make it as easy as possible to make use of this package,
 you'll need a development environment that understands
-Javascript and Typescript, such as
+JavaScript and Typescript, such as
 [Visual Studio Code](https://code.visualstudio.com/).
 
-Many of the methods in this project return Javascript Promises.
-If you aren't familiar with async programming in Javascript,
+Many of the methods in this project return JavaScript Promises.
+If you aren't familiar with async programming in JavaScript,
 you'll need to
 [do some studying](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Using_promises)
 before diving in!

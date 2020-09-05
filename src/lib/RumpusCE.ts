@@ -1,3 +1,6 @@
+// Prevent Typescript errors on the Node side in Axios:
+/// <reference lib="DOM" />
+
 import axios, {
   AxiosInstance,
   AxiosRequestConfig,
