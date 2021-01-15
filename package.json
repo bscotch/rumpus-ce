@@ -6,7 +6,8 @@
   "browser": "browser/index.js",
   "files": [
     "build/lib/**/*",
-    "build/index.js"
+    "build/index.js",
+    "build/types/**/*"
   ],
   "scripts": {
     "test": "npx mocha --inspect --require source-map-support/register --bail  ./build/test/index.js",
