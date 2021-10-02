@@ -1,13 +1,11 @@
-import RumpusCE from "../RumpusCE";
-import {
-  getLevelheadAliases
-} from "./levelhead/aliases";
+import RumpusCE from '../RumpusCE.js';
+import { getLevelheadAliases } from './levelhead/aliases.js';
 import {
   getLevelheadLevels,
   getLevelheadLevelTags,
   getLevelheadLevelLikes,
-  getLevelheadLevelFavorites
-} from "./levelhead/levels";
+  getLevelheadLevelFavorites,
+} from './levelhead/levels.js';
 import {
   getLevelheadPlayer,
   getLevelheadPlayers,
@@ -16,31 +14,31 @@ import {
   getLevelheadPlayerFollowers,
   getLevelheadPlayerFollowing,
   followLevelheadPlayer,
-  unfollowLevelheadPlayer
-} from "./levelhead/players";
+  unfollowLevelheadPlayer,
+} from './levelhead/players.js';
 import {
   getLevelheadBookmarks,
   bookmarkLevelheadLevel,
-  unbookmarkLevelheadLevel
-} from "./levelhead/bookmarks";
+  unbookmarkLevelheadLevel,
+} from './levelhead/bookmarks.js';
 
-export function createLevelheadAPI(client:RumpusCE){
+export function createLevelheadAPI(client: RumpusCE) {
   const api = {
     /** Aliases */
-    aliases:{
-      search: getLevelheadAliases.bind(client)
+    aliases: {
+      search: getLevelheadAliases.bind(client),
     },
     /** Manage Level Bookmarks */
-    bookmarks:{
+    bookmarks: {
       /** List and filter your bookmarks. */
       search: getLevelheadBookmarks.bind(client),
       /** Add a level to your bookmarks. */
       add: bookmarkLevelheadLevel.bind(client),
       /** Remove a level from your bookmarks. */
-      remove: unbookmarkLevelheadLevel.bind(client)
+      remove: unbookmarkLevelheadLevel.bind(client),
     },
     /** Information about Levels. */
-    levels:{
+    levels: {
       /** Search Levelhead Levels. */
       search: getLevelheadLevels.bind(client),
       /** Get statistics and information about Level Tags. */
@@ -51,7 +49,7 @@ export function createLevelheadAPI(client:RumpusCE){
       getFavorites: getLevelheadLevelFavorites.bind(client),
     },
     /** Information about players, plus following management. */
-    players:{
+    players: {
       /** Search Levelhead Player profiles. */
       search: getLevelheadPlayers.bind(client),
       /** Find a Levelhead Player profile. */
@@ -67,8 +65,8 @@ export function createLevelheadAPI(client:RumpusCE){
       /** Follow a player. */
       follow: followLevelheadPlayer.bind(client),
       /** Unfollow a player. */
-      unfollow: unfollowLevelheadPlayer.bind(client)
-    }
+      unfollow: unfollowLevelheadPlayer.bind(client),
+    },
   };
   return api;
 }

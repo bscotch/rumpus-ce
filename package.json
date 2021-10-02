@@ -1,7 +1,7 @@
 {
   "name": "@bscotch/rumpus-ce",
   "version": "1.2.4",
-  "description": "Rumpus Community Edition SDK (Rumpus CE SDK), for writing applications that use Levelhead data.",
+  "description": "Rumpus Community Edition SDK (Rumpus CE SDK), for creating browser and Node.js applications that use Levelhead data.",
   "main": "build/index.js",
   "browser": "browser/index.js",
   "files": [
@@ -21,7 +21,8 @@
     "api",
     "bscotch",
     "butterscotch shenanigans",
-    "levelhead"
+    "levelhead",
+    "levels"
   ],
   "repository": {
     "type": "git",
@@ -29,28 +30,24 @@
   },
   "author": "Adam Coster",
   "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/bscotch/rumpus-ce/issues"
-  },
   "homepage": "https://github.com/bscotch/rumpus-ce#readme",
   "dependencies": {
-    "axios": "^0.21.1"
+    "axios": "^0.22.0"
   },
   "devDependencies": {
     "@types/axios": "^0.14.0",
-    "@types/chai": "^4.2.14",
-    "@types/mocha": "^8.2.0",
-    "@types/node": "^14.14.20",
-    "@typescript-eslint/eslint-plugin": "^4.12.0",
-    "@typescript-eslint/parser": "^4.12.0",
-    "chai": "^4.2.0",
-    "dotenv": "^8.2.0",
-    "eslint": "^7.17.0",
-    "mocha": "^8.2.1",
-    "source-map-support": "^0.5.19",
-    "ts-loader": "^8.0.14",
-    "typescript": "^4.1.3",
-    "webpack": "^4.44.2",
-    "webpack-cli": "^3.3.12"
+    "@types/chai": "^4.2.22",
+    "@types/mocha": "^9.0.0",
+    "@types/node": "^14.17.20",
+    "@typescript-eslint/eslint-plugin": "^4.32.0",
+    "@typescript-eslint/parser": "^4.32.0",
+    "chai": "^4.3.4",
+    "dotenv": "^10.0.0",
+    "esbuild": "^0.13.3",
+    "eslint": "^7.32.0",
+    "mocha": "^9.1.2",
+    "prettier": "^2.4.1",
+    "source-map-support": "^0.5.20",
+    "typescript": "^4.4.3"
   }
 }
