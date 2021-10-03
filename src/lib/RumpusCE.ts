@@ -2,7 +2,7 @@
 /// <reference lib="DOM" />
 
 import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios';
-import type { DelegationKey } from '../types/auth.js';
+import type { DelegationKeyDownload } from '../types/auth.js';
 import { createLevelheadAPI, LevelheadAPI } from './api/index.js';
 
 type HttpMethod = 'get' | 'post' | 'patch' | 'put' | 'delete';
@@ -91,13 +91,16 @@ export default class RumpusCE {
    * Useful for verifying that your calls to Rumpus CE will succeed.
    */
   async delegationKeyPermissions(delegationKey?: string) {
-    const res = await this.get<DelegationKey>('/api/delegation/keys/@this', {
-      delegationKey,
-    });
+    const res = await this.get<DelegationKeyDownload>(
+      '/api/delegation/keys/@this',
+      {
+        delegationKey,
+      },
+    );
     if (res.status == 200) {
       return {
         userId: res.data.userId,
-        passId: res.data._id,
+        passId: res.data.passId,
         permissions: res.data.permissions,
       };
     } else if ([400, 403].includes(res.status)) {

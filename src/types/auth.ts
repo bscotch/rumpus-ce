@@ -1,6 +1,6 @@
-export interface DelegationKey {
-  _id: string;
+export interface DelegationKeyDownload {
+  passId: string;
   userId: string;
   name: string;
-  permissions: { url: string; methods: string[] }[];
+  permissions: (string | { url: string; methods: string[] })[];
 }

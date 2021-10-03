@@ -91,7 +91,7 @@ describe('Rumpus CE Client', async function () {
         expect(levels.length).to.be.lessThan(6);
         expect(levels[0].avatarUrl()).to.be.a('string');
       });
-      xit('can page levels', async function () {
+      it('can page levels', async function () {
         const limit = 5;
         const levels = await rce.levelhead.levels.search({ limit });
         expect(levels.length).to.equal(limit);
@@ -103,7 +103,7 @@ describe('Rumpus CE Client', async function () {
           expect(maxDate).to.be.greaterThan(new Date(nextLevels[i].createdAt));
         }
       });
-      xit('can fetch level likes', async function () {
+      it('can fetch level likes', async function () {
         const likedLevel = (
           await rce.levelhead.levels.search({ limit: 1, sort: 'ReplayValue' })
         )[0];
@@ -126,7 +126,7 @@ describe('Rumpus CE Client', async function () {
       });
       xit('can page level favorites', async function () {
         // Find a favorited level
-        this.timeout(6000);
+        this.timeout(10000);
         let levelId = '';
         let totalFavorites = 0;
         let minFavorites = rce.server == 'beta' ? 6 : 2;
@@ -181,13 +181,13 @@ describe('Rumpus CE Client', async function () {
     });
     describe('Players', async function () {
       // Use Seth as the test case.
-      const dev = 'bscotch404';
+      const dev = 'bscotch101';
       it('can search players', async function () {
         const players = await rce.levelhead.players.search({ userIds: dev });
         expect(players.length, 'Adam should exist').to.equal(1);
         expect(players[0].userId).to.equal(dev);
       });
-      xit('can (un)follow a player', async function () {
+      it('can (un)follow a player', async function () {
         // Have the test end up back where it started so that anyone running the
         // test doesn't have a permanent side effect.
         const { userId } = await rce.delegationKeyPermissions();
@@ -212,7 +212,7 @@ describe('Rumpus CE Client', async function () {
             .false;
         }
       });
-      xit("can fetch player's follower list", async function () {
+      it("can fetch player's follower list", async function () {
         const player = (
           await rce.levelhead.players.search({ limit: 1, sort: 'Subscribers' })
         )[0];
@@ -233,7 +233,7 @@ describe('Rumpus CE Client', async function () {
           ).to.equal(followers[i]._id);
         }
       });
-      xit("can fetch player's liked levels ", async function () {
+      it("can fetch player's liked levels ", async function () {
         const player = (
           await rce.levelhead.players.search({ limit: 1, sort: 'Subscribers' })
         )[0];
