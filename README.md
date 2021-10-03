@@ -38,12 +38,15 @@ Some methods and Rumpus CE endpoints can be used without any authentication.
 
 ## Installation
 
-To use directly in the browser via the JSDelivr CDN:
+To use directly in the browser via the JSDelivr CDN (**Note:** you must specify `type="module"` in your script tags!):
 
 ```html
-<script src='https://cdn.jsdelivr.net/npm/@bscotch/rumpus-ce@latest'></script>
-<script>
-  const rce = new RumpusCE();
+<script
+  src="https://cdn.jsdelivr.net/npm/@bscotch/rumpus-ce@latest"
+  type="module"
+></script>
+<script type="module">
+  const rce = new window.RumpusCE();
 </script>
 ```
 
@@ -52,12 +55,12 @@ Or install with npm: `npm i @bscotch/rumpus-ce`
 And then in JavaScript/Node:
 
 ```js
-const {RumpusCE} = require('@rumpus-ce');
+const {RumpusCE} = require('@bscotch/rumpus-ce');
 const rce = new RumpusCE();
 ```
 
 ```ts
-import {RumpusCE} from "@rumpus-ce";
+import {RumpusCE} from "@bscotch/rumpus-ce";
 const rce = new RumpusCE();
 ```
 

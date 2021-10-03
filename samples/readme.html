@@ -1,0 +1,156 @@
+<h2 id="rumpus-community-edition-sdk">Rumpus Community Edition SDK</h2>
+<p><strong>Rumpus Community Edition</strong> (&quot;Rumpus CE&quot;) is a subset of the Rumpus API by Butterscotch Shenanigans (&quot;Bscotch&quot;). The broader Rumpus API manages all user and game data for Bscotch games. Currently, Rumpus CE allows access to <a href="https://www.bscotch.net/games/levelhead">Levelhead</a> data only.</p>
+<p>This project is designed to help jump-start community-created projects by providing easy access to Rumpus CE data -- learn more about Rumpus CE on the <a href="https://beta.bscotch.net/rumpus-ce">Bscotch website</a> and check out the <a href="https://beta.bscotch.net/api/docs/community-edition/">Rumpus CE documentation</a> for all the technical details.</p>
+<p><em>It may be tempting to use this module and Rumpus CE in ways that violate our Terms or Code of Conduct. <strong>Don&#39;t!</strong> If you&#39;re unsure about something, pop into the official Bscotch Discord to ask about your use case.</em></p>
+<h2 id="relevant-links">Relevant Links</h2>
+<ul>
+<li><a href="https://beta.bscotch.net/rumpus-ce">Rumpus CE Homepage</a></li>
+<li><a href="https://beta.bscotch.net/telegrams?subscribe=rumpus-ce">Rumpus CE Newsletter</a></li>
+<li><a href="https://beta.bscotch.net/api/docs/community-edition">Rumpus CE Documentation</a> - Full documentation for Rumpus CE.</li>
+<li><a href="https://beta.bscotch.net/terms-rce">Rumpus CE Terms</a> - Terms and Conditions that apply specifically to use of Rumpus Community Edition.</li>
+<li><a href="https://beta.bscotch.net/terms">Bscotch Terms</a> - The broader Terms and Conditions for all software and services run by Bscotch.</li>
+<li><a href="https://discord.gg/bscotch">Bscotch Discord</a> - Head to the #levelhead-api channel to share your work with others.</li>
+<li><a href="https://beta.bscotch.net/conduct">Code of Conduct</a></li>
+<li><a href="https://beta.bscotch.net/privacy">Bscotch Privacy Policy</a></li>
+<li><a href="https://beta.bscotch.net/feedbag/rumpus?tags=rce,github">Feedback</a> - Our official channel for collecting feedback. You can also create Issues on Github.</li>
+</ul>
+<h2 id="rate-limits">Rate Limits</h2>
+<p>The Rumpus APIs enforce strict rate limiting, but if you are using the APIs responsibly you shouldn&#39;t have to worry about them. The exact numbers are subject to change at any moment, so they are not listed here. If you run into limits, optimize your requests by caching responses, making batch requests, and throttling requests. The <a href="https://beta.bscotch.net/api/docs/community-edition/#header-headers-1">headers returned in each response</a> will tell you how many requests you have left until your counter is reset.</p>
+<p>Rate limits are on a per-user basis. Anonymous requests are limited at the IP address level.</p>
+<h2 id="browser-vs-server">Browser vs. Server</h2>
+<p>This project can be used in both a browser and non-browser (server/nodejs) context. However, differences between those two contexts, in particular with CORS and JavaScript feature variation across browsers, may create problems in some contexts.</p>
+<h2 id="authentication">Authentication</h2>
+<p>This project supports unauthenticated requests (for those Rumpus CE endpoints that allow for that) and Delegation Key-authenticated requests. Delegation Keys provide well-defined and extremely limited access to Rumpus accounts, so that players can hand keys over to unofficial 3rd parties without having to worry <em>too</em> much about privacy and security issues. Delegation Keys are created via a user&#39;s <a href="https://beta.bscotch.net/account">Rumpus account settings</a>.</p>
+<p>Users opt into different sets of permissions when they create delegation keys -- if there is a mismatch between what is allowed by a delegation key and what you&#39;re trying to do, you&#39;ll get back <code>403</code> statuses from your request.</p>
+<p>Some methods and Rumpus CE endpoints can be used without any authentication.</p>
+<h2 id="installation">Installation</h2>
+<p>To use directly in the browser via the JSDelivr CDN (<strong>Note:</strong> you must specify <code>type=&quot;module&quot;</code> in your script tags!):</p>
+<pre><code class="language-html">&lt;script
+  src=&quot;https://cdn.jsdelivr.net/npm/@bscotch/rumpus-ce@latest&quot;
+  type=&quot;module&quot;
+&gt;&lt;/script&gt;
+&lt;script type=&quot;module&quot;&gt;
+  const rce = new window.RumpusCE();
+&lt;/script&gt;
+</code></pre>
+<p>Or install with npm: <code>npm i @bscotch/rumpus-ce</code></p>
+<p>And then in JavaScript/Node:</p>
+<pre><code class="language-js">const {RumpusCE} = require(&#39;@bscotch/rumpus-ce&#39;);
+const rce = new RumpusCE();
+</code></pre>
+<pre><code class="language-ts">import {RumpusCE} from &quot;@bscotch/rumpus-ce&quot;;
+const rce = new RumpusCE();
+</code></pre>
+<h2 id="usage">Usage</h2>
+<h3 id="new-to-programming-andor-javascript">New to Programming and/or JavaScript?</h3>
+<p>While this project is meant to help jump-start community use
+of Rumpus CE, it is not designed specifically for people new
+to programming or new to JavaScript/Typescript.</p>
+<p>Most of the documentation for this project is internal, via
+JSDoc and Typescript, because external documentation is prone
+to becoming inaccurate over time. Good development software makes
+internal documentation visible to you via auto-complete and hover-text.
+So, to make it as easy as possible to make use of this package,
+you&#39;ll need a development environment that understands
+JavaScript and Typescript, such as
+<a href="https://code.visualstudio.com/">Visual Studio Code</a>.</p>
+<p>Many of the methods in this project return JavaScript Promises.
+If you aren&#39;t familiar with async programming in JavaScript,
+you&#39;ll need to
+<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Using_promises">do some studying</a>
+before diving in!</p>
+<h3 id="creating-a-client-instance">Creating a client instance</h3>
+<p>All usage is centered around instances of the RumpusCE SDK client.</p>
+<p>Delegation keys are optional in general, but are required for
+many specific actions. You can set a default delegation key
+for the client using the environment variable <code>RUMPUS_DELEGATION_KEY</code>,
+or by explicitly providing the key when you make a new client.</p>
+<p>The default key will be used for all requests unless you override
+it by setting one of the override options: <code>doNotUseKey: true</code> or <code>delegationKey: TemproraryOverrideKey</code>.</p>
+<pre><code class="language-js">// Create a client that uses the RUMPUS_DELEGATION_KEY
+// environment variable value as its default key, if defined,
+// and otherwise defaults to having no default key.
+const rce = new RumpusCE();
+
+// Or explicitly specify the default key.
+const myDelegationToken = &#39;ADelegationKey&#39;;
+const rce = new RumpusCE(myDelegationToken);
+
+// You can change the default key at any time.
+rce.defaultDelegationKey = &#39;SomeOtherDelegationKey&#39;;
+
+// You can override the default key on a per-request basis.
+rce.levelhead.aliases.search(&quot;bscotch404&quot;,{},{delegationKey:&#39;AnOverrideKey&#39;});
+
+// Finally, you can prevent use of a key completely, for example for endpoints
+// that are publicly accessible but to which a given Delegatin Key does not have
+// explicit permissions.
+rce.get(&#39;/api/some/endpoint&#39;,{doNotUseKey:true});
+</code></pre>
+<h3 id="data-structures">Data Structures</h3>
+<p>Some of the arrays and objects returned by Rumpus CE methods have methods attached to them to simplify subsequent API interaction. If you use an IDE that reveals type information you&#39;ll be able to infer this on a method/object-specific basis. Example extended objects:</p>
+<ul>
+<li><code>ResultsPage</code>: An array with the addition of an async <code>.nextPage()</code> method. Calling this method will trigger another API request to fetch the next page of results.</li>
+<li><code>Alias</code><ul>
+<li><code>avatarUrl()</code>: Retrieve the image URL (defaults to PNG of width 128px) for this users&#39;s avatar, hosted on Bscotch servers.</li>
+</ul>
+</li>
+<li><code>LevelheadPlayer</code><ul>
+<li><code>getLikedLevels()</code>: Pageable list of levelIds.</li>
+<li><code>getFavoritedLevels()</code></li>
+<li><code>getFollowers()</code>: Pageable list of userIds of users following this user.</li>
+<li><code>getFollowing()</code>: List of userIds this user follows.</li>
+<li><code>follow()</code>: Acting on behalf of the current user (the one matching the Delegation Key), follow this user.</li>
+<li><code>unfollow()</code></li>
+</ul>
+</li>
+<li><code>LevelheadLevel</code><ul>
+<li><code>avatarUrl()</code>: Retrieve the image URL for this level&#39;s icon.</li>
+<li><code>getLikes()</code>: Pageable list of userIds for players who like this level.</li>
+<li><code>getFavorites()</code></li>
+<li><code>bookmark()</code>: Bookmark this level on the current user&#39;s behalf.</li>
+<li><code>unbookmark()</code></li>
+</ul>
+</li>
+</ul>
+<h3 id="methods">Methods</h3>
+<p>Full documentation is provided via types and JSDocs. Below is a quick, non-comprehensive list of functionality for convenience.</p>
+<h4 id="general">General</h4>
+<ul>
+<li><code>rce.version()</code>: [node only] Get the current Rumpus, Terms, and Privacy Policy versions.</li>
+<li><code>rce.delegationKeyPermissions()</code>: Get permissions information for a given delegation key.</li>
+<li><code>rce.request()</code>: Generic method for sending requests to Rumpus.</li>
+<li><code>rce.get()</code>: Shortcut method for sending GET requests to Rumpus.</li>
+<li><code>rce.post()</code></li>
+<li><code>rce.patch()</code></li>
+<li><code>rce.put()</code></li>
+<li><code>rce.delete()</code></li>
+</ul>
+<h4 id="levelhead">Levelhead</h4>
+<h5 id="misc">Misc.</h5>
+<ul>
+<li><code>rce.levelhead.aliases.search(&#39;bscotch404&#39;)</code>: Get the Levelhead aliases (usernames) for a list of lookup codes.</li>
+</ul>
+<h5 id="levels">Levels</h5>
+<ul>
+<li><code>rce.levelhead.levels.getTags()</code>: Level tags are machine-friendly tokens -- this returns the current set of level tags along with their statistical frequencies across all levels, and their name and description in the requester&#39;s language.</li>
+<li><code>rce.levelhead.levels.search()</code>: Search for Levelhead levels. Level tags are automatically translated into the requester&#39;s preferred language (English fallback).</li>
+<li><code>rce.levelhead.levels.getLikes(levelId)</code>: List the users who like a given Levelhead level. Resulting array has a <code>nextPage()</code> function to simplify paging.</li>
+<li><code>rce.levelhead.levels.getFavorites(levelId)</code>:</li>
+</ul>
+<h5 id="players">Players</h5>
+<ul>
+<li><code>rce.levelhead.players.search()</code>: Search for Levelhead players.</li>
+<li><code>rce.levelhead.players.getLikedLevels(userId)</code>: Page through the levels &quot;liked&quot; by a given player.</li>
+<li><code>rce.levelhead.players.getFavoritedLevels(userId)</code></li>
+<li><code>rce.levelhead.players.getFollowers(userId)</code>: Page through the users who follow a given player.</li>
+<li><code>rce.levelhead.players.getFollowing(userId)</code>: Page through the users a given user follows.</li>
+<li><code>rce.levelhead.players.follow(userId)</code>: Follow a player.</li>
+<li><code>rce.levelhead.players.unfollow(userId)</code></li>
+</ul>
+<h5 id="bookmarks">Bookmarks</h5>
+<ul>
+<li><code>rce.levelhead.bookmarks.search()</code>: Search the current user&#39;s bookmarks.</li>
+<li><code>rce.levelhead.bookmarks.add(levelId)</code>: Add a level to the current user&#39;s bookmarks.</li>
+<li><code>rce.levelhead.bookmarks.remove(levelId)</code></li>
+</ul>

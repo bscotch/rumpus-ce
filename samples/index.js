@@ -1,3 +1,5 @@
+const rce = new window.RumpusCE();
+
 /**
  * @param {any} claim
  * @param {string} message
@@ -11,23 +13,24 @@ function assertClaim(claim, message) {
 
 /**
  * @template {HTMLElement} [El=HTMLElement]
- * @param {string} id
- * @returns {El}
+ * @param {string} selector
  */
-function getElementById(id) {
-  const element = /** @type {El}*/ (document.getElementById(id));
-  assertClaim(element, `Element with id ${id} does not exist`);
-  return element;
+function getElements(selector) {
+  const elements = /** @type {NodeListOf<El>}*/ (
+    document.querySelectorAll(selector)
+  );
+  assertClaim(elements.length, `Elements selected by ${selector} do not exist`);
+  return elements;
 }
 
 /**
- * @param {string} elementId
+ * @param {string} selector
  * @param {string} innerHtml
  */
-function setElementInnerHtml(elementId, innerHtml) {
-  const element = getElementById(elementId);
-  element.innerHTML = innerHtml;
-  return element;
+function setElementsInnerHtml(selector, innerHtml) {
+  const elements = getElements(selector);
+  elements.forEach((element) => (element.innerHTML = innerHtml));
+  return elements;
 }
 
 /**
@@ -35,35 +38,101 @@ function setElementInnerHtml(elementId, innerHtml) {
  * @param {string} url
  */
 function setImageSrc(imageId, url) {
-  const imageEl = /** @type {HTMLImageElement} */ (getElementById(imageId));
-  imageEl.src = url;
+  const imageEl = /** @type {NodeListOf<HTMLImageElement>} */ (
+    getElements(imageId)
+  );
+  imageEl.forEach((image) => (image.src = url));
+  return imageEl;
 }
 
-/** @type {[id:string, size:number][]} */
-const logoList = [
-  ['logo-header', 64],
-  ['logo-footer', 32],
-];
-
-async function populatePage() {
-  const rce = new window.RumpusCE();
+async function populateStaticContent() {
   const versionInfo = await rce.version();
-  const sampleProfile = await rce.levelhead.players.getPlayer('bscotch404');
-  setElementInnerHtml('rumpus-version', versionInfo.rumpus);
-  setElementInnerHtml('alias', (await sampleProfile.alias).name);
-  setImageSrc('avatar', await sampleProfile.createAvatarUrl(128));
+  setElementsInnerHtml('#rumpus-version', versionInfo.rumpus);
+  /** @type {[id:string, size:number][]} */
+  const logoList = [
+    ['#logo-header', 64],
+    ['#logo-footer', 32],
+  ];
   for (const [id, size] of logoList) {
     setImageSrc(id, rce.createLogoUrl(size));
   }
+}
 
+function getUserIdInputElement() {
+  return /** @type {HTMLInputElement} */ (getElements('#user-id-input')[0]);
+}
+
+/**
+ * @param {string} userId
+ */
+function setUserIdInputElement(userId) {
+  getUserIdInputElement().value = userId;
+}
+
+/**
+ * @param {string} message
+ */
+function setErrorMessage(message) {
+  const errorMessageEl = /** @type {HTMLParagraphElement} */ (
+    getElements('#error-message')[0]
+  );
+  if (message) {
+    message = `⚠ ${message}`;
+    errorMessageEl.hidden = false;
+  } else {
+    errorMessageEl.hidden = true;
+  }
+  errorMessageEl.innerText = message;
+}
+
+async function loadReadme() {
+  const readme = await (await fetch('./readme.html')).text();
+  setElementsInnerHtml('#readme-content', readme);
+  // @ts-expect-error
+  // eslint-disable-next-line no-undef
+  await hljs.highlightAll();
+}
+
+/**
+ * @param {string} userId
+ */
+async function showUserProfile(userId) {
+  loadReadme();
+  const sampleProfile = await rce.levelhead.players.getPlayer(userId);
+  setElementsInnerHtml('.alias', (await sampleProfile.alias).name);
+  setImageSrc('#avatar', await sampleProfile.createAvatarUrl(128));
   const statNames = /** @type {(keyof typeof sampleProfile['stats'])[]} */ (
     Object.keys(sampleProfile.stats)
   );
   let statsRows = ``;
   for (const statName of statNames) {
-    statsRows += `<tr class="stat-row"><td class="stat-name">${statName}</td><td  class="stat-value">${sampleProfile.stats[statName]}</td></tr>`;
+    const value = Math.round(sampleProfile.stats[statName]);
+    statsRows += `<tr class="stat-row"><th scope="row" class="stat-name">${statName}</th><td  class="stat-value">${value}</td></tr>`;
   }
-  setElementInnerHtml('stats', statsRows);
+  setElementsInnerHtml('#stats>tbody', statsRows);
+  setUserIdInputElement(userId);
 }
 
-populatePage();
+// Listen for new userId submissions
+const form = /** @type {HTMLFormElement} */ (getElements('#user-id-form')[0]);
+
+/**
+ *
+ * @param {SubmitEvent} event
+ */
+form.onsubmit = async (event) => {
+  event.preventDefault();
+  const userId = getUserIdInputElement().value;
+  try {
+    await showUserProfile(userId);
+  } catch (err) {
+    // @ts-ignore
+    setErrorMessage(err.message);
+  }
+};
+
+getUserIdInputElement().onkeyup = () => setErrorMessage('');
+
+// Initial load
+populateStaticContent();
+showUserProfile('bscotch404');

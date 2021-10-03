@@ -15,7 +15,9 @@
     "preversion": "git checkout develop && git fetch origin --prune && npm run build && npm test",
     "version": "git add -A",
     "postversion": "git push origin develop && git checkout master && git merge develop && git push origin master && npm publish && git checkout develop",
-    "_build:browser": "esbuild src/index.ts --bundle --sourcemap --target=chrome58,firefox57,safari11,edge16 --outdir=browser --format=esm --inject:browser/node-shims.js"
+    "_build:browser": "esbuild src/index.ts --bundle --sourcemap --target=chrome58,firefox57,safari11,edge16 --outdir=browser --format=esm --inject:browser/node-shims.js",
+    "_build:sample": "marked --gfm --input README.md -o samples/readme.html",
+    "get-version": "echo ${node -p \"require('./package').version\"}"
   },
   "keywords": [
     "rumpus",
@@ -46,6 +48,7 @@
     "dotenv": "^10.0.0",
     "esbuild": "^0.13.3",
     "eslint": "^7.32.0",
+    "marked": "^3.0.4",
     "mocha": "^9.1.2",
     "prettier": "^2.4.1",
     "source-map-support": "^0.5.20",

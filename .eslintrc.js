@@ -27,9 +27,9 @@ module.exports = {
     '@typescript-eslint/no-explicit-any': 'off',
     '@typescript-eslint/no-empty-function': 'off',
     'no-empty': 'off',
-    semi: 'error',
+    semi: 'off',
     'no-constant-condition': 'warn',
-    'no-trailing-spaces': 'error',
+    'no-trailing-spaces': 'off',
     'getter-return': 'off',
   },
   overrides: [
