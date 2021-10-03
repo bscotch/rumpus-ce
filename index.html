@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Rumpus CE Demo</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Styles and syntax hightlighting -->
+    <link rel="stylesheet" href="./index.css"/>
+    <link rel="stylesheet"
+      href="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.2.0/build/styles/default.min.css"/>
+    <script src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.2.0/build/highlight.min.js"></script>
+
+    <!--
+      Each version of browser-based RumpusCE also gets published to
+      the jsdelivr CDN, so the following script tag is the best way
+      to import it (you'll probably want to specify the version, instead
+      of using @latest, to make sure a future update doesn't break
+      your site)
+    -->
+
+    <script src="./index.js" type="module"></script>
+    <script src="./sample.js" type="module"></script>
+
+  </head>
+  <body>
+    <main>
+      <section id="preamble">
+        <header>
+          <a href="https://www.bscotch.net/rumpus-ce">
+            <img id="logo-header" alt="Rumpus CE Logo" loading="lazy" />
+          </a>
+          <h1 id="header">Rumpus CE Demo Site</h1>
+        </header>
+        </h1>
+        <p>
+          Rumpus CE is the community edition of the Rumpus API, which powers
+          <a href="https://www.bscotch.net/games/levelhead">Levelhead</a>
+          and the broader
+          <a href="https://www.bscotch.net">Butterscotch Shenanigans</a> universe.
+        </p>
+        <p>
+          See <a href="https://github.com/bscotch/rumpus-ce#readme">this project's README file</a>
+          for information about how to use
+          RumpusCE in your own Node.js or web projects.
+        </p>
+        <p>
+          See this site's <a href="https://github.com/bscotch/rumpus-ce/tree/develop/browser">source code</a> for an example of Rumpus CE in action for fetching Levelhead data.
+        </p>
+      </section>
+      <section id="levelhead-profile">
+        <header>
+          <img id="avatar" loading="lazy" />
+          <h3 class="alias"></h3>
+          <form id="user-id-form">
+            <label id="user-id-label" for="user-id-input">
+              <span >Rumpus Lookup Code</span>
+            </label>
+            <input name="user-id-input" id="user-id-input" type="text" pattern="^[a-zA-Z0-9]{5,12}$" placeholder="bscotch404"/>
+            <button type="submit">Load Profile</button>
+            <p id="error-message" hidden="true" aria-role="alert" aria-live="polite"></p>
+          </form>
+        </header>
+        <table id="stats" aria-live="polite">
+          <caption><span class="alias"></span>'s Levelhead Stats</caption> 
+          <thead>
+            <tr>
+              <th class="stat-name">Stat</th>
+              <th class="stat-value">Value</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </section>
+      <section id="readme">
+        <header>
+          <h2><a href="https://github.com/bscotch/rumpus-ce#readme">README</a></h2>
+        </header>
+        <div id="readme-content"></div>
+      </section>
+      <footer>
+          <img id="logo-footer" alt="Rumpus CE Logo" loading="lazy" />
+          <span>
+            Powered by 
+            <a href="https://www.bscotch.net/changelog">
+              Rumpus
+              <span id="rumpus-version"></span>
+            </a>
+          </span>
+      </footer>
+    </main>
+  </body>
+</html>
