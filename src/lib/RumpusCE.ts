@@ -172,4 +172,9 @@ export default class RumpusCE {
       remainingRequests: +res.headers['x-rate-limit-remaining'],
     } as RumpusResponse<Data>;
   }
+
+  createLogoUrl(size: number) {
+    size = Math.round(Math.min(Math.max(size, 16), 256));
+    return `https://img.bscotch.net/fit-in/${size}x${size}/logos/rumpus-ce.png`;
+  }
 }

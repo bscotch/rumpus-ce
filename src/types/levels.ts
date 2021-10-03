@@ -1,4 +1,4 @@
-import type { Alias } from './aliases';
+import type { AliasDownload } from './aliases';
 import type { ResultsPage } from '../lib/api/paging';
 import type { ListedUserId } from './players';
 
@@ -36,7 +36,7 @@ export interface LevelheadLevelTag {
 interface CrateItemRecord {
   userId: string;
   /** Alias information for the user who has this record. */
-  alias: Alias;
+  alias: AliasDownload;
   value: number;
   /** When this record was set. */
   createdAt: string;
@@ -94,7 +94,7 @@ export interface LevelheadLevelDownload {
   levelId: string;
   avatarId: string;
   userId: string;
-  alias: Alias;
+  alias: AliasDownload;
   title: string;
   createdAt: string;
   updatedAt: string;

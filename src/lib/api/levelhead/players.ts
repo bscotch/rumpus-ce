@@ -2,7 +2,6 @@ import { default as RumpusCE, DelegationOptions } from '../../RumpusCE.js';
 import { cleanQuery } from '../../utility.js';
 import type {
   ListedUserId,
-  LevelheadPlayer,
   LevelheadPlayerSearch,
   LevelheadPlayerDownload,
   LevelheadPlayerLikesSearch,
@@ -14,6 +13,7 @@ import {
   blankResultsPage,
   addNextPageSearchFunction,
 } from '../paging.js';
+import { LevelheadPlayer } from '../classes/LevelheadPlayer.js';
 
 /** Fetch the levels liked or favorited by a given user. */
 async function getLevelheadPlayerLevelList(
@@ -181,42 +181,6 @@ export async function unfollowLevelheadPlayer(
   return true;
 }
 
-/** Add convenience functions to Player objects. */
-function addPlayerFunctionality(
-  client: RumpusCE,
-  player: LevelheadPlayerDownload,
-) {
-  const fancyPlayer = player as LevelheadPlayer;
-
-  fancyPlayer.getLikedLevels = (
-    query?: LevelheadPlayerLikesSearch,
-    options?: DelegationOptions,
-  ) => getLevelheadLikedLevels.call(client, player.userId, query, options);
-
-  fancyPlayer.getFavoritedLevels = (
-    query?: LevelheadPlayerLikesSearch,
-    options?: DelegationOptions,
-  ) => getLevelheadFavoritedLevels.call(client, player.userId, query, options);
-
-  fancyPlayer.getFollowers = (
-    query?: LevelheadPlayerFollowsSearch,
-    options?: DelegationOptions,
-  ) => getLevelheadPlayerFollowers.call(client, player.userId, query, options);
-
-  fancyPlayer.getFollowing = (
-    query?: LevelheadPlayerFollowsSearch,
-    options?: DelegationOptions,
-  ) => getLevelheadPlayerFollowing.call(client, player.userId, query, options);
-
-  fancyPlayer.follow = (options?: DelegationOptions) =>
-    followLevelheadPlayer.call(client, player.userId, options);
-
-  fancyPlayer.unfollow = (options?: DelegationOptions) =>
-    unfollowLevelheadPlayer.call(client, player.userId, options);
-
-  return fancyPlayer;
-}
-
 /** Search for Levelhead player profiles. */
 export async function getLevelheadPlayers(
   this: RumpusCE,
@@ -225,13 +189,16 @@ export async function getLevelheadPlayers(
 ) {
   const queryParams: LevelheadPlayerSearch = { ...query };
   queryParams.sort = queryParams.sort || 'createdAt';
-  const res = await this.get(`/api/levelhead/players`, {
-    ...options,
-    query: cleanQuery(queryParams),
-  });
+  const res = await this.get<LevelheadPlayerDownload[]>(
+    `/api/levelhead/players`,
+    {
+      ...options,
+      query: cleanQuery(queryParams),
+    },
+  );
   if (res.status == 200) {
-    const players = (res.data as LevelheadPlayerDownload[]).map((player) =>
-      addPlayerFunctionality(this, player),
+    const players = res.data.map(
+      (player) => new LevelheadPlayer(this, player),
     ) as ResultsPage<LevelheadPlayer>;
     addNextPageSearchFunction(
       this,

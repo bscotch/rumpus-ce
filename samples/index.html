@@ -2,61 +2,159 @@
 <html>
   <head>
     <title>Rumpus CE Demo</title>
-    <!--  You'll probably want to replace `latest` with whatever the
-          current version is so that future changes don't break your site.
+    <!--
+      Each version of browser-based RumpusCE also gets published to
+      the jsdelivr CDN, so the following script tag is the best way
+      to import it (you'll probably want to specify the version, instead
+      of using @latest, to make sure a future update doesn't break
+      your site)
     -->
-    <script src="https://cdn.jsdelivr.net/npm/@bscotch/rumpus-ce@latest"></script>
-    <script src="./index.js"></script>
-    <link rel="stylesheet" href="index.css">
+
+    <!-- <script src="https://cdn.jsdelivr.net/npm/@bscotch/rumpus-ce@latest"></script> -->
+
+    <script src="../browser/index.js" type="module"></script>
+    <script src="./index.js" type="module"></script>
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap');
+
+      :root {
+        --link-color: #d70dd7;
+        --max-width: 640px;
+      }
+
+      html {
+        box-sizing: border-box;
+        background-image: linear-gradient(rgb(92, 20, 89), rgb(90, 15, 82));
+        color: white;
+        font-family: 'Roboto', sans-serif;
+        font-size: 20px;
+        line-height: 1.3;
+      }
+      *,
+      *:before,
+      *:after {
+        box-sizing: inherit;
+      }
+
+      body {
+        margin: 0 auto;
+        min-height: 100vh;
+        border: 1px solid #27052e;
+      }
+
+      a{
+        color: var(--link-color);
+        text-decoration: none;
+      }
+      a:hover{
+        color: var(--link-color);
+        text-decoration: underline;
+      }
+
+      main {
+        max-width: var(--max-width);
+        width: 100%;
+        background-color: #37183c;
+        overflow: auto;
+        padding: 20px 30px;
+        display: flex;
+        flex-direction: column;
+        margin: 0 auto;
+        min-height: 100vh;
+      }
+
+      footer {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      footer img {
+        padding: 10px;
+      }
+
+      #preamble header {
+        display: flex;
+        align-items: center;
+      }
+      h1{
+        font-size: 200%;
+        padding: 0 20px;
+      }
+
+      #levelhead-profile {
+        display: flex;
+        align-items: flex-start;
+        padding: 20px 0;
+        justify-content: center;
+        flex-grow:1;
+      }
+
+      #levelhead-profile header {
+        text-align: center;
+        padding: 30px;
+      }
+
+      td{
+        padding: 5px;
+        border-radius: 5px;
+        background-color: black;
+      }
+      .stat-name{
+        text-align:right;
+        background-color: #27052e;
+      }
+      .stat-value{
+        text-align:center;
+      }
+      @media screen and (max-width: var(--max-width)) {
+        #levelhead-profile{
+          flex-direction: column;
+        }
+        main{          
+          padding: 20px;
+          background-color: red;
+        }
+      }
+    </style>
   </head>
   <body>
-    <div id="content">
-      <h1 id="header">
-        <img  id="logo"
-              alt="Rumpus CE Logo"
-              loading="lazy"
-              src="https://img.bscotch.net/fit-in/64x64/logos/rumpus-ce.png"
-        />
-        Rumpus CE Demo Site
-      </h1>
-      <h3>
-        <i>Look at the index.js file to understand how this page gets its data.</i>
-      </h3>
-      <div id="info">
+    <main>
+      <section id="preamble">
+        <header>
+          <img id="logo-header" alt="Rumpus CE Logo" loading="lazy" />
+          <h1 id="header">Rumpus CE Demo Site</h1>
+        </header>
+        </h1>
         <p>
           Rumpus CE is the community edition of the Rumpus API, which powers
-          Levelhead and the broader Butterscotch Shenanigans universe.
+          <a href="https://www.bscotch.net/games/levelhead">Levelhead</a>
+          and the broader
+          <a href="https://www.bscotch.net">Butterscotch Shenanigans</a> universe.
         </p>
         <p>
-          Rumpus is designed, created, and maintained by Adam Coster, the
-          CTO and co-founder of Butterscotch Shenanigans. He spends most of
-          his time making Rumpus instead of playing Levelhead, so his stats
-          aren't very impressive. But hey, you're here to see Rumpus CE in
-          action, not to see impressive Levelhead stats!
+          See <a href="https://github.com/bscotch/rumpus-ce#readme">this project's README file</a>
+          for information about how to use
+          RumpusCE in your own Node.js or web projects.
         </p>
-        <div id="levelhead-stats">
-          <img  id="avatar"
-                alt="Adam's Levelhead avatar"
-                src="https://img.bscotch.net/fit-in/128x128/avatars/bscotchadam.png" />
-          <div id="alias"></div>
-          <div id="stats">
-            
-          </div>
-        </div>
-      </div>
-      <div id="footer">
-        <span id="powered-by">
-          <img  id="logo"
-                alt="Rumpus CE Logo"
-                loading="lazy"
-                src="https://img.bscotch.net/fit-in/32x32/logos/rumpus-ce.png"
-          />
+        <p>
+          See this site's <a href="https://github.com/bscotch/rumpus-ce/tree/develop/samples">source code</a> for an example of Rumpus CE in action for fetching Levelhead data.
+        </p>
+      </section>
+      <section id="levelhead-profile">
+        <header>
+          <img id="avatar" loading="lazy" />
+          <h3 id="alias"></h3>
+        </header>
+        <table id="stats"></table>
+      </section>
+      <footer>
+          <img id="logo-footer" alt="Rumpus CE Logo" loading="lazy" />
           <a href="https://www.bscotch.net/rumpus-ce">
-            Powered by Rumpus CE
+            Powered by Rumpus
             <span id="rumpus-version"></span>
           </a>
-        </span>
-      </div>
-    </div>
+      </footer>
+    </main>
   </body>
 </html>

@@ -1,6 +1,4 @@
-import type { Alias } from './aliases';
-import type { ResultsPage } from '../lib/api/paging';
-import type { ListedLevelId } from './levels';
+import type { AliasDownload } from './aliases';
 
 type PlayerSearchSortOption =
   | 'createdAt'
@@ -15,7 +13,7 @@ type PlayerSearchSortOption =
   | '-Trophies';
 
 export type LevelheadPlayerSearch = {
-  userIds?: string;
+  userIds?: string | string[];
   sort?: PlayerSearchSortOption;
   limit?: number;
   includeAliases?: boolean;
@@ -33,7 +31,7 @@ export type LevelheadPlayerSearch = {
 export interface LevelheadPlayerDownload {
   _id: string;
   userId: string;
-  alias: Alias;
+  alias?: AliasDownload;
   createdAt: string;
   updatedAt: string;
   stats: {
@@ -77,19 +75,4 @@ export interface ListedUserId {
   _id: string;
   userId: string;
   alias?: string;
-}
-
-export interface LevelheadPlayer extends LevelheadPlayerDownload {
-  /** Get the levels liked by this user. */
-  getLikedLevels(): Promise<ResultsPage<ListedLevelId>>;
-  /** Get the levels favorited by this user. */
-  getFavoritedLevels(): Promise<ResultsPage<ListedLevelId>>;
-  /** Get the users who follow this user. */
-  getFollowers(): Promise<ResultsPage<ListedUserId>>;
-  /** Get the users this user follows. */
-  getFollowing(): Promise<ResultsPage<ListedUserId>>;
-  /** Follow this user. */
-  follow(): Promise<boolean>;
-  /** Unfollow this user. */
-  unfollow(): Promise<boolean>;
 }

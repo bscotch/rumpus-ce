@@ -10,11 +10,12 @@
     "build/types/**/*"
   ],
   "scripts": {
-    "test": "npx mocha --inspect --require source-map-support/register --bail  ./build/test/index.js",
-    "build": "rm -rf build && npx tsc && npx webpack",
+    "test": "mocha --inspect --require source-map-support/register --bail  ./build/test/index.js",
+    "build": "rm -rf build && tsc && npm run _build:browser",
     "preversion": "git checkout develop && git fetch origin --prune && npm run build && npm test",
     "version": "git add -A",
-    "postversion": "git push origin develop && git checkout master && git merge develop && git push origin master && npm publish && git checkout develop"
+    "postversion": "git push origin develop && git checkout master && git merge develop && git push origin master && npm publish && git checkout develop",
+    "_build:browser": "esbuild src/index.ts --bundle --sourcemap --target=chrome58,firefox57,safari11,edge16 --outdir=browser --format=esm --inject:browser/node-shims.js"
   },
   "keywords": [
     "rumpus",
