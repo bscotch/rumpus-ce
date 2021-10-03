@@ -42,7 +42,7 @@ To use directly in the browser via the JSDelivr CDN (**Note:** you must specify 
 
 ```html
 <script
-  src="https://cdn.jsdelivr.net/npm/@bscotch/rumpus-ce@latest"
+  src="https://cdn.jsdelivr.net/npm/@bscotch/rumpus-ce@1.2.4"
   type="module"
 ></script>
 <script type="module">

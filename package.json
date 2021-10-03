@@ -7,17 +7,19 @@
   "files": [
     "build/lib/**/*",
     "build/index.*",
-    "build/types/**/*"
+    "build/types/**/*",
+    "browser/index.js",
+    "browser/index.js.map"
   ],
   "scripts": {
     "test": "mocha --inspect --require source-map-support/register --bail  ./build/test/index.js",
-    "build": "rm -rf build && tsc && npm run _build:browser",
-    "preversion": "git checkout develop && git fetch origin --prune && npm run build && npm test",
-    "version": "git add -A",
+    "build": "npm run _build:node && npm run _build:browser && npm run _build:sample",
+    "version": "npm run build && npm run test && git add -A",
     "postversion": "git push origin develop && git checkout master && git merge develop && git push origin master && npm publish && git checkout develop",
+    "_build:node": "rm -rf build && tsc ",
     "_build:browser": "esbuild src/index.ts --bundle --sourcemap --target=chrome58,firefox57,safari11,edge16 --outdir=browser --format=esm --inject:browser/node-shims.js",
-    "_build:sample": "marked --gfm --input README.md -o samples/readme.html",
-    "get-version": "echo ${node -p \"require('./package').version\"}"
+    "_build:sample": "npm run _set-readme-version && marked --gfm --input README.md -o browser/readme.html",
+    "_set-readme-version": "node -p \"let f='README.md',fs=require('fs');fs.writeFileSync(f,fs.readFileSync(f,'utf-8').replace(/@(latest|\\d+\\.\\d+\\.\\d+\\b)/g, `@${require('./package').version}`));"
   },
   "keywords": [
     "rumpus",

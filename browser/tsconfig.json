@@ -1,5 +1,5 @@
 {
-  "include": ["index.js", "./shim.d.ts"],
+  "include": ["sample.js", "./shim.d.ts"],
   "compilerOptions": {
     "target": "ESNext" /* Set the JavaScript language version for emitted JavaScript and include compatible library declarations. */,
     "lib": [
