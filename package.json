@@ -15,11 +15,12 @@
     "test": "mocha --inspect --require source-map-support/register --bail  ./build/test/index.js",
     "build": "npm run _build:node && npm run _build:browser && npm run _build:sample",
     "version": "npm run build && npm run test && git add -A",
-    "postversion": "git push origin develop && git checkout master && git merge develop && git push origin master && npm publish && git checkout develop",
+    "postversion": "git push origin develop && npm publish",
     "_build:node": "rm -rf build && tsc ",
     "_build:browser": "esbuild src/index.ts --bundle --sourcemap --target=chrome58,firefox57,safari11,edge16 --outdir=browser --format=esm --inject:browser/node-shims.js",
     "_build:sample": "npm run _set-readme-version && marked --gfm --input README.md -o browser/readme.html",
-    "_set-readme-version": "node -p \"let f='README.md',fs=require('fs');fs.writeFileSync(f,fs.readFileSync(f,'utf-8').replace(/@(latest|\\d+\\.\\d+\\.\\d+\\b)/g, `@${require('./package').version}`));"
+    "_set-readme-version": "node -p \"let f='README.md',fs=require('fs');fs.writeFileSync(f,fs.readFileSync(f,'utf-8').replace(/@(latest|\\d+\\.\\d+\\.\\d+\\b)/g, `@${require('./package').version}`));",
+    "_publish:gh-pages": "gh-pages-clean && gh-pages -d browser"
   },
   "keywords": [
     "rumpus",
