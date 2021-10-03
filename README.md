@@ -4,10 +4,13 @@
 
 This project is designed to help jump-start community-created projects by providing easy access to Rumpus CE data -- learn more about Rumpus CE on the [Bscotch website](https://beta.bscotch.net/rumpus-ce) and check out the [Rumpus CE documentation](https://beta.bscotch.net/api/docs/community-edition/) for all the technical details.
 
+👀 See the [demo site](https://bscotch.github.io/rumpus-ce/), which uses RumpusCE to fetch and display Levelhead player stats. The code for the demo site is [available on GitHub](https://github.com/bscotch/rumpus-ce/tree/develop/browser).
+
 *It may be tempting to use this module and Rumpus CE in ways that violate our Terms or Code of Conduct. **Don't!** If you're unsure about something, pop into the official Bscotch Discord to ask about your use case.*
 
 ## Relevant Links
 
++ [Demo Site](https://bscotch.github.io/rumpus-ce/)
 + [Rumpus CE Homepage](https://beta.bscotch.net/rumpus-ce)
 + [Rumpus CE Newsletter](https://beta.bscotch.net/telegrams?subscribe=rumpus-ce)
 + [Rumpus CE Documentation](https://beta.bscotch.net/api/docs/community-edition) - Full documentation for Rumpus CE.
