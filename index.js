@@ -1763,7 +1763,7 @@ var RumpusCE = class {
     if (res.status == 200) {
       return {
         userId: res.data.userId,
-        passId: res.data._id,
+        passId: res.data.passId,
         permissions: res.data.permissions
       };
     } else if ([400, 403].includes(res.status)) {
