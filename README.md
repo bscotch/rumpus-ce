@@ -45,7 +45,7 @@ To use directly in the browser via the JSDelivr CDN (**Note:** you must specify 
 
 ```html
 <script
-  src="https://cdn.jsdelivr.net/npm/@bscotch/rumpus-ce@2.0.1"
+  src="https://cdn.jsdelivr.net/npm/@bscotch/rumpus-ce@2.0.2"
   type="module"
 ></script>
 <script type="module">
