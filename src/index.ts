@@ -2,10 +2,15 @@ import RCE from './lib/RumpusCE.js';
 export const RumpusCE = RCE;
 export default RumpusCE;
 
-if (window) {
-  // @ts-ignore
-  window.RumpusCE = RumpusCE;
-}
+try {
+  // For the browser build, attach the RumpuseCE
+  // client object to Window to make it globally
+  // available and simplify use.
+  if (window) {
+    // @ts-ignore
+    window.RumpusCE = RumpusCE;
+  }
+} catch {}
 
 export * from './lib/RumpusCE.js';
 export * from './types/aliases.js';
