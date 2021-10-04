@@ -1843,8 +1843,11 @@ init_node_shims();
 // src/index.ts
 var RumpusCE2 = RumpusCE;
 var src_default = RumpusCE2;
-if (window) {
-  window.RumpusCE = RumpusCE2;
+try {
+  if (window) {
+    window.RumpusCE = RumpusCE2;
+  }
+} catch (e) {
 }
 export {
   RumpusCE2 as RumpusCE,
