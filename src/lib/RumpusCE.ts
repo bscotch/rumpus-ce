@@ -32,12 +32,19 @@ export interface RumpusResponse<Data = any> {
   remainingRequests: number;
 }
 
+export interface RateLimitInfo {
+  limit?: number;
+  remaining?: number;
+  nextReset?: Date;
+}
+
 /** Class for interacting with the Rumpus CE API. */
 export default class RumpusCE {
   private _server: RumpusServer;
   private _request: AxiosInstance;
   private _levelheadAPI: LevelheadAPI;
   private _baseUrl: string;
+  private _rateLimitInfo: RateLimitInfo;
 
   constructor(
     public defaultDelegationKey: string | undefined = process.env
@@ -52,6 +59,11 @@ export default class RumpusCE {
         : `https://${this._server}.bscotch.net`;
     this._request = axios.create({ baseURL: this._baseUrl, auth });
     this._levelheadAPI = createLevelheadAPI(this);
+    this._rateLimitInfo = {
+      limit: undefined,
+      remaining: undefined,
+      nextReset: undefined
+    };
   }
 
   /** Rumpus has multiple servers for different stages of development. */
@@ -67,6 +79,10 @@ export default class RumpusCE {
   /** The Rumpus CE Levelhead API, as a nested collection of methods. */
   get levelhead() {
     return this._levelheadAPI;
+  }
+
+  get rateLimitInfo() {
+    return { ...this._rateLimitInfo };
   }
 
   /** Fetch version information from Rumpus, including server and legal doc versions.
@@ -167,6 +183,15 @@ export default class RumpusCE {
       // since the meaning of e.g. a 404 is endpoint-specific.
       res = err.response;
     }
+
+    this._rateLimitInfo = {
+      limit: +res.headers['x-rate-limit-limit'],
+      remaining: +res.headers['x-rate-limit-remaining'],
+      nextReset: new Date(
+                       +(res.headers['x-rate-limit-reset']) * 1000 + Date.now()
+      )
+    };
+
     return {
       ...res.data,
       headers: res.headers,
