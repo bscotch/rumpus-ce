@@ -33,9 +33,9 @@ export interface RumpusResponse<Data = any> {
 }
 
 export interface RateLimitInfo {
-  limit?: number;
-  remaining?: number;
-  nextReset?: Date;
+  limit: number;
+  remaining: number;
+  nextReset: Date;
 }
 
 /** Class for interacting with the Rumpus CE API. */
@@ -44,7 +44,11 @@ export default class RumpusCE {
   private _request: AxiosInstance;
   private _levelheadAPI: LevelheadAPI;
   private _baseUrl: string;
-  private _rateLimitInfo: RateLimitInfo;
+  private _rateLimitInfo: RateLimitInfo = {
+    limit: Infinity,
+    remaining: Infinity,
+    nextReset: new Date(),
+  };
 
   constructor(
     public defaultDelegationKey: string | undefined = process.env
@@ -59,11 +63,6 @@ export default class RumpusCE {
         : `https://${this._server}.bscotch.net`;
     this._request = axios.create({ baseURL: this._baseUrl, auth });
     this._levelheadAPI = createLevelheadAPI(this);
-    this._rateLimitInfo = {
-      limit: undefined,
-      remaining: undefined,
-      nextReset: undefined
-    };
   }
 
   /** Rumpus has multiple servers for different stages of development. */
@@ -81,7 +80,29 @@ export default class RumpusCE {
     return this._levelheadAPI;
   }
 
-  get rateLimitInfo() {
+  /**
+   * Number of requests that can be made by this client
+   * before running into the API rate limit (unless the
+   * cooldown has expired.)
+   */
+  get requestsRemaining() {
+    return this._rateLimitInfo.remaining;
+  }
+
+  /**
+   * Whether the client has hit the rate limit and, if so,
+   * is still within the cooldown period. If `true` the
+   * client will receive a 429 error until the cooldown
+   * expires.
+   */
+  get isRateLimited() {
+    return (
+      this.requestsRemaining <= 0 &&
+      this.rateLimitInfo.nextReset.getTime() > Date.now()
+    );
+  }
+
+  get rateLimitInfo(): RateLimitInfo {
     return { ...this._rateLimitInfo };
   }
 
@@ -188,8 +209,8 @@ export default class RumpusCE {
       limit: +res.headers['x-rate-limit-limit'],
       remaining: +res.headers['x-rate-limit-remaining'],
       nextReset: new Date(
-                       +(res.headers['x-rate-limit-reset']) * 1000 + Date.now()
-      )
+        +res.headers['x-rate-limit-reset'] * 1000 + Date.now(),
+      ),
     };
 
     return {
