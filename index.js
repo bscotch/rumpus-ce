@@ -23,21 +23,21 @@ var __spreadValues = (a, b) => {
 var __spreadProps = (a, b) => __defProps(a, __getOwnPropDescs(b));
 var __markAsModule = (target) => __defProp(target, "__esModule", { value: true });
 var __esm = (fn, res) => function __init() {
-  return fn && (res = (0, fn[Object.keys(fn)[0]])(fn = 0)), res;
+  return fn && (res = (0, fn[__getOwnPropNames(fn)[0]])(fn = 0)), res;
 };
 var __commonJS = (cb, mod) => function __require() {
-  return mod || (0, cb[Object.keys(cb)[0]])((mod = { exports: {} }).exports, mod), mod.exports;
+  return mod || (0, cb[__getOwnPropNames(cb)[0]])((mod = { exports: {} }).exports, mod), mod.exports;
 };
-var __reExport = (target, module, desc) => {
+var __reExport = (target, module, copyDefault, desc) => {
   if (module && typeof module === "object" || typeof module === "function") {
     for (let key of __getOwnPropNames(module))
-      if (!__hasOwnProp.call(target, key) && key !== "default")
+      if (!__hasOwnProp.call(target, key) && (copyDefault || key !== "default"))
         __defProp(target, key, { get: () => module[key], enumerable: !(desc = __getOwnPropDesc(module, key)) || desc.enumerable });
   }
   return target;
 };
-var __toModule = (module) => {
-  return __reExport(__markAsModule(__defProp(module != null ? __create(__getProtoOf(module)) : {}, "default", module && module.__esModule && "default" in module ? { get: () => module.default, enumerable: true } : { value: module, enumerable: true })), module);
+var __toESM = (module, isNodeMode) => {
+  return __reExport(__markAsModule(__defProp(module != null ? __create(__getProtoOf(module)) : {}, "default", !isNodeMode && module && module.__esModule ? { get: () => module.default, enumerable: true } : { value: module, enumerable: true })), module);
 };
 
 // browser/node-shims.js
@@ -53,8 +53,8 @@ var init_node_shims = __esm({
 // node_modules/axios/lib/helpers/bind.js
 var require_bind = __commonJS({
   "node_modules/axios/lib/helpers/bind.js"(exports, module) {
-    init_node_shims();
     "use strict";
+    init_node_shims();
     module.exports = function bind(fn, thisArg) {
       return function wrap() {
         var args = new Array(arguments.length);
@@ -70,12 +70,12 @@ var require_bind = __commonJS({
 // node_modules/axios/lib/utils.js
 var require_utils = __commonJS({
   "node_modules/axios/lib/utils.js"(exports, module) {
-    init_node_shims();
     "use strict";
+    init_node_shims();
     var bind = require_bind();
     var toString = Object.prototype.toString;
     function isArray(val) {
-      return toString.call(val) === "[object Array]";
+      return Array.isArray(val);
     }
     function isUndefined(val) {
       return typeof val === "undefined";
@@ -87,14 +87,14 @@ var require_utils = __commonJS({
       return toString.call(val) === "[object ArrayBuffer]";
     }
     function isFormData(val) {
-      return typeof FormData !== "undefined" && val instanceof FormData;
+      return toString.call(val) === "[object FormData]";
     }
     function isArrayBufferView(val) {
       var result;
       if (typeof ArrayBuffer !== "undefined" && ArrayBuffer.isView) {
         result = ArrayBuffer.isView(val);
       } else {
-        result = val && val.buffer && val.buffer instanceof ArrayBuffer;
+        result = val && val.buffer && isArrayBuffer(val.buffer);
       }
       return result;
     }
@@ -130,7 +130,7 @@ var require_utils = __commonJS({
       return isObject(val) && isFunction(val.pipe);
     }
     function isURLSearchParams(val) {
-      return typeof URLSearchParams !== "undefined" && val instanceof URLSearchParams;
+      return toString.call(val) === "[object URLSearchParams]";
     }
     function trim(str) {
       return str.trim ? str.trim() : str.replace(/^\s+|\s+$/g, "");
@@ -224,8 +224,8 @@ var require_utils = __commonJS({
 // node_modules/axios/lib/helpers/buildURL.js
 var require_buildURL = __commonJS({
   "node_modules/axios/lib/helpers/buildURL.js"(exports, module) {
-    init_node_shims();
     "use strict";
+    init_node_shims();
     var utils = require_utils();
     function encode(val) {
       return encodeURIComponent(val).replace(/%3A/gi, ":").replace(/%24/g, "$").replace(/%2C/gi, ",").replace(/%20/g, "+").replace(/%5B/gi, "[").replace(/%5D/gi, "]");
@@ -276,8 +276,8 @@ var require_buildURL = __commonJS({
 // node_modules/axios/lib/core/InterceptorManager.js
 var require_InterceptorManager = __commonJS({
   "node_modules/axios/lib/core/InterceptorManager.js"(exports, module) {
-    init_node_shims();
     "use strict";
+    init_node_shims();
     var utils = require_utils();
     function InterceptorManager() {
       this.handlers = [];
@@ -310,8 +310,8 @@ var require_InterceptorManager = __commonJS({
 // node_modules/axios/lib/helpers/normalizeHeaderName.js
 var require_normalizeHeaderName = __commonJS({
   "node_modules/axios/lib/helpers/normalizeHeaderName.js"(exports, module) {
-    init_node_shims();
     "use strict";
+    init_node_shims();
     var utils = require_utils();
     module.exports = function normalizeHeaderName(headers, normalizedName) {
       utils.forEach(headers, function processHeader(value, name) {
@@ -327,8 +327,8 @@ var require_normalizeHeaderName = __commonJS({
 // node_modules/axios/lib/core/enhanceError.js
 var require_enhanceError = __commonJS({
   "node_modules/axios/lib/core/enhanceError.js"(exports, module) {
-    init_node_shims();
     "use strict";
+    init_node_shims();
     module.exports = function enhanceError(error, config, code, request, response) {
       error.config = config;
       if (code) {
@@ -360,8 +360,8 @@ var require_enhanceError = __commonJS({
 // node_modules/axios/lib/core/createError.js
 var require_createError = __commonJS({
   "node_modules/axios/lib/core/createError.js"(exports, module) {
-    init_node_shims();
     "use strict";
+    init_node_shims();
     var enhanceError = require_enhanceError();
     module.exports = function createError(message, config, code, request, response) {
       var error = new Error(message);
@@ -373,8 +373,8 @@ var require_createError = __commonJS({
 // node_modules/axios/lib/core/settle.js
 var require_settle = __commonJS({
   "node_modules/axios/lib/core/settle.js"(exports, module) {
-    init_node_shims();
     "use strict";
+    init_node_shims();
     var createError = require_createError();
     module.exports = function settle(resolve, reject, response) {
       var validateStatus = response.config.validateStatus;
@@ -390,8 +390,8 @@ var require_settle = __commonJS({
 // node_modules/axios/lib/helpers/cookies.js
 var require_cookies = __commonJS({
   "node_modules/axios/lib/helpers/cookies.js"(exports, module) {
-    init_node_shims();
     "use strict";
+    init_node_shims();
     var utils = require_utils();
     module.exports = utils.isStandardBrowserEnv() ? function standardBrowserEnv() {
       return {
@@ -437,10 +437,10 @@ var require_cookies = __commonJS({
 // node_modules/axios/lib/helpers/isAbsoluteURL.js
 var require_isAbsoluteURL = __commonJS({
   "node_modules/axios/lib/helpers/isAbsoluteURL.js"(exports, module) {
-    init_node_shims();
     "use strict";
+    init_node_shims();
     module.exports = function isAbsoluteURL(url) {
-      return /^([a-z][a-z\d\+\-\.]*:)?\/\//i.test(url);
+      return /^([a-z][a-z\d+\-.]*:)?\/\//i.test(url);
     };
   }
 });
@@ -448,8 +448,8 @@ var require_isAbsoluteURL = __commonJS({
 // node_modules/axios/lib/helpers/combineURLs.js
 var require_combineURLs = __commonJS({
   "node_modules/axios/lib/helpers/combineURLs.js"(exports, module) {
-    init_node_shims();
     "use strict";
+    init_node_shims();
     module.exports = function combineURLs(baseURL, relativeURL) {
       return relativeURL ? baseURL.replace(/\/+$/, "") + "/" + relativeURL.replace(/^\/+/, "") : baseURL;
     };
@@ -459,8 +459,8 @@ var require_combineURLs = __commonJS({
 // node_modules/axios/lib/core/buildFullPath.js
 var require_buildFullPath = __commonJS({
   "node_modules/axios/lib/core/buildFullPath.js"(exports, module) {
-    init_node_shims();
     "use strict";
+    init_node_shims();
     var isAbsoluteURL = require_isAbsoluteURL();
     var combineURLs = require_combineURLs();
     module.exports = function buildFullPath(baseURL, requestedURL) {
@@ -475,8 +475,8 @@ var require_buildFullPath = __commonJS({
 // node_modules/axios/lib/helpers/parseHeaders.js
 var require_parseHeaders = __commonJS({
   "node_modules/axios/lib/helpers/parseHeaders.js"(exports, module) {
-    init_node_shims();
     "use strict";
+    init_node_shims();
     var utils = require_utils();
     var ignoreDuplicateOf = [
       "age",
@@ -528,8 +528,8 @@ var require_parseHeaders = __commonJS({
 // node_modules/axios/lib/helpers/isURLSameOrigin.js
 var require_isURLSameOrigin = __commonJS({
   "node_modules/axios/lib/helpers/isURLSameOrigin.js"(exports, module) {
-    init_node_shims();
     "use strict";
+    init_node_shims();
     var utils = require_utils();
     module.exports = utils.isStandardBrowserEnv() ? function standardBrowserEnv() {
       var msie = /(msie|trident)/i.test(navigator.userAgent);
@@ -569,8 +569,8 @@ var require_isURLSameOrigin = __commonJS({
 // node_modules/axios/lib/cancel/Cancel.js
 var require_Cancel = __commonJS({
   "node_modules/axios/lib/cancel/Cancel.js"(exports, module) {
-    init_node_shims();
     "use strict";
+    init_node_shims();
     function Cancel(message) {
       this.message = message;
     }
@@ -585,8 +585,8 @@ var require_Cancel = __commonJS({
 // node_modules/axios/lib/adapters/xhr.js
 var require_xhr = __commonJS({
   "node_modules/axios/lib/adapters/xhr.js"(exports, module) {
-    init_node_shims();
     "use strict";
+    init_node_shims();
     var utils = require_utils();
     var settle = require_settle();
     var cookies = require_cookies();
@@ -671,7 +671,7 @@ var require_xhr = __commonJS({
           request = null;
         };
         request.ontimeout = function handleTimeout() {
-          var timeoutErrorMessage = "timeout of " + config.timeout + "ms exceeded";
+          var timeoutErrorMessage = config.timeout ? "timeout of " + config.timeout + "ms exceeded" : "timeout exceeded";
           var transitional = config.transitional || defaults.transitional;
           if (config.timeoutErrorMessage) {
             timeoutErrorMessage = config.timeoutErrorMessage;
@@ -732,8 +732,8 @@ var require_xhr = __commonJS({
 // node_modules/axios/lib/defaults.js
 var require_defaults = __commonJS({
   "node_modules/axios/lib/defaults.js"(exports, module) {
-    init_node_shims();
     "use strict";
+    init_node_shims();
     var utils = require_utils();
     var normalizeHeaderName = require_normalizeHeaderName();
     var enhanceError = require_enhanceError();
@@ -839,8 +839,8 @@ var require_defaults = __commonJS({
 // node_modules/axios/lib/core/transformData.js
 var require_transformData = __commonJS({
   "node_modules/axios/lib/core/transformData.js"(exports, module) {
-    init_node_shims();
     "use strict";
+    init_node_shims();
     var utils = require_utils();
     var defaults = require_defaults();
     module.exports = function transformData(data, headers, fns) {
@@ -856,8 +856,8 @@ var require_transformData = __commonJS({
 // node_modules/axios/lib/cancel/isCancel.js
 var require_isCancel = __commonJS({
   "node_modules/axios/lib/cancel/isCancel.js"(exports, module) {
-    init_node_shims();
     "use strict";
+    init_node_shims();
     module.exports = function isCancel(value) {
       return !!(value && value.__CANCEL__);
     };
@@ -867,8 +867,8 @@ var require_isCancel = __commonJS({
 // node_modules/axios/lib/core/dispatchRequest.js
 var require_dispatchRequest = __commonJS({
   "node_modules/axios/lib/core/dispatchRequest.js"(exports, module) {
-    init_node_shims();
     "use strict";
+    init_node_shims();
     var utils = require_utils();
     var transformData = require_transformData();
     var isCancel = require_isCancel();
@@ -911,8 +911,8 @@ var require_dispatchRequest = __commonJS({
 // node_modules/axios/lib/core/mergeConfig.js
 var require_mergeConfig = __commonJS({
   "node_modules/axios/lib/core/mergeConfig.js"(exports, module) {
-    init_node_shims();
     "use strict";
+    init_node_shims();
     var utils = require_utils();
     module.exports = function mergeConfig(config1, config2) {
       config2 = config2 || {};
@@ -996,7 +996,7 @@ var require_data = __commonJS({
   "node_modules/axios/lib/env/data.js"(exports, module) {
     init_node_shims();
     module.exports = {
-      "version": "0.22.0"
+      "version": "0.26.0"
     };
   }
 });
@@ -1004,8 +1004,8 @@ var require_data = __commonJS({
 // node_modules/axios/lib/helpers/validator.js
 var require_validator = __commonJS({
   "node_modules/axios/lib/helpers/validator.js"(exports, module) {
-    init_node_shims();
     "use strict";
+    init_node_shims();
     var VERSION = require_data().version;
     var validators = {};
     ["object", "boolean", "number", "function", "string", "symbol"].forEach(function(type, i) {
@@ -1061,8 +1061,8 @@ var require_validator = __commonJS({
 // node_modules/axios/lib/core/Axios.js
 var require_Axios = __commonJS({
   "node_modules/axios/lib/core/Axios.js"(exports, module) {
-    init_node_shims();
     "use strict";
+    init_node_shims();
     var utils = require_utils();
     var buildURL = require_buildURL();
     var InterceptorManager = require_InterceptorManager();
@@ -1077,12 +1077,12 @@ var require_Axios = __commonJS({
         response: new InterceptorManager()
       };
     }
-    Axios.prototype.request = function request(config) {
-      if (typeof config === "string") {
-        config = arguments[1] || {};
-        config.url = arguments[0];
-      } else {
+    Axios.prototype.request = function request(configOrUrl, config) {
+      if (typeof configOrUrl === "string") {
         config = config || {};
+        config.url = configOrUrl;
+      } else {
+        config = configOrUrl || {};
       }
       config = mergeConfig(this.defaults, config);
       if (config.method) {
@@ -1174,8 +1174,8 @@ var require_Axios = __commonJS({
 // node_modules/axios/lib/cancel/CancelToken.js
 var require_CancelToken = __commonJS({
   "node_modules/axios/lib/cancel/CancelToken.js"(exports, module) {
-    init_node_shims();
     "use strict";
+    init_node_shims();
     var Cancel = require_Cancel();
     function CancelToken(executor) {
       if (typeof executor !== "function") {
@@ -1257,8 +1257,8 @@ var require_CancelToken = __commonJS({
 // node_modules/axios/lib/helpers/spread.js
 var require_spread = __commonJS({
   "node_modules/axios/lib/helpers/spread.js"(exports, module) {
-    init_node_shims();
     "use strict";
+    init_node_shims();
     module.exports = function spread(callback) {
       return function wrap(arr) {
         return callback.apply(null, arr);
@@ -1270,10 +1270,11 @@ var require_spread = __commonJS({
 // node_modules/axios/lib/helpers/isAxiosError.js
 var require_isAxiosError = __commonJS({
   "node_modules/axios/lib/helpers/isAxiosError.js"(exports, module) {
-    init_node_shims();
     "use strict";
+    init_node_shims();
+    var utils = require_utils();
     module.exports = function isAxiosError(payload) {
-      return typeof payload === "object" && payload.isAxiosError === true;
+      return utils.isObject(payload) && payload.isAxiosError === true;
     };
   }
 });
@@ -1281,8 +1282,8 @@ var require_isAxiosError = __commonJS({
 // node_modules/axios/lib/axios.js
 var require_axios = __commonJS({
   "node_modules/axios/lib/axios.js"(exports, module) {
-    init_node_shims();
     "use strict";
+    init_node_shims();
     var utils = require_utils();
     var bind = require_bind();
     var Axios = require_Axios();
@@ -1327,7 +1328,7 @@ init_node_shims();
 
 // src/lib/RumpusCE.ts
 init_node_shims();
-var import_axios = __toModule(require_axios2());
+var import_axios = __toESM(require_axios2());
 
 // src/lib/api/index.ts
 init_node_shims();
@@ -1730,6 +1731,11 @@ function createLevelheadAPI(client) {
 var RumpusCE = class {
   constructor(defaultDelegationKey = process.env.RUMPUS_DELEGATION_KEY, server = "beta", auth) {
     this.defaultDelegationKey = defaultDelegationKey;
+    this._rateLimitInfo = {
+      limit: Infinity,
+      remaining: Infinity,
+      nextReset: new Date()
+    };
     this._server = server;
     this._baseUrl = server == "local" ? "http://localhost:8080" : `https://${this._server}.bscotch.net`;
     this._request = import_axios.default.create({ baseURL: this._baseUrl, auth });
@@ -1743,6 +1749,15 @@ var RumpusCE = class {
   }
   get levelhead() {
     return this._levelheadAPI;
+  }
+  get requestsRemaining() {
+    return this._rateLimitInfo.remaining;
+  }
+  get isRateLimited() {
+    return this.requestsRemaining <= 0 && this.rateLimitInfo.nextReset.getTime() > Date.now();
+  }
+  get rateLimitInfo() {
+    return __spreadValues({}, this._rateLimitInfo);
   }
   async version() {
     const res = await this.get("/api/version", {
@@ -1812,6 +1827,11 @@ var RumpusCE = class {
       }
       res = err.response;
     }
+    this._rateLimitInfo = {
+      limit: +res.headers["x-rate-limit-limit"],
+      remaining: +res.headers["x-rate-limit-remaining"],
+      nextReset: new Date(+res.headers["x-rate-limit-reset"] * 1e3 + Date.now())
+    };
     return __spreadProps(__spreadValues({}, res.data), {
       headers: res.headers,
       status: res.status,
