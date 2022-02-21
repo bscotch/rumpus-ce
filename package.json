@@ -14,7 +14,7 @@
   "scripts": {
     "test": "mocha --inspect --require source-map-support/register --bail  ./build/test/index.js",
     "build": "npm run _build:node && npm run _build:browser && npm run _build:sample",
-    "version": "npm run build && npm run test && git add -A",
+    "version": "npm run build && git add -A",
     "postversion": "git push origin develop && npm publish && npm run _publish:gh-pages",
     "_build:node": "rm -rf build && tsc ",
     "_build:browser": "esbuild src/index.ts --bundle --sourcemap --target=chrome58,firefox57,safari11,edge16 --outdir=browser --format=esm --inject:browser/node-shims.js",
